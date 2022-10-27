@@ -1,2 +1,2 @@
-# kommet
+# Kommet
 Kommet platform source code
