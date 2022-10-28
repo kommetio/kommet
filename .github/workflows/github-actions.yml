@@ -1,5 +1,8 @@
 name: Project Build
-on: [push]
+on:
+    paths:
+        - src/**
+        - .github/**
 jobs:
         build:
                 runs-on: ubuntu-latest

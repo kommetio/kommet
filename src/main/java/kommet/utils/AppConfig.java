@@ -82,9 +82,9 @@ public class AppConfig extends PropertySet
 	 */
 	public KID getDefaultEnvId() throws PropertyUtilException
 	{
-		String envId = getEnvVar("RM_DEFAULT_ENV_ID");
+		String envId = getEnvVar("KM_DEFAULT_ENV_ID");
 
-		System.out.println("RM_DEFAULT_ENV_ID = " + envId);
+		System.out.println("KM_DEFAULT_ENV_ID = " + envId);
 
 		if (StringUtils.isEmpty(envId))
 		{
@@ -382,25 +382,25 @@ public class AppConfig extends PropertySet
 	 */
 	public String getCompileClasspath() throws PropertyUtilException
 	{
-		String compileClassPath = getEnvVar("RM_COMPILE_CLASSPATH");
+		String compileClassPath = getEnvVar("KM_COMPILE_CLASSPATH");
 		return StringUtils.isEmpty(compileClassPath) ? getRootDir() + "/" + getProperty("kommet.koll.compileclasspath") : compileClassPath;
 	}
 
 	public String getEnvDBPassword() throws PropertyUtilException
 	{
-		String env = getEnvVar("RM_DB_PWD");
+		String env = getEnvVar("KM_DB_PWD");
 		return StringUtils.isEmpty(env) ? getProperty("kommet.envdb.password") : env;
 	}
 
 	public String getKeetleDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_KEETLE_DIR");
+		String dir = getEnvVar("KM_KEETLE_DIR");
 		return StringUtils.isEmpty(dir) ? getRootDir() + "/" + getProperty("kommet.keetle.dir") : dir;
 	}
 
 	public String getLayoutDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_LAYOUT_DIR");
+		String dir = getEnvVar("KM_LAYOUT_DIR");
 		return StringUtils.isEmpty(dir) ? getRootDir() + "/" +  getProperty("kommet.layout.dir") : dir;
 	}
 
@@ -421,13 +421,13 @@ public class AppConfig extends PropertySet
 	 */
 	public String getLibDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_LIB_DIR");
+		String dir = getEnvVar("KM_LIB_DIR");
 		return StringUtils.isEmpty(dir) ? getProperty("kommet.lib.dir") : dir;
 	}
 	
 	public String getKollDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_KOLLDIR");
+		String dir = getEnvVar("KM_KOLLDIR");
 		return StringUtils.isEmpty(dir) ? getProperty("kommet.koll.dir") : dir;
 	}
 
@@ -438,7 +438,7 @@ public class AppConfig extends PropertySet
 	 */
 	public String getFileDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_FILE_DIR");
+		String dir = getEnvVar("KM_FILE_DIR");
 		return StringUtils.isEmpty(dir) ? getProperty("kommet.file.dir") : dir;
 	}
 
@@ -454,32 +454,32 @@ public class AppConfig extends PropertySet
 
 	public String getViewResourceDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_VIEWRESOURCE_DIR");
+		String dir = getEnvVar("KM_VIEWRESOURCE_DIR");
 		return StringUtils.isEmpty(dir) ? getRootDir() + "/" + getProperty("kommet.viewresource.dir") : dir;
 	}
 
 	public String getEnvDBHost() throws PropertyUtilException
 	{
-		String host = getEnvVar("RM_ENVDB_HOST");
+		String host = getEnvVar("KM_ENVDB_HOST");
 		return StringUtils.isEmpty(host) ? getProperty("kommet.envdb.host") : host;
 	}
 
 	public String getEnvDBPort() throws PropertyUtilException
 	{
-		String port = getEnvVar("RM_ENVDB_PORT");
+		String port = getEnvVar("KM_ENVDB_PORT");
 		return StringUtils.isEmpty(port) ? getProperty("kommet.envdb.port") : port;
 	}
 
 	public String getMasterDBHost() throws PropertyUtilException
 	{
-		String host = getEnvVar("RM_ENVDB_HOST");
-		System.out.println("RM_ENVDB_HOST = " + host);
+		String host = getEnvVar("KM_ENVDB_HOST");
+		System.out.println("KM_ENVDB_HOST = " + host);
 		return StringUtils.isEmpty(host) ? getProperty("kommet.masterdb.host") : host;
 	}
 
 	public String getMasterDBPort() throws PropertyUtilException
 	{
-		String port = getEnvVar("RM_MASTERDB_PORT");
+		String port = getEnvVar("KM_MASTERDB_PORT");
 		return StringUtils.isEmpty(port) ? getProperty("kommet.masterdb.port") : port;
 	}
 
@@ -495,7 +495,7 @@ public class AppConfig extends PropertySet
 
 	public String getMasterDBPassword() throws PropertyUtilException
 	{
-		String env = getEnvVar("RM_DB_PWD");
+		String env = getEnvVar("KM_DB_PWD");
 		return StringUtils.isEmpty(env) ? getProperty("kommet.masterdb.password") : env;
 	}
 
@@ -546,7 +546,7 @@ public class AppConfig extends PropertySet
 
 	private String getRootDir() throws PropertyUtilException
 	{
-		String dir = getEnvVar("RM_ROOTDIR");
+		String dir = getEnvVar("KM_ROOTDIR");
 		return StringUtils.isEmpty(dir) ? getProperty("kommet.rootdir") : dir;
 	}
 }
