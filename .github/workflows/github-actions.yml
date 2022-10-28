@@ -1,0 +1,22 @@
+name: Project Build
+on: [push]
+jobs:
+        build:
+                runs-on: ubuntu-latest
+                steps:
+                        - uses: actions/checkout@v2
+                        - name: Build package
+                          run: mvn package -DskipTests=true
+
+                        # after successful build - tag it
+                        - name: Tag successful build
+                          uses: actions/github-script@v6
+                          with:
+                                # when updateRef is used instead of createRef, the actual ref should be without the 'refs' prefix
+                                script: |
+                                    github.rest.git.updateRef({
+                                      owner: context.repo.owner,
+                                      repo: context.repo.repo,
+                                      ref: 'tags/latest-build',
+                                      sha: context.sha
+                                    })
