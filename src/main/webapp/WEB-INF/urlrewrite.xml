@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" "urlrewrite3.0.dtd">
+<urlrewrite default-match-type="regex">
+	<!-- codesandbox snippets -->
+	<rule>
+		<from>^/c/(\w+)$</from>
+		<to>/codesandbox/$1</to>
+	</rule>
+</urlrewrite>

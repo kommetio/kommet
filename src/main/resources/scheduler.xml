@@ -1,0 +1,15 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
+		<property name="autoStartup" value="true" />
+		<property name="schedulerName" value="quartzScheduler" />
+		<property name="jobFactory">
+			<bean class="kommet.scheduler.QuartzJobFactory"/>
+		</property>
+		<property name="configLocation" value="classpath:quartz.properties"/>
+	</bean>
+		
+</beans>

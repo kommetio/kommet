@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
+"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd"> 
+
+<taglib> 
+	<tlibversion>1.0</tlibversion> 
+	<jspversion>1.1</jspversion>
+	<shortname>Kommet auth tags</shortname>
+	<uri>http://kommet.io</uri>
+	<info>Kommet auth tag library</info>
+
+	<tag> 
+		<name>check</name> 
+		<tagclass>kommet.auth.tags.CheckAccessTag</tagclass>
+		<info>Check access</info>
+		<bodycontent>scriptless</bodycontent>
+		
+		<attribute>
+			<name>profile</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+	</tag>
+	
+	<tag> 
+		<name>checkTypeAccess</name> 
+		<tagclass>kommet.auth.tags.CheckTypeAccessTag</tagclass>
+		<info>Check type access</info>
+		<bodycontent>scriptless</bodycontent>
+		
+		<attribute>
+			<name>access</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>typeId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+	</tag>
+
+</taglib>

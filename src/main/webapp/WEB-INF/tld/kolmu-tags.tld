@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
+"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd"> 
+
+<taglib> 
+	<tlibversion>1.0</tlibversion> 
+	<jspversion>1.1</jspversion>
+	<shortname>FAQ tags</shortname>
+	<uri>http://kommet.io</uri>
+	<info>FAQ Tags Library</info>
+
+	<tag> 
+		<name>login-panel</name> 
+		<tagclass>kommet.web.tags.LoginPanel</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Login Panel</info>
+		
+		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+		</attribute>
+	</tag>
+	
+	<tag> 
+		<name>errors</name> 
+		<tagclass>kommet.web.tags.ActionErrors</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Action messages</info> 
+
+		<attribute>
+			<name>messages</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag> 
+		<name>messages</name> 
+		<tagclass>kommet.web.tags.ActionMessages</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Action messages</info> 
+
+		<attribute>
+			<name>messages</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag> 
+		<name>userPackage</name> 
+		<tagclass>kommet.basic.keetle.tags.UserPackageTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>User package tag</info>
+		
+		<attribute>
+			<name>package</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag> 
+		<name>label</name>
+		<tagclass>kommet.basic.keetle.tags.LabelTag</tagclass>
+		<bodycontent>scriptless</bodycontent>
+		<info>Render i18n label tag</info>
+		
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>i18n</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+</taglib>

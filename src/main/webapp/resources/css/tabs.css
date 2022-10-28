@@ -1,0 +1,43 @@
+ul.tabbar {
+	list-style: none;
+	font-family: Arial;
+	font-size: 1.2em;
+	color: rgba(78, 78, 78, 1);
+	margin: 0;
+	padding: 0;
+	position: relative;
+	left: 1em;
+}
+
+ul.tabbar > li {
+	display: inline-block;
+	border: 0.1em solid #ccc;
+	border-bottom: none;
+	margin: 0;
+	background-color: #E2E2E2;
+}
+
+ul.tabbar > li.active {
+	background-color: #ccc;
+	color: #000;
+}
+
+ul.tabbar > li > div.codename {
+	padding: 0.7em 1em 0.7em 1em;
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.tabbar > li:hover > img.close {
+	display: inline-block;
+}
+
+ul.tabbar > li.tab-link {
+	padding: 0.5em;
+	margin-right: 0.7em;
+	border: 0.1em solid #ccc;
+	border-bottom: none;
+	cursor: pointer;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
