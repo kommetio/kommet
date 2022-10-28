@@ -1,8 +1,9 @@
 name: Project Build
 on:
-    paths:
-        - src/**
-        - .github/**
+    push:
+        paths:
+            - src/**
+            - .github/**
 jobs:
         build:
                 runs-on: ubuntu-latest
