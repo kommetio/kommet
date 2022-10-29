@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jsoup.helper.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kommet.data.KID;
@@ -31,12 +33,14 @@ public class AppConfig extends PropertySet
 	 * server including all apps running on it. Some of them can be overridden by app-specific configuration.
 	 * The file is located in the app's resource folder.
 	 */
-	private static final String SERVER_CONFIG_FILE = "config-dev.properties";
+	private static final String SERVER_CONFIG_FILE = "config-prod.properties";
 
 	/**
 	 * Name of the package where all base system types are stored (such as Action, Class, View etc.)
 	 */
 	public static final String BASE_TYPE_PACKAGE = "kommet.basic";
+
+	private static final Logger log = LoggerFactory.getLogger(AppConfig.class);
 
 	/**
 	 * Returns the value of a given property
@@ -383,7 +387,9 @@ public class AppConfig extends PropertySet
 	public String getCompileClasspath() throws PropertyUtilException
 	{
 		String compileClassPath = getEnvVar("KM_COMPILE_CLASSPATH");
-		return StringUtils.isEmpty(compileClassPath) ? getRootDir() + "/" + getProperty("kommet.koll.compileclasspath") : compileClassPath;
+		String path = StringUtils.isEmpty(compileClassPath) ? getRootDir() + "/" + getProperty("kommet.koll.compileclasspath") : compileClassPath;
+		log.debug("Compile classpath: " + path);
+		return path;
 	}
 
 	public String getEnvDBPassword() throws PropertyUtilException
