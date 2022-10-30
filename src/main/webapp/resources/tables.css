@@ -1,0 +1,8 @@
+table.kmt > tbody > tr > td.kmtc-focus {
+	border: 0.2em solid rgb(115, 171, 199);
+	box-shadow: 0 0 0.2em 0.2em #D8D8D8;
+}
+
+table.kmtgrid > tbody > tr > td {
+	border: 0.1em solid #ccc;
+}

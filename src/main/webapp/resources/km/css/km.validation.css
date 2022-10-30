@@ -1,0 +1,5 @@
+input.km-validate-err, select.km-validate-err, textarea.km-validate-err {
+	border: 1px solid rgb(223, 149, 149);
+  	box-shadow: 0 0 6px rgb(219, 150, 150);
+  	outline: none;
+}
