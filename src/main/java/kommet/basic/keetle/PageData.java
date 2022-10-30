@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import kommet.data.KID;
 import kommet.env.EnvData;
-import kommet.web.rmparams.KmParamNode;
+import kommet.web.kmparams.KmParamNode;
 
 /**
  * This class represents all data returned by a controller method.

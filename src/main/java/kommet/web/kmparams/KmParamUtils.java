@@ -5,7 +5,7 @@
  * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
  */
 
-package kommet.web.rmparams;
+package kommet.web.kmparams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +18,14 @@ import kommet.basic.keetle.PageData;
 import kommet.data.KID;
 import kommet.data.KIDException;
 import kommet.utils.MiscUtils;
-import kommet.web.rmparams.actions.Action;
-import kommet.web.rmparams.actions.ActionMessage;
-import kommet.web.rmparams.actions.ExecuteCode;
-import kommet.web.rmparams.actions.KeepParameters;
-import kommet.web.rmparams.actions.OverrideLayout;
-import kommet.web.rmparams.actions.SetField;
-import kommet.web.rmparams.actions.SetParentField;
-import kommet.web.rmparams.actions.ShowLookup;
+import kommet.web.kmparams.actions.Action;
+import kommet.web.kmparams.actions.ActionMessage;
+import kommet.web.kmparams.actions.ExecuteCode;
+import kommet.web.kmparams.actions.KeepParameters;
+import kommet.web.kmparams.actions.OverrideLayout;
+import kommet.web.kmparams.actions.SetField;
+import kommet.web.kmparams.actions.SetParentField;
+import kommet.web.kmparams.actions.ShowLookup;
 
 
 public class KmParamUtils
@@ -34,36 +34,36 @@ public class KmParamUtils
 	{	
 		if (baseNode == null)
 		{
-			throw new KmParamException("RM param node to parse value into is null");
+			throw new KmParamException("KM param node to parse value into is null");
 		}
 		
-		if (!baseNode.getName().equals("rm"))
+		if (!baseNode.getName().equals("km"))
 		{
 			throw new KmParamException("Base node passed to parseParam method must have name 'rm'");
 		}
 		
 		if (!StringUtils.hasText(paramName))
 		{
-			throw new KmParamException("RM parameter name is empty"); 
+			throw new KmParamException("KM parameter name is empty"); 
 		}
 
-		if (!paramName.startsWith("rm."))
+		if (!paramName.startsWith("km."))
 		{
-			throw new KmParamException("RM parameter name must start with 'rm' prefix");
+			throw new KmParamException("RM parameter name must start with 'km' prefix");
 		}
 		
 		String[] parts = paramName.split("\\.");
 
-		setRmParam(baseNode, parts, paramValue, 1);
+		setKmParam(baseNode, parts, paramValue, 1);
 		return baseNode;
 	}
 	
-	private static KmParamNode setRmParam (KmParamNode node, String[] splitParamName, String paramValue, int i) throws KmParamException
+	private static KmParamNode setKmParam (KmParamNode node, String[] splitParamName, String paramValue, int i) throws KmParamException
 	{
 		// check if the current node is an action node, if yes, parse it manually
 		if (node.getType().equals(KmParamNodeType.SET) || node.getType().equals(KmParamNodeType.SET_PARENT_WINDOW_FIELD))
 		{
-			// implode the rest of the parameters after "set", e.g. for "rm.set.one.two=three", treat
+			// implode the rest of the parameters after "set", e.g. for "km.set.one.two=three", treat
 			// "one.two" as variable name
 			
 			List<String> varNameParts = new ArrayList<String>();
@@ -156,7 +156,7 @@ public class KmParamUtils
 			}
 			catch (KIDException e)
 			{
-				throw new KmParamException("Invalid layout ID value '" + paramValue + "' in rm parameter " + MiscUtils.implode(splitParamName, "."));
+				throw new KmParamException("Invalid layout ID value '" + paramValue + "' in km parameter " + MiscUtils.implode(splitParamName, "."));
 			}
 			return node;
 		}
@@ -164,7 +164,7 @@ public class KmParamUtils
 		// no action node has been discovered, so we make sure that this is not the last node
 		if (i >= splitParamName.length)
 		{
-			throw new KmParamException("No action node at the end of the rm parameter " + MiscUtils.implode(splitParamName, ".") + "(i = " + i + ")");
+			throw new KmParamException("No action node at the end of the km parameter " + MiscUtils.implode(splitParamName, ".") + "(i = " + i + ")");
 		}
 		
 		// remember previous node
@@ -179,17 +179,17 @@ public class KmParamUtils
 			prevNode.addNode(node);
 		}
 			
-		return setRmParam(node, splitParamName, paramValue, i + 1);
+		return setKmParam(node, splitParamName, paramValue, i + 1);
 	}
 	
-	public static KmParamNode getRmParamsFromRequest (HttpServletRequest req) throws KmParamException
+	public static KmParamNode getKmParamsFromRequest (HttpServletRequest req) throws KmParamException
 	{
-		KmParamNode node = new KmParamNode("rm");
+		KmParamNode node = new KmParamNode("km");
 		
 		// initialize all rm parameters
 		for (Object param : req.getParameterMap().keySet())
 		{
-			if (param instanceof String && ((String)param).startsWith("rm."))
+			if (param instanceof String && ((String)param).startsWith("km."))
 			{
 				KmParamUtils.parseParam(node, (String)param, ((String[])req.getParameterMap().get(param))[0]);
 			}
@@ -200,7 +200,7 @@ public class KmParamUtils
 	
 	public static PageData initRmParams(HttpServletRequest req, PageData pageData) throws KmParamException
 	{
-		pageData.setRmParams(getRmParamsFromRequest(req));
+		pageData.setRmParams(getKmParamsFromRequest(req));
 		
 		// init overridden layout
 		// TODO note that layout will be reserved for this use as a parameter

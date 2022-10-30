@@ -43,13 +43,13 @@ import kommet.utils.MiscUtils;
 import kommet.utils.UrlUtil;
 import kommet.utils.VarInterpreter;
 import kommet.utils.XMLUtil;
-import kommet.web.rmparams.KmParamException;
-import kommet.web.rmparams.KmParamNode;
-import kommet.web.rmparams.actions.Action;
-import kommet.web.rmparams.actions.ExecuteCode;
-import kommet.web.rmparams.actions.SetField;
-import kommet.web.rmparams.actions.SetParentField;
-import kommet.web.rmparams.actions.ShowLookup;
+import kommet.web.kmparams.KmParamException;
+import kommet.web.kmparams.KmParamNode;
+import kommet.web.kmparams.actions.Action;
+import kommet.web.kmparams.actions.ExecuteCode;
+import kommet.web.kmparams.actions.SetField;
+import kommet.web.kmparams.actions.SetParentField;
+import kommet.web.kmparams.actions.ShowLookup;
 
 /**
  * Configuration of an object list. Stores all information necessary to render an object list.

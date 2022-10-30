@@ -45,7 +45,7 @@ import kommet.systemsettings.SystemSettingKey;
 import kommet.transactions.Savepoint;
 import kommet.utils.MiscUtils;
 import kommet.utils.UrlUtil;
-import kommet.web.rmparams.actions.ShowLookup;
+import kommet.web.kmparams.actions.ShowLookup;
 
 /**
  * Standard object controller that will handle all basic operations on type records regardless of

@@ -88,9 +88,9 @@ import kommet.utils.UrlUtil;
 import kommet.web.RequestAttributes;
 import kommet.web.actions.ActionUtil;
 import kommet.web.actions.ParsedURL;
-import kommet.web.rmparams.KmParamException;
-import kommet.web.rmparams.KmParamUtils;
-import kommet.web.rmparams.actions.OverrideLayout;
+import kommet.web.kmparams.KmParamException;
+import kommet.web.kmparams.KmParamUtils;
+import kommet.web.kmparams.actions.OverrideLayout;
 
 /**
  * This filter is the main point where action requests are intercepted and executed.
@@ -863,7 +863,7 @@ public class RequestFilter extends OncePerRequestFilter
 		{
 			try
 			{
-				kommet.web.rmparams.actions.Action layoutRmParam = pageData.getRmParams() != null ? pageData.getRmParams().getSingleActionNode("layout") : null;
+				kommet.web.kmparams.actions.Action layoutRmParam = pageData.getRmParams() != null ? pageData.getRmParams().getSingleActionNode("layout") : null;
 				KID layoutId = null;
 				if (layoutRmParam != null)
 				{

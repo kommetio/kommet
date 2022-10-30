@@ -111,7 +111,7 @@ public class BaseWebTest extends SeleneseTestBase
 	
 	protected boolean openViewDetailsByName(String viewName, String packageName, boolean verify) throws KommetException
 	{
-		driver.get(TestDataCreator.WEB_TEST_BASE_URL + "rm/" + TestDataCreator.WEB_VIEW_LIST_URL);
+		driver.get(TestDataCreator.WEB_TEST_BASE_URL + "km/" + TestDataCreator.WEB_VIEW_LIST_URL);
 		
 		assertTrue("View list not opened, instead the URL is " + driver.getCurrentUrl(), driver.getCurrentUrl().endsWith(TestDataCreator.WEB_VIEW_LIST_URL));
 		
@@ -263,7 +263,7 @@ public class BaseWebTest extends SeleneseTestBase
 			params.put("id", id.getId());
 		}
 		
-		String responseBody = sendPostRequestGetResponseBody(TestDataCreator.WEB_TEST_BASE_URL + "rm" + UrlUtil.REST_API_SAVE_CLASS_URL, params);
+		String responseBody = sendPostRequestGetResponseBody(TestDataCreator.WEB_TEST_BASE_URL + "km" + UrlUtil.REST_API_SAVE_CLASS_URL, params);
 		Map<String, Object> tokenJSON;
 		
 		try
@@ -463,7 +463,7 @@ public class BaseWebTest extends SeleneseTestBase
 	
 	protected void openNewViewPage() throws KommetException
 	{
-		driver.get(TestDataCreator.WEB_TEST_BASE_URL + "rm/" + TestDataCreator.WEB_NEW_VIEW_URL);
+		driver.get(TestDataCreator.WEB_TEST_BASE_URL + "km/" + TestDataCreator.WEB_NEW_VIEW_URL);
 		web.assertTrue(driver.getTitle().startsWith("New view"));
 	}
 	

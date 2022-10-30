@@ -5,16 +5,15 @@
  * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
  */
 
-package kommet.web.rmparams;
+package kommet.web.kmparams.actions;
 
-import kommet.data.KommetException;
+import kommet.web.kmparams.KmParamException;
+import kommet.web.kmparams.KmParamNode;
 
-public class KmParamException extends KommetException
-{
-	private static final long serialVersionUID = -1966993354039187418L;
-
-	public KmParamException(String msg)
+public class Action extends KmParamNode
+{	
+	public Action(String name) throws KmParamException
 	{
-		super(msg);
+		super(name);
 	}
 }

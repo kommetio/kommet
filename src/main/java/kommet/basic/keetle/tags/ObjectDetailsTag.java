@@ -43,9 +43,9 @@ import kommet.i18n.I18nDictionary;
 import kommet.utils.AppConfig;
 import kommet.utils.MiscUtils;
 import kommet.utils.NestedContextField;
-import kommet.web.rmparams.KmParamNode;
-import kommet.web.rmparams.actions.Action;
-import kommet.web.rmparams.actions.ShowLookup;
+import kommet.web.kmparams.KmParamNode;
+import kommet.web.kmparams.actions.Action;
+import kommet.web.kmparams.actions.ShowLookup;
 
 public class ObjectDetailsTag extends KommetTag implements RecordContext
 {
