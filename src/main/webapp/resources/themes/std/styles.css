@@ -20,7 +20,7 @@ input[type=text].km-top-search {
 }
 
 table.std-table, div.km-table-std {
-	box-shadow: none;
+	box-shadow: 0 0 0.4em #d6d6d6;
 	border: 0;
 }
 
@@ -41,21 +41,21 @@ div.kmjstb div.kmjstr:nth-child(odd) > div.kmjstd, table.std-table > tbody > tr:
 }
 
 table.std-table > tbody > tr > td:first-child, div.kmjstb div.kmjstr > div.kmjstd:FIRST-CHILD {
-	border-left: 1px solid #7899a8;
+	border-left: none;
 }
 
 table.std-table > tbody > tr > td:last-child, div.kmjstb div.kmjstr > div.kmjstd:LAST-CHILD {
-	border-right: 1px solid #7899a8;
+	border-right: none;
 }
 
 table.std-table > tbody > tr:last-child > td, div.kmjstb div.kmjstr:LAST-CHILD > div.kmjstd {
-	border-bottom: 1px solid #7899a8;
+	border-bottom: none;
 }
 
 div.km-table-std > div.kmjsth >  div.kmjstr >  div.kmjstd {
-	padding: 0.6em;
-	border-top: 1px solid #7899a8;
-	border-bottom: 1px solid #7899a8;
+	padding: 0.4em 0.7em;
+	border-top: none;
+	border-bottom: none;
 }
 
 table.std-table > tbody > tr > td, div.kmjstb div.kmjstd {
@@ -72,23 +72,20 @@ table.std-table > thead > tr.cols > th, table.std-table > thead > tr.cols > th a
     text-align: left;
     font-weight: normal;
     padding: 0.4em 1em;
-    background: #88bad1;
-    background-image: linear-gradient(to bottom, #88bad1, #7aa9bf);
+    background: #59a0d3;
+    /*background-image: linear-gradient(to bottom, #88bad1, #7aa9bf);*/
     font-weight: lighter;
     color: #fff;
     border: 0;
-    border: 1px solid #7899a8;
-    border-left: 0;
-    border-right: 0;
 }
 
 table.std-table > thead > tr.cols > th:first-child, div.km-table-std div.kmjsth div.kmjstd:first-child {
-	border-left: 1px solid #7899a8;
+	border-left: none;
 	border-top-left-radius: 0.3em;
 }
 
 table.std-table > thead > tr.cols > th:last-child, div.km-table-std div.kmjsth div.kmjstd:last-child {
-	border-right: 1px solid #7899a8;
+	border-right: none;
 	border-top-right-radius: 0.3em;
 }
 
@@ -113,25 +110,22 @@ div.km-table-std div.kmjstb div.kmjstr:last-child > div.kmjstd:last-child {
 }
 
 .ui-widget a.sbtn, .ui-widget input.sbtn, a.sbtn, input.sbtn, body input[type=submit], .sbtn {
-    background: #6bb6ec;
-    background-image: -webkit-linear-gradient(top, #6bb6ec, #68a0d7);
+    background: #59a0d3;
     background-image: -moz-linear-gradient(top, #6bb6ec, #68a0d7);
     background-image: -ms-linear-gradient(top, #6bb6ec, #68a0d7);
     background-image: -o-linear-gradient(top, #6bb6ec, #68a0d7);
-    background-image: linear-gradient(to bottom, #6bb6ec, #68a0d7);
-	text-shadow: 0px 1px 0 #707070;
-	box-shadow: #91ccff 0px 1px 0px;
-	border: 1px solid #5c8ab2;
+    border: none;
 	line-height: 0.8rem;
+    border-radius: 0.2em;
 }
 
 /****** km-menu ********/
 .km-menu li.km-menu-highlighted > a {
-	background-color: #5b7489;
+	background-color: #2f5c83;
 }
 
 .km-menu > ul > li > a > span.km-menu-icon {
-	display: table-cell;
+	display: none;
     vertical-align: middle;
     padding-right: 0.9em;
 }
@@ -164,6 +158,7 @@ div.km-table-std div.kmjstb div.kmjstr:last-child > div.kmjstd:last-child {
 
 .km-menu span.km-menu-item-title {
 	display: table-cell;
+	font-size: 0.8rem;
 }
 
 .km-menu > ul > li, .km-menu > ul > li > ul > li {
@@ -183,6 +178,7 @@ div.km-table-std div.kmjstb div.kmjstr:last-child > div.kmjstd:last-child {
 	display: block;
 	margin: 0;
 	white-space: nowrap;
+	font-size: 0.8rem;
 }
 
 .km-menu > ul > li > a {
@@ -327,8 +323,8 @@ div#breadcrumbs {
 
 /**** left menu ********/
 #km-layout-menu, .km-left-menu, div.km-left-container {
-	width: 240px;
-	min-width: 240px;
+	width: 200px;
+	min-width: 200px;
 	border-right: 0.1em solid #ccc;
     box-shadow: 0 0 0.6em rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -341,16 +337,16 @@ div.km-left-container {
 }
 
 .km-menu > ul > li > a:hover {
-	background-color: #5b7489;	
+	background-color: #2f5c83;	
 }
 
 .km-menu, .km-left-menu {
-	background-color: #395872;
+	background-color: #2f5678;
 }
 
 .km-menu a {
 	color: #fff;
-	border-top: 1px solid #495f72;
+	border-top: 1px solid #3e6383;
 }
 
 .km-menu > ul {
@@ -358,7 +354,8 @@ div.km-left-container {
 }
 
 .km-profile-box {
-	background: #4e6981;
+	display: none;
+	background: #282828;
 }
 
 .km-profile-pic {
@@ -382,7 +379,7 @@ div.km-left-container {
 }
 
 .km-menu > ul > li > ul > li > a:hover {
-	background-color: #5b7489;	
+	background-color: #2f5c83;	
 }
 
 .header-bar-bg {
@@ -429,7 +426,7 @@ div.km-layout-body {
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
-	background: #395872;
+	background: #275378;
 }
 
 div.logo-cell {
@@ -455,16 +452,13 @@ div#km-mobile-bar {
 }
 
 .km-pagination > a, .km-pagination > div.km-page-no-no-ellipsis > a, .km-pagination > div.km-page-no-ellipsis > a {
-    padding: .3em .8em;
-    font-size: 0.83rem;
+    padding: 0.3em 0.8em;
+    font-size: 0.8rem;
     display: inline-block;
-    border: solid 1px #c0c0c0;
-    background: #f4f4f4;
-    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
     border-radius: 0.2em;
     line-height: 1rem;
-    color: #717171;
-    text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+    color: #444444;
+    text-shadow: 0px 1px 0px rgb(255 255 255);
     margin-right: 0.3em;
 }
 
@@ -545,6 +539,11 @@ table tr:first-child td:last-child {
 
 #content {
 	background: #f2f2f2;
+}
+
+img.km-home-logo {
+	width: 150px;
+    margin: 1rem 0 0 1rem;
 }
 
 /************ end of minimal table 1 **************/

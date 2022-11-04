@@ -55,6 +55,8 @@
 			
 			div.km-logo > img {
 				height: 4rem;
+				position: relative;
+    			left: -10px;
 			}
 		
 			table.auth-forms td.btn-cell {
@@ -62,25 +64,24 @@
 			}
 			
 			body {
-				background: url(${pageContext.request.contextPath}/resources/images/valley.jpg);
-				background-size: cover;
+				background-color: #2f5678;
 			}
 			
 			.auth-forms a.sbtn {
-				font-size: 0.85rem;
+				font-size: 0.8rem;
 				display: block;
 				margin: 0 0 0.5rem 0;
 				padding: 0.7em;
 				box-sizing: border-box;
-				background: rgba(62, 124, 162, 0.64);
-				border: 1px solid #495665;
+			    background: rgb(47 86 120);
+			    border: 1px solid #1f4354;
 				box-shadow: none;
 				text-shadow: none;
 				color: #f1f1f1;
 			}
 			
 			.auth-forms input[type="text"], .auth-forms input[type="password"] {
-			    border: 0.1em solid #9c9c9c;
+			    border: 0.1em solid #fff;
 			    padding: 0.7em;
 			    background-color: #f2f2f2;
 			    border-radius: 0.2em;

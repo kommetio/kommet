@@ -80,11 +80,22 @@
 			div#layout-table > div > div.header-bar {
 				height: 30px;
 				display: table;
-				background-color: #4c6c86;
+				background-color: #2f5c83;
 			}
 			
 			.km-square > div {
-				background-color: #4c6c86;
+				background-color: #3e3e3e;
+			}
+			
+			.km-ide-header {
+				display: block;
+			    width: 100%;
+			    text-align: left;
+			    padding: 1em;
+			}
+			
+			img.km-ide-logo {
+				width: 150px;
 			}
 		
 		</style>
@@ -98,13 +109,8 @@
 			<div>
 				<div class="header-bar header-bar-bg">
 					<div class="km-bl-cell">
-						<div class="km-bl-table">
-							<div class="logo-cell">
-								<div class="km-square"><div></div></div>
-							</div>
-							<div class="brand-cell" id="brand-cell">
-								<span class="brand">kommet</span>
-							</div>
+						<div class="km-ide-header">
+							<img src="${pageContext.request.contextPath}/resources/images/km-logo-white.png" class="km-ide-logo"></img>
 						</div>
 					</div>
 				</div>

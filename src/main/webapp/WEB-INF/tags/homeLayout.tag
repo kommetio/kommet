@@ -174,12 +174,13 @@
 					<div id="km-layout-menu" class="km-left-menu">
 						<div class="km-left-container">
 							<div class="km-bl-table">
-								<div class="logo-cell">
+								<img src="${pageContext.request.contextPath}/resources/images/km-logo-white.png" class="km-home-logo"></img>
+								<!--<div class="logo-cell">
 									<div class="km-square"><div></div></div>
 								</div>
 								<div class="brand-cell" id="brand-cell">
 									<span class="brand">kommet</span>
-								</div>
+								</div>-->
 							</div>
 							<div class="km-profile-box">
 								<div class="km-profile-pic"></div>
