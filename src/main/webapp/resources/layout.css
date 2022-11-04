@@ -948,6 +948,7 @@ div.upper-links > a {
     color: #545454;
 	font-weight: bold;
 	margin: 0 0 2em 0;
+	font-family: Roboto, Arial;
 }
 
 .km-title > i {
@@ -1352,7 +1353,6 @@ table.kdetails td.value {
     border-radius: 0.4em 0.5em 0 0;
     border-top: none;
     color: #484848;
-    text-shadow: 1px 1px 1px #dadada;
 }
 
 /**
@@ -1429,6 +1429,7 @@ table.kdetails td.value {
 
 #km-layout-topbar {
 	width: 100%;
+	display: none;
 }
 
 #km-layout-mainbox {

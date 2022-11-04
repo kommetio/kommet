@@ -5,21 +5,21 @@
  * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
  */
 
-package kommet.web.rmparams;
+package kommet.web.kmparams;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import kommet.web.rmparams.actions.Action;
-import kommet.web.rmparams.actions.ActionMessage;
-import kommet.web.rmparams.actions.ExecuteCode;
-import kommet.web.rmparams.actions.KeepParameters;
-import kommet.web.rmparams.actions.OverrideLayout;
-import kommet.web.rmparams.actions.SetField;
-import kommet.web.rmparams.actions.SetParentField;
-import kommet.web.rmparams.actions.ShowLookup;
+import kommet.web.kmparams.actions.Action;
+import kommet.web.kmparams.actions.ActionMessage;
+import kommet.web.kmparams.actions.ExecuteCode;
+import kommet.web.kmparams.actions.KeepParameters;
+import kommet.web.kmparams.actions.OverrideLayout;
+import kommet.web.kmparams.actions.SetField;
+import kommet.web.kmparams.actions.SetParentField;
+import kommet.web.kmparams.actions.ShowLookup;
 
 public class KmParamNode
 {
@@ -61,7 +61,7 @@ public class KmParamNode
 	
 	private static KmParamNodeType getNodeType(String name) throws KmParamException
 	{
-		if ("rm".equals(name))
+		if ("km".equals(name))
 		{
 			return KmParamNodeType.BASE;
 		}

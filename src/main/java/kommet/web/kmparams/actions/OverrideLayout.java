@@ -5,10 +5,10 @@
  * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
  */
 
-package kommet.web.rmparams.actions;
+package kommet.web.kmparams.actions;
 
 import kommet.data.KID;
-import kommet.web.rmparams.KmParamException;
+import kommet.web.kmparams.KmParamException;
 
 public class OverrideLayout extends Action
 {

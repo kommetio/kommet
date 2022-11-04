@@ -5,15 +5,12 @@
  * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
  */
 
-package kommet.web.rmparams.actions;
+package kommet.web.kmparams;
 
-import kommet.web.rmparams.KmParamException;
-
-
-public class CloseDialog extends Action
+public class Event extends KmParamNode
 {	
-	public CloseDialog() throws KmParamException
+	public Event(String name) throws KmParamException
 	{
-		super("closedialog");
+		super(name);
 	}
 }

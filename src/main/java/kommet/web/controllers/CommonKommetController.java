@@ -26,9 +26,9 @@ import kommet.services.SystemSettingService;
 import kommet.uch.UserCascadeHierarchyService;
 import kommet.utils.MiscUtils;
 import kommet.web.RequestAttributes;
-import kommet.web.rmparams.KmParamException;
-import kommet.web.rmparams.KmParamUtils;
-import kommet.web.rmparams.actions.OverrideLayout;
+import kommet.web.kmparams.KmParamException;
+import kommet.web.kmparams.KmParamUtils;
+import kommet.web.kmparams.actions.OverrideLayout;
 
 /**
  * Common abstract controller class for all controllers.

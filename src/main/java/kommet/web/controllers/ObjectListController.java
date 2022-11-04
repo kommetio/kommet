@@ -40,7 +40,7 @@ import kommet.env.EnvService;
 import kommet.koll.compiler.KommetCompiler;
 import kommet.utils.MiscUtils;
 import kommet.utils.UrlUtil;
-import kommet.web.rmparams.KmParamUtils;
+import kommet.web.kmparams.KmParamUtils;
 
 @Controller
 public class ObjectListController extends CommonKommetController
@@ -109,7 +109,7 @@ public class ObjectListController extends CommonKommetController
 		config.setLookupId(lookupId);
 		
 		// init RM params
-		config.setRmParams(KmParamUtils.getRmParamsFromRequest(req));
+		config.setRmParams(KmParamUtils.getKmParamsFromRequest(req));
 		
 		Set<String> sortableFieldSet = getFieldsFromParam(sortableFields);
 		Set<String> linkFieldSet = getFieldsFromParam(linkFields);

@@ -35,7 +35,7 @@ import kommet.i18n.I18nDictionary;
 import kommet.i18n.InternationalizationService;
 import kommet.utils.MiscUtils;
 import kommet.utils.NestedContextField;
-import kommet.web.rmparams.KmParamNode;
+import kommet.web.kmparams.KmParamNode;
 
 public class LookupTag extends FieldTag implements ListDisplay
 {
