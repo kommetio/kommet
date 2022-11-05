@@ -202,10 +202,15 @@
 			<version>3.2.1</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
 		    <version>1.4.7</version>
+	    </dependency>-->
+	    <dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.2</version>
 	    </dependency>
 
 		<dependency>
@@ -325,8 +330,8 @@
 			<version>1.2.15</version>
 			<exclusions>
 				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
+    				<groupId>com.sun.mail</groupId>
+    				<artifactId>javax.mail</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>javax.jms</groupId>
