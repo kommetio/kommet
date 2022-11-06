@@ -80,7 +80,7 @@ public class EmailService
 		return sendEmail(subject, recipients, content, htmlContent, null, null, null);
 	}
 	
-	private JavaMailSender getMailSenderForAccount(EmailAccount account)
+	private JavaMailSender getMailSenderForAccount (EmailAccount account)
 	{
 	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 	    mailSender.setHost(account.getSmtpHost());

@@ -4,6 +4,7 @@ on:
         paths:
             - src/**
             - .github/**
+            - pom.xml
 jobs:
         build:
                 runs-on: ubuntu-latest

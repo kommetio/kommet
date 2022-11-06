@@ -493,7 +493,7 @@ public class AuthData
 		this.isGuest = isGuest;
 	}
 
-	public static AuthData getGuestAuthData(PermissionService permissionService, UserCascadeHierarchyService uchService, EnvData env) throws KommetException
+	public static AuthData getGuestAuthData (PermissionService permissionService, UserCascadeHierarchyService uchService, EnvData env) throws KommetException
 	{
 		if (guestAuthDataByEnvId == null)
 		{
