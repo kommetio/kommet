@@ -290,6 +290,11 @@ public class UserController extends BasicRestController
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/users/activate", method = RequestMethod.GET)
 	public ModelAndView activateUser(@RequestParam("hash") String hash, @RequestParam(name = "envId", required = false) String envId, HttpSession session) throws KommetException
 	{	
+		if (StringUtils.isEmpty(envId))
+		{
+			envId = appConfig.getDefaultEnvId().getId();
+		}
+		
 		EnvData env = envService.get(KID.get(envId));
 		I18nDictionary i18n = i18nService.getDictionary(getDefaultLocale(env, settingService));
 		
@@ -297,11 +302,6 @@ public class UserController extends BasicRestController
 		UserFilter filter = new UserFilter();
 		filter.setActivationHash(hash);
 		List<User> users = userService.get(filter, env);
-		
-		if (StringUtils.isEmpty(envId))
-		{
-			envId = appConfig.getDefaultEnvId().getId();
-		}
 		
 		ModelAndView mv = new ModelAndView("users/activate");
 		mv.addObject("i18n", i18n);
