@@ -120,6 +120,13 @@ public class UserService
 		env.getJdbcTemplate().execute("UPDATE obj_004 SET _triggerflag = '" + UPDATE_ROOT_PWD_FLAG + "', password = '" + newEncryptedPwd + "' WHERE username = 'root'");
 		return true;
 	}
+	
+	@Transactional(readOnly = true)
+	public boolean activateRoot (String newEncryptedPwd, EnvData env) throws KommetException
+	{
+		env.getJdbcTemplate().execute("UPDATE obj_004 SET _triggerflag = '" + UPDATE_ROOT_PWD_FLAG + "', password = '" + newEncryptedPwd + "', isactive = true, activationhash = null WHERE username = 'root'");
+		return true;
+	}
 
 	@Transactional
 	public User save (User user, AuthData authData, EnvData env) throws KommetException
