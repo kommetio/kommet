@@ -391,7 +391,8 @@ table.auth-forms>tbody>tr>td {
 }
 
 .action-errors, .tag-error {
-	background-color: #f5f5f5;
+	background-color: #ffffff;
+    border: 0.1em solid #c5958eb8;
 }
 
 .action-errors > table, .tag-error > table {

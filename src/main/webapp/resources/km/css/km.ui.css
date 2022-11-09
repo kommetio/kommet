@@ -328,7 +328,7 @@ div.km-status-bar-std-info {
 }
 
 div.km-status-bar-std-err {
-	background-color: #ffd1c4;
+	background-color: #ffffff;
 }
 
 div.km-status-bar-std ul.km-status-msgs {
@@ -348,7 +348,7 @@ div.km-status-bar > div.content {
 
 div.km-status-bar img.km-close {
 	float: right;
-	margin: 0.3em 1em 0.3em 0.3em;
+	margin: 0.3em 1.5em 0.3em 0.3em;
 	display: inline-block;
 }
 
@@ -357,7 +357,7 @@ ul.km-status-msgs > li {
 }
 
 img.km-close {
-	height: 2em;
+	height: 1.3em;
 	cursor: pointer;
 }
 
