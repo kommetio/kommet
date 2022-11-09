@@ -45,7 +45,7 @@ public class Collection
 	 * @param env
 	 * @return CollectionCode object, containing two parts of the code. Element code is a simple HTML placeholder
 	 * to be put where the tag should be displayed. Initialization code is JQuery code responsible for rendering the
-	 * tag with the use of the rm.rel library. It should be called after the body of the page is loaded.
+	 * tag with the use of the km.rel library. It should be called after the body of the page is loaded.
 	 * @throws KommetException
 	 */
 	public CollectionCode getCode(TagMode mode, AuthData authData, EnvData env) throws KommetException
@@ -178,7 +178,7 @@ public class Collection
 		
 		sb.append("buttonPanel: (function() {");
 		sb.append("btnPanel = km.js.buttonpanel.create({ id: \"ri_" + MiscUtils.getHash(10) + "\" });");
-		sb.append("btnPanel.addButton({ label: km.js.config.i18n['btn.new'], url: km.js.config.contextPath + \"/" + associatedType.getKeyPrefix().getPrefix() + "/n?rm.lookup=" + relId + "&rm.layout=" + env.getBlankLayoutId() + "\" });");
+		sb.append("btnPanel.addButton({ label: km.js.config.i18n['btn.new'], url: km.js.config.contextPath + \"/" + associatedType.getKeyPrefix().getPrefix() + "/n?km.lookup=" + relId + "&km.layout=" + env.getBlankLayoutId() + "\" });");
 		sb.append("return btnPanel;})()");
 				
 		return sb.toString();

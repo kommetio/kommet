@@ -269,7 +269,7 @@ public class HttpService
 	}
 
 	/**
-	 * Rewrites headers from rm.request to original apache request
+	 * Rewrites headers from km.request to original apache request
 	 * @param httpReq
 	 * @param req
 	 * @return

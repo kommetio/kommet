@@ -444,13 +444,13 @@ public class ObjectListConfig
 		// add lookup reference
 		if (rmParams != null && rmParams.getSingleActionNode("lookup") != null)
 		{
-			paramSettings.add("rm.lookup=" + ((ShowLookup)rmParams.getSingleActionNode("lookup")).getId());
-			paramSettings.add("rm.layout=" + env.getBlankLayoutId());
+			paramSettings.add("km.lookup=" + ((ShowLookup)rmParams.getSingleActionNode("lookup")).getId());
+			paramSettings.add("km.layout=" + env.getBlankLayoutId());
 		}
 		else if (lookupId != null)
 		{
-			paramSettings.add("rm.lookup=" + lookupId);
-			paramSettings.add("rm.layout=" + env.getBlankLayoutId());
+			paramSettings.add("km.lookup=" + lookupId);
+			paramSettings.add("km.layout=" + env.getBlankLayoutId());
 		}
 		
 		if (!paramSettings.isEmpty())

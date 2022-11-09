@@ -316,7 +316,7 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 					//parentView.appendScript("if (window.parent && window.parent.km.js.scope.resizeEvent) { window.parent.km.js.scope.resizeEvent.notify(); }");
 					
 					lookupId = ((ShowLookup)rmParams.getSingleActionNode("lookup")).getId();
-					mainTabCode.append("<input type=\"hidden\" name=\"rm.lookup\" value=\"").append(lookupId).append("\" />");
+					mainTabCode.append("<input type=\"hidden\" name=\"km.lookup\" value=\"").append(lookupId).append("\" />");
 					
 					// do not render a container box when in lookup mode
 					this.renderContainerBox = false;
@@ -471,7 +471,7 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 							fieldNames.add(contextField.getNestedName());
 						}
 						
-						// render the object form using javascript rm.objectdetails library	
+						// render the object form using javascript km.objectdetails library	
 						String query = "select " + MiscUtils.implode(fieldNames, ", ") + " FROM " + type.getQualifiedName() + " where " + Field.ID_FIELD_NAME + " = '" + this.record.getKID() + "'";
 						
 						parentView.appendScript(getObjectDetailsRenderScript(fieldLayout, "$(\".object-detail-main-panel\")", query, this.record, type, this.mode.name().toLowerCase(), getAuthData()));

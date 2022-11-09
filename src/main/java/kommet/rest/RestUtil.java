@@ -21,7 +21,7 @@ public class RestUtil
 {
 	/**
 	 * Returns a JSON error response containing serialized field validation errors in a format expected e.g.
-	 * by rm.objectdetails
+	 * by km.objectdetails
 	 * @param e
 	 * @return
 	 * @throws KommetException
