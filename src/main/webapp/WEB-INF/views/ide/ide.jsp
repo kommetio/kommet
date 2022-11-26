@@ -231,6 +231,7 @@
 			ul#ide-menu a {
 				text-decoration: none;
 				color: #424242;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
 			}
 			
 			ul#ide-menu a:hover {

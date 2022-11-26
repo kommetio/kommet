@@ -283,6 +283,7 @@
 								<option value="km.sys.recorddetails.collections.display">Display collections on record details</option>
 								<option value="km.sys.newtask.emailnotification">Send email if task assigned</option>
 								<option value="km.sys.login.url">Login action URL</option>
+								<option value="km.sys.404.url">404 action URL</option>
 								<option value="km.btns.section.class">Buttons section CSS class</option>
 							</select>
 						</ko:propertyValue>

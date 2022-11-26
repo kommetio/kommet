@@ -38,6 +38,8 @@ public class UserSettingKeys
 	 */
 	public static final String KM_SYS_HOME_PAGE = "km.home.url";
 	
+	public static final String KM_SYS_404_URL = "km.sys.404.url";
+	
 	public static final String KM_SYS_MAX_FILE_SIZE = "km.sys.max.file.size";
 	
 	public static final String KM_SYS_DEFAULT_LAYOUT_ID = "km.sys.defaultlayout.id";
@@ -60,7 +62,7 @@ public class UserSettingKeys
 	// possible values those of enum {@link ValidationRuleUninitializedFieldsMode}
 	public static final String KM_ROOT_SYS_VALIDATION_RULE_UNINITIALIZED_FIELDS_MODE = "km.root.sys.vr.uninit.fields.mode";
 
-	public static String getName(String key)
+	public static String getName (String key)
 	{
 		if (KM_ROOT_SYS_CAN_LOGIN.equals(key))
 		{
@@ -85,6 +87,10 @@ public class UserSettingKeys
 		else if (KM_SYS_LOGIN_URL.equals(key))
 		{
 			return "Login page URL";
+		}
+		else if (KM_SYS_404_URL.equals(key))
+		{
+			return "404 action URL";
 		}
 		else
 		{

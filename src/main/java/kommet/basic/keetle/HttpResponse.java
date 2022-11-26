@@ -11,6 +11,7 @@ public class HttpResponse
 {
 	private String body;
 	private String contentType;
+	private Integer statusCode;
 	
 	public void appendBody(String s)
 	{
@@ -42,5 +43,13 @@ public class HttpResponse
 	public String getContentType()
 	{
 		return contentType;
+	}
+
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
 	}
 }

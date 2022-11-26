@@ -170,6 +170,17 @@ public class LoginController extends CommonKommetController
 		mv.addObject("browserMsgText", i18n.get(locale, "msg.browser.not.supported.text"));
 		return mv;
 	}
+	
+	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/404", method = RequestMethod.GET)
+	public ModelAndView pageNotFound(HttpServletRequest req, HttpServletResponse res) throws KommetException
+	{
+		clearMessages();
+		ModelAndView mv = new ModelAndView("auth/404");
+		addError("Page does not exist");
+		mv.addObject("errorMsgs", getErrorMsgs());
+		res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return mv;
+	}
 
 	private Locale getDefaultLocale(EnvData env) throws KommetException
 	{

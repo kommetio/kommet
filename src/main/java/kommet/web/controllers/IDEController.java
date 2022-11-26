@@ -44,6 +44,7 @@ import kommet.basic.Profile;
 import kommet.basic.View;
 import kommet.basic.ViewResource;
 import kommet.basic.keetle.BaseController;
+import kommet.basic.keetle.HttpResponse;
 import kommet.basic.keetle.LayoutFilter;
 import kommet.basic.keetle.LayoutService;
 import kommet.basic.keetle.PageData;
@@ -1094,7 +1095,7 @@ public class IDEController extends CommonKommetController
 		}
 		
 		// imports
-		for (java.lang.Class<?> cls : getAllRaimmeClasses(env))
+		for (java.lang.Class<?> cls : getAllKommetClasses(env))
 		{
 			hints.add("{ \"displayText\": \"" + cls.getSimpleName() + "\", \"text\": \"" + cls.getName() + "\", \"javaImport\": \"" + cls.getName() + "\" }");
 		}
@@ -1258,7 +1259,7 @@ public class IDEController extends CommonKommetController
 		return "[ " + MiscUtils.implode(serializedNamespaces, ", ") + " ]";
 	}
 
-	private List<java.lang.Class<?>> getAllRaimmeClasses(EnvData env)
+	private List<java.lang.Class<?>> getAllKommetClasses(EnvData env)
 	{
 		List<java.lang.Class<?>> classes = new ArrayList<java.lang.Class<?>>();
 		
@@ -1302,6 +1303,8 @@ public class IDEController extends CommonKommetController
 		classes.add(TestResults.class);
 		classes.add(TestError.class);
 		classes.add(TestException.class);
+		
+		classes.add(HttpResponse.class);
 		
 		//classes.add(KerasModel.class);
 		//classes.add(MLException.class);
