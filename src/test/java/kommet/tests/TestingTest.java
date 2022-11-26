@@ -7,9 +7,6 @@
 
 package kommet.tests;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -21,10 +18,7 @@ import kommet.data.DataService;
 import kommet.data.KommetException;
 import kommet.env.EnvData;
 import kommet.koll.ClassService;
-import kommet.testing.TestError;
-import kommet.testing.TestResults;
 import kommet.testing.TestService;
-import kommet.utils.MiscUtils;
 
 public class TestingTest extends BaseUnitTest
 {
@@ -51,7 +45,7 @@ public class TestingTest extends BaseUnitTest
 		
 		String clsName = "SampleTest";
 		String method = "runTest";
-		String packageName = "rm.sampletest";
+		String packageName = "km.sampletest";
 		String fullClsName = packageName + "." + clsName;
 		
 		Class file = getTestClass(clsName, packageName, method, dataHelper.getRootAuthData(env), env);

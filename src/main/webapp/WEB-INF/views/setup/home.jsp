@@ -374,7 +374,7 @@
 							tip += "\nQuery object ID: select id from <OBJECT API NAME>";
 							tip += "\nQuery fields of type kommet.Customer: select id. firstName, lastName from kommet.Customer";
 							tip += "\nQuery object reference relationship: select id, email, profile.name, profile.label from User";
-							tip += "\nQuery collection: select id, items.id, items.price from rm.shop.Order";
+							tip += "\nQuery collection: select id, items.id, items.price from km.shop.Order";
 							tip += "\nCount records: select count(id) from User";
 							textarea.val(tip);
 							
@@ -538,7 +538,7 @@
 				});
 				
 				$("#action-customize-views").click(function() {
-					km.js.utils.openURL(km.js.config.contextPath + "/km/type/1cc#rm.tab.2");
+					km.js.utils.openURL(km.js.config.contextPath + "/km/type/1cc#km.tab.2");
 				});
 				
 				$("#action-custom-logic").click(function() {

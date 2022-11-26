@@ -148,7 +148,7 @@ km.js.tabs = {
 				this.container().find("ul.km-tabs-head > li.km-tabs-head-" + index).addClass("km-tabs-head-active");
 				
 				// append anchor to the current URL
-				location.hash = "rm.tab." + index;
+				location.hash = "km.tab." + index;
 			},
 			
 			/**

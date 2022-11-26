@@ -88,7 +88,7 @@ i.km-bool-button-icon {
 	margin-right: 0.5em;
 }
 
-/* rm.table used in the available items dialog of rm.rel */
+/* km.table used in the available items dialog of km.rel */
 .km-rel-av-items {
 	width: 100%;
 }
@@ -105,7 +105,7 @@ i.km-bool-button-icon {
 	font-size: 1em;
 }
 
-/********** rm.tabs general styles start *************/
+/********** km.tabs general styles start *************/
 ul.km-tabs-head {
 	list-style-type: none;
 	padding: 0;
@@ -124,9 +124,9 @@ div.km-tabs-panel {
 	display: none;
 }
 
-/********** rm.tabs general styles end *************/
+/********** km.tabs general styles end *************/
 
-/********** rm.tabs standard styles start *************/
+/********** km.tabs standard styles start *************/
 
 div.km-tabs-std ul.km-tabs-head > li:hover {
 	text-decoration: underline;
@@ -146,13 +146,13 @@ div.km-tabs-std div.km-tabs-panel {
 .km-cmt-std .km-cmt-add-error {
 	margin-top: 2em;
 }
-/********** rm.tabs standard styles end *************/
+/********** km.tabs standard styles end *************/
 
-/********** rm.comments general styles start *************/
+/********** km.comments general styles start *************/
 
-/********** rm.comments general styles end *************/
+/********** km.comments general styles end *************/
 
-/********** rm.comments standard styles start *************/
+/********** km.comments standard styles start *************/
 
 .km-cmt-std {
 	font-size: 1em;
@@ -328,7 +328,7 @@ div.km-status-bar-std-info {
 }
 
 div.km-status-bar-std-err {
-	background-color: #ffd1c4;
+	background-color: #ffffff;
 }
 
 div.km-status-bar-std ul.km-status-msgs {
@@ -348,7 +348,7 @@ div.km-status-bar > div.content {
 
 div.km-status-bar img.km-close {
 	float: right;
-	margin: 0.3em 1em 0.3em 0.3em;
+	margin: 0.3em 1.5em 0.3em 0.3em;
 	display: inline-block;
 }
 
@@ -357,7 +357,7 @@ ul.km-status-msgs > li {
 }
 
 img.km-close {
-	height: 2em;
+	height: 1.3em;
 	cursor: pointer;
 }
 

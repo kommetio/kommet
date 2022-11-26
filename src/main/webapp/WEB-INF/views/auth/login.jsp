@@ -195,7 +195,7 @@
 							<div id="login-errors"></div>
 							
 							<input type="hidden" name="url" value="${url}" />
-							<input type="hidden" name="locale" value="PL_PL" />
+							<input type="hidden" name="locale" value="EN_US" />
 							<table id="auth-form-content">
 								<tr>
 									<td>
@@ -234,31 +234,6 @@
 						</form>
 					</div>
 							
-						<%--	
-						</td>
-						<td style="padding-left: 30px;">
-							<h3>Create an account</h3>
-							<form action="${pageContext.request.contextPath}/km/auth/doregister" method="post">
-								<table>
-									<tr>
-										<td><input type="text" name="username" placeholder="Email" /></td>
-									</tr>
-									<tr>
-										<td><input type="text" name="displayName" placeholder="Community Name" /></td>
-									</tr>
-									<tr>
-										<td><input type="password" name="password" placeholder="Password" /></td>
-									</tr>
-									<tr>
-										<td><input type="password" name="confirmedPassword" placeholder="Re-type password" /></td>
-									</tr>
-									<tr>
-										<td colspan="2"><input type="submit" value="Register" class="sbtn" /></td>
-									</tr>
-								</table>
-							</form>
-						</td>
-						--%>
 				</div>
 		</div>
 		

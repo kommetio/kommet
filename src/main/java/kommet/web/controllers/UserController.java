@@ -288,8 +288,13 @@ public class UserController extends BasicRestController
 	}
 	
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/users/activate", method = RequestMethod.GET)
-	public ModelAndView activateUser(@RequestParam("hash") String hash, @RequestParam("envId") String envId, HttpSession session) throws KommetException
+	public ModelAndView activateUser(@RequestParam("hash") String hash, @RequestParam(name = "envId", required = false) String envId, HttpSession session) throws KommetException
 	{	
+		if (StringUtils.isEmpty(envId))
+		{
+			envId = appConfig.getDefaultEnvId().getId();
+		}
+		
 		EnvData env = envService.get(KID.get(envId));
 		I18nDictionary i18n = i18nService.getDictionary(getDefaultLocale(env, settingService));
 		
@@ -633,13 +638,21 @@ public class UserController extends BasicRestController
 			return mv;
 		}
 		
+		if (BasicSetupService.ROOT_USERNAME.equals(users.get(0).getUserName()))
+		{
+			userService.activateRoot(MiscUtils.getSHA1Password(newPassword), env);
+		}
+		else
+		{
 		// change password
 		Record user = RecordProxyUtil.generateRecord(users.get(0), env.getTypeByRecordId(users.get(0).getId()), 2, env);
 		user.setField("password", MiscUtils.getSHA1Password(newPassword));
+			
 		// clear hash
 		user.setField("activationHash", SpecialValue.NULL);
 		user.setField("isActive", true);
 		dataService.save(user, env);
+		}
 		
 		// redirect to login page with appropriate message
 		mv = new ModelAndView("auth/login");

@@ -368,7 +368,7 @@ public class LookupTag extends FieldTag implements ListDisplay
 		{
 			if (btn.getType().equals(ButtonType.NEW))
 			{
-				code.append("btnPanel.addButton({ label: \"").append(i18n.get("btn.new")).append("\", url: km.js.config.contextPath + \"/").append(type.getKeyPrefix()).append("/n?rm.lookup=").append(lookupId).append("&rm.layout=").append(env.getBlankLayoutId()).append("\"");
+				code.append("btnPanel.addButton({ label: \"").append(i18n.get("btn.new")).append("\", url: km.js.config.contextPath + \"/").append(type.getKeyPrefix()).append("/n?km.lookup=").append(lookupId).append("&km.layout=").append(env.getBlankLayoutId()).append("\"");
 				
 				if (StringUtils.hasText(btn.getId()))
 				{

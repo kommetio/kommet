@@ -13,16 +13,6 @@
 		<faq:errors messages="${errorMsgs}" />
 		<faq:messages messages="${actionMsgs}" />
 		
-		<%-- <div class="box">
-			Thanks for joining! Your account is now activated. If you have a moment, please tell us a bit about yourself so that other users can get to know you.
-			
-			<form method="post" action="/profile/save">
-				<input type="text" name="displayName" placeholder="Community name" />
-				<textarea name="about" placeholder="A few words about yourself"></textarea>
-				<input type="submit" class="sbtn" value="Save" />
-			</form> 
-		</div>--%>
-		
 	</jsp:body>
 	
 </tags:homeLayout>

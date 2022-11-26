@@ -58,14 +58,14 @@ km.js.objectdetails = {
 				
 				if (!jsti)
 				{
-					throw "JSTI not provided to rm.objectdetails";
+					throw "JSTI not provided to km.objectdetails";
 				}
 				
 				var record = actualOptions.record;
 				
 				if (!record)
 				{
-					throw "Record not passed to rm.objectdetails";
+					throw "Record not passed to km.objectdetails";
 				}
 				
 				// clone object
@@ -94,7 +94,7 @@ km.js.objectdetails = {
 				
 				if (actualOptions.fields && actualOptions.layout)
 				{
-					throw "Both fields and layout cannot be set in options of rm.objectdetails";
+					throw "Both fields and layout cannot be set in options of km.objectdetails";
 				}
 				
 				if (actualOptions.fields)

@@ -228,7 +228,7 @@ km.js.table = {
 				
 				if (typeof(this.buttonPanel.render) !== "function")
 				{
-					throw "Button panel defined on rm.table does not have function render(). It may not have been created using rm.buttonpanel.create()";
+					throw "Button panel defined on km.table does not have function render(). It may not have been created using km.buttonpanel.create()";
 				}
 				
 				// render the button panel into the btn panel container
@@ -1728,7 +1728,7 @@ km.js.table = {
 		}
 		
 		// for JSON datasources, the IDs of display properties are undefined, because these are simple js object
-		// however, the code of rm.table operates on property IDs, so we need to rewrite them for unified format for processing
+		// however, the code of km.table operates on property IDs, so we need to rewrite them for unified format for processing
 		if (tableObj.datasource.type === "json")
 		{
 			tableObj = this.adjustJSONDatasource(tableObj);

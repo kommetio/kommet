@@ -101,7 +101,7 @@ km.js.ref = {
 				{
 					if (!this.selectedRecordDisplayField)
 					{
-						throw "Display field not defined. Specify option selectedRecordDisplayField in configuration of the rm.ref component.";
+						throw "Display field not defined. Specify option selectedRecordDisplayField in configuration of the km.ref component.";
 					}
 					else if (!this.selectedRecordDisplayField.id && !this.selectedRecordDisplayField.name)
 					{

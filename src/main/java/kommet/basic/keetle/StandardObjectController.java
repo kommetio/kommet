@@ -676,9 +676,9 @@ public class StandardObjectController extends BaseController implements SystemCo
       		// if this page was run in lookup mode, pass lookup parameters to the result page
       		if (lookupId != null)
       		{
-      			//getPageData().setValue("rm.layout", getEnv().getBlankLayoutId());
+      			//getPageData().setValue("km.layout", getEnv().getBlankLayoutId());
       			getPageData().setLayoutId(getEnv().getBlankLayoutId());
-      			getPageData().setValue("rm.lookup", lookupId);
+      			getPageData().setValue("km.lookup", lookupId);
       		}
       		
       		if (sourceViewId != null)
@@ -709,8 +709,8 @@ public class StandardObjectController extends BaseController implements SystemCo
       	// that tells it to close
       	if (lookupId != null)
       	{
-      		redirectUrl += "?rm.layout=" + getEnv().getBlankLayoutId().getId() + "&rm.lookup=" + lookupId;
-      		redirectUrl += this.operation.equals(Operation.UPDATE) ? "&rm.afterupdate" : "&rm.afterinsert";
+      		redirectUrl += "?km.layout=" + getEnv().getBlankLayoutId().getId() + "&km.lookup=" + lookupId;
+      		redirectUrl += this.operation.equals(Operation.UPDATE) ? "&km.afterupdate" : "&km.afterinsert";
       	}
       
       	// redirect to object details

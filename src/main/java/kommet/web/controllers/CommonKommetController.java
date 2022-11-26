@@ -53,10 +53,10 @@ public abstract class CommonKommetController
 		mv.addObject(RequestAttributes.PAGE_DATA_ATTR_NAME, KmParamUtils.initRmParams(req, new PageData(env)));
 	}
 	
-	protected Locale getDefaultLocale(EnvData env, SystemSettingService settingService) throws KommetException
+	protected Locale getDefaultLocale (EnvData env, SystemSettingService settingService) throws KommetException
 	{
 		Locale locale = env != null ? settingService.getDefaultLocale(env) : null;
-		return locale != null ? locale : Locale.PL_PL;
+		return locale != null ? locale : Locale.EN_US;
 	}
 	
 	protected static void addLayoutPath(UserCascadeHierarchyService uchService, ModelAndView mv, AuthData authData, EnvData env) throws KommetException
