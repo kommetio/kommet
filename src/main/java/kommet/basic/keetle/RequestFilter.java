@@ -602,6 +602,39 @@ public class RequestFilter extends OncePerRequestFilter
 						throw new ServletException("Error generating error response: " + e.getMessage());
 					}
 				}
+				else if (action == null && genericAction == null && !requestedUrl.startsWith(UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/"))
+				{
+					String notFoundURL = null;
+					try
+					{
+						if (env != null)
+						{
+							notFoundURL = uchService.getUserSettingAsString(UserSettingKeys.KM_SYS_404_URL, authData, AuthData.getRootAuthData(env), env);
+						}
+						
+						if (StringUtils.hasText(notFoundURL))
+						{
+							response.sendRedirect(request.getContextPath() + "/" + notFoundURL);
+							return;
+						}
+					}
+					catch (KommetException e)
+					{
+						e.printStackTrace();
+						throw new ServletException("Error reading default 404 page: " + e.getMessage());
+					}
+					
+					if (!StringUtils.hasText(notFoundURL))
+					{
+						// use system default login page
+						notFoundURL = "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/404";
+					}
+					
+					// redirect to the 404 page
+					// forward the request to the KTL-JSP file
+					RequestDispatcher loginDispatcher = request.getRequestDispatcher("/" + notFoundURL);
+					loginDispatcher.forward(request, response);
+				}
 				else
 				{
 					String loginURL = null;
@@ -1123,7 +1156,7 @@ public class RequestFilter extends OncePerRequestFilter
 				// TODO this is a more rare case than standard actions returning views so move this condition to be checked as second
 				if (pageData.getHttpResponse() != null && StringUtils.hasText(pageData.getHttpResponse().getBody()))
 				{
-					log.debug("Writing response body [" + requestID + "]");
+					//log.debug("Writing response body [" + requestID + "]");
 					
 					// write response body directly
 					response.getWriter().write(pageData.getHttpResponse().getBody());
@@ -1132,6 +1165,11 @@ public class RequestFilter extends OncePerRequestFilter
 					if (pageData.getHttpResponse().getContentType() != null)
 					{
 						response.setContentType(pageData.getHttpResponse().getContentType());
+					}
+					
+					if (pageData.getHttpResponse().getStatusCode() != null)
+					{
+						response.setStatus(pageData.getHttpResponse().getStatusCode());
 					}
 				}
 				else
@@ -1155,6 +1193,11 @@ public class RequestFilter extends OncePerRequestFilter
 					if (appConfig.isDebugKollCode())
 					{
 						log.debug("Dispatching view [" + requestID + "] [" + (System.currentTimeMillis() - reqStartTime) + "]");
+					}
+					
+					if (pageData.getHttpResponse().getStatusCode() != null)
+					{
+						response.setStatus(pageData.getHttpResponse().getStatusCode());
 					}
 					
 					// forward the request to the KTL-JSP file - use the view ID from page data
