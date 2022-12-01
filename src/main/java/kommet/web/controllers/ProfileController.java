@@ -585,7 +585,7 @@ public class ProfileController extends CommonKommetController
 		
 		mv.addObject("profiles", getProfilesForDisplay(env));
 		
-		Breadcrumbs.add(req.getRequestURL().toString(), "Profiles", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Profiles", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

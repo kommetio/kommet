@@ -69,7 +69,7 @@ public class EventController extends CommonKommetController
 	public ModelAndView list(HttpSession session, HttpServletRequest req) throws KommetException
 	{
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Events", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Events", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		return new ModelAndView("events/list");
 	}
 	
@@ -77,7 +77,7 @@ public class EventController extends CommonKommetController
 	public ModelAndView calendar(HttpSession session, HttpServletRequest req) throws KommetException
 	{
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Calendar", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Calendar", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		return new ModelAndView("events/calendar");
 	}
 	
@@ -190,7 +190,7 @@ public class EventController extends CommonKommetController
 		mv.addObject("event", e);
 		mv.addObject("pageTitle", e.getName());
 		
-		Breadcrumbs.add(req.getRequestURL().toString(), e.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), e.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

@@ -121,12 +121,12 @@ public class OutputFieldTag extends FieldTag
 				if (!refRecord.getType().getKeyPrefix().getPrefix().equals(KID.FILE_PREFIX))
 				{
 					strValue = refRecord.getDefaultFieldValue(authData.getLocale());
-					code.append("<a href=\"").append(pageContext.getServletContext().getContextPath()).append("/").append(refRecord.getKID()).append("\">").append(strValue).append("</a>");
+					code.append("<a href=\"").append(viewWrapper.getHost()).append("/").append(refRecord.getKID()).append("\">").append(strValue).append("</a>");
 				}
 				else
 				{
 					// if it is a reference to a file, display it differently
-					code.append(FileFieldTag.getCode(refRecord.getKID(), refRecord.getDefaultFieldValue(authData.getLocale()), env, "file_" + id, pageContext.getServletContext().getContextPath()));
+					code.append(FileFieldTag.getCode(refRecord.getKID(), refRecord.getDefaultFieldValue(authData.getLocale()), env, "file_" + id, viewWrapper.getHost()));
 				}
 			}
 		}
@@ -149,11 +149,11 @@ public class OutputFieldTag extends FieldTag
 		{
 				
 			// render user fields as user links
-			code.append(UserLinkTag.getCode(KID.get(strValue), env, pageContext.getServletContext().getContextPath(), userService));
+			code.append(UserLinkTag.getCode(KID.get(strValue), env, viewWrapper.getHost(), userService));
 		}
 		else if (nestedField.getDataType().getId().equals(DataType.BOOLEAN))
 		{
-			code.append(getCheckboxOutput(nestedField, (Boolean)value, pageContext.getServletContext().getContextPath(), authData.getI18n()));
+			code.append(getCheckboxOutput(nestedField, (Boolean)value, viewWrapper.getHost(), authData.getI18n()));
 		}
 		else if (nestedField.getDataTypeId().equals(DataType.TEXT) && ((TextDataType)nestedField.getDataType()).isLong())
 		{

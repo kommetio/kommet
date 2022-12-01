@@ -247,7 +247,7 @@ public class FieldHistoryTag extends KommetTag
 						code.append("<td>").append(interpreteValue(fh.getNewValue(), i18n, recordsById, fh.getOperation(), authData.getLocale())).append("</td>");
 						// render date according to user's locale
 						code.append("<td>").append(MiscUtils.formatDateTimeByUserLocale(fh.getCreatedDate(), parentView.getAuthData())).append("</td>");
-						code.append("<td>").append(UserLinkTag.getCode(fh.getCreatedBy().getId(), getEnv(), this.pageContext.getServletContext().getContextPath(), parentView.getUserService())).append("</td>");
+						code.append("<td>").append(UserLinkTag.getCode(fh.getCreatedBy().getId(), getEnv(), getHost(), parentView.getUserService())).append("</td>");
 						code.append("</tr>");
 					}
 					code.append("</tbody>");

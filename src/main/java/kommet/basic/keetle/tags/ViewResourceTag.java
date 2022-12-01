@@ -34,7 +34,7 @@ public class ViewResourceTag extends KommetTag
     {
 		try
 		{
-			writeToPage(ViewUtil.includeViewResource(name, getViewWrapper().getAppConfig(), this.pageContext.getServletContext().getContextPath(), getEnv()));
+			writeToPage(ViewUtil.includeViewResource(name, getViewWrapper().getAppConfig(), getHost(), getEnv()));
 		}
 		catch (MisplacedTagException e)
 		{

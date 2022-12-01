@@ -187,7 +187,7 @@ public class InputFieldTag extends FieldTag
 			if (referencedType.getKeyPrefix().equals(KeyPrefix.get(KID.FILE_PREFIX)))
 			{
 				String fileLookupId = "file-" + MiscUtils.getHash(10);
-				String fileLookup = "<div id=\"" + fileLookupId + "\"><img src=\"" + pageContext.getServletContext().getContextPath() + "/resources/images/attachicon.png\" class=\"km-wait\"></img></div>";
+				String fileLookup = "<div id=\"" + fileLookupId + "\"><img src=\"" + viewTag.getHost() + "/resources/images/attachicon.png\" class=\"km-wait\"></img></div>";
 				code.append(fileLookup);
 				
 				//code.append("<input type=\"hidden\" name=\"").append(inputName + "." + Field.ID_FIELD_NAME).append("\" id=\"" + inputId + "\"></input>");

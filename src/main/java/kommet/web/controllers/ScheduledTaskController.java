@@ -114,7 +114,7 @@ public class ScheduledTaskController extends CommonKommetController
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/scheduledtasks", method = RequestMethod.GET)
 	public ModelAndView scheduledTasks (HttpSession session, HttpServletRequest req) throws PropertyUtilException, KommetException
 	{
-		Breadcrumbs.add(req.getRequestURL().toString(), "Scheduled tasks", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Scheduled tasks", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("scheduledtasks/list");
 		mv.addObject("tasks", schedulerService.get(new ScheduledTaskFilter(), envService.getCurrentEnv(session)));
@@ -159,7 +159,7 @@ public class ScheduledTaskController extends CommonKommetController
 			return getErrorPage("Scheduled task with ID " + taskId + " not found");
 		}
 		
-		Breadcrumbs.add(req.getRequestURL().toString(), task.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), task.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("scheduledtasks/details");
 		mv.addObject("task", task);

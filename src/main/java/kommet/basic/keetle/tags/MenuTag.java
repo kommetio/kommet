@@ -42,7 +42,7 @@ public class MenuTag extends KommetTag
 			{
 				if (authData.canReadType(type.getKID(), false, getEnv()))
 				{
-					code.append("<li><a href=\"").append(this.pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/list/").append(type.getKeyPrefix().getPrefix()).append("\">").append(type.getInterpretedPluralLabel(authData)).append("</a></li>");
+					code.append("<li><a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/list/").append(type.getKeyPrefix().getPrefix()).append("\">").append(type.getInterpretedPluralLabel(authData)).append("</a></li>");
 				}
 			}
 			

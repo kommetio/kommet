@@ -32,8 +32,8 @@ import kommet.basic.keetle.tags.buttons.ButtonType;
 import kommet.dao.queries.QueryResult;
 import kommet.data.Field;
 import kommet.data.KeyPrefix;
-import kommet.data.NoSuchFieldException;
 import kommet.data.KommetException;
+import kommet.data.NoSuchFieldException;
 import kommet.data.Record;
 import kommet.data.Type;
 import kommet.env.EnvData;
@@ -78,6 +78,7 @@ public class ObjectListConfig
 	private String idField;
 	private ObjectListSource recordSource;
 	private ObjectListItemType itemType;
+	private String servletHost;
 
 	/**
 	 * Variable name under which the current record will be available to
@@ -236,10 +237,10 @@ public class ObjectListConfig
 		// if list is not displayed with preset records and new button should be displayed, display it
 		if (!config.getButtonPanel().isCustomButtons() && ObjectListSource.QUERY.equals(config.getRecordSource()) && config.isShowNewBtn() && authData.canCreateType(config.getType().getKID(), false, config.getEnv()))
 		{
-			config.getButtonPanel().addButton(newObjectBtn(config.getType().getKeyPrefix(), config.getI18n().get("btn.new"), config.getNewObjectPassedParams(), config.getPageContext().getServletContext().getContextPath(), config.getRmParams(), config.getLookupId(), env));
+			config.getButtonPanel().addButton(newObjectBtn(config.getType().getKeyPrefix(), config.getI18n().get("btn.new"), config.getNewObjectPassedParams(), config.getServletHost(), config.getRmParams(), config.getLookupId(), env));
 		}
 		
-		code.append(detachedBtnPanel(config, config.getTitle(), config.getType() != null ? config.getType().getKeyPrefix() : null, config.getPageContext().getServletContext().getContextPath(), config.getI18n(), env, config.getButtonPanel() != null ? config.getButtonPanel().getButtons().toArray(new ButtonPrototype[0]) : new ButtonPrototype[0]));
+		code.append(detachedBtnPanel(config, config.getTitle(), config.getType() != null ? config.getType().getKeyPrefix() : null, config.getServletHost(), config.getI18n(), env, config.getButtonPanel() != null ? config.getButtonPanel().getButtons().toArray(new ButtonPrototype[0]) : new ButtonPrototype[0]));
 		
 		code.append("<table class=\"std-table\">");
 		code.append("<thead>");
@@ -293,7 +294,7 @@ public class ObjectListConfig
 					code.append("<tr>");
 					for (ListColumn col : config.getColumns())
 					{	
-						code.append("<td>").append(col.getCode(object, config.getItemVar(), listSelectCustomHandler, authData, config.getPageContext().getServletContext().getContextPath()));
+						code.append("<td>").append(col.getCode(object, config.getItemVar(), listSelectCustomHandler, authData, config.getServletHost()));
 						code.append("</td>");
 					}
 					code.append("</tr>");
@@ -617,8 +618,8 @@ public class ObjectListConfig
 		json.append("\"id\": \"").append(this.getId()).append("\", ");
 		json.append("\"lookupId\": \"").append(MiscUtils.nullAsBlank(this.lookupId)).append("\", ");
 		json.append("\"sortBy\": \"").append(MiscUtils.nullAsBlank(this.getSortBy())).append("\", ");
-		json.append("\"contextPath\": \"").append(this.pageContext.getServletContext().getContextPath()).append("\", ");
-		json.append("\"sysContextPath\": \"").append(this.pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("\", ");
+		json.append("\"contextPath\": \"").append(getServletHost()).append("\", ");
+		json.append("\"sysContextPath\": \"").append(getServletHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("\", ");
 		
 		// each column will be serialized as a separate property, not as an array,
 		// because array does not guarantee the order of items to be preserved
@@ -1222,5 +1223,15 @@ public class ObjectListConfig
 	public String getLookupId()
 	{
 		return lookupId;
+	}
+
+	public String getServletHost()
+	{
+		return servletHost;
+	}
+
+	public void setServletHost(String servletHost)
+	{
+		this.servletHost = servletHost;
 	}
 }

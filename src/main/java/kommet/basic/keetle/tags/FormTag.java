@@ -55,7 +55,16 @@ public class FormTag extends KommetTag
 		
 		StringBuilder code = new StringBuilder();
 		code.append("<form action=\"");
-		code.append(this.pageContext.getServletContext().getContextPath() + "/" + this.action);
+		
+		try
+		{
+			code.append(getHost() + "/" + this.action);
+		}
+		catch (Exception e)
+		{
+			return exitWithTagError("Error rendering form tag: " + e.getMessage());
+		}
+		
 		code.append("\"");
 		code.append(" method=\"").append(this.method).append("\"");
 		XMLUtil.addStandardTagAttributes(code, this.id, this.name, null, null);

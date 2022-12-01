@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import kommet.auth.AuthData;
+import kommet.auth.AuthUtil;
 import kommet.basic.keetle.PageData;
 import kommet.config.UserSettingKeys;
 import kommet.data.KID;
@@ -197,5 +199,11 @@ public abstract class CommonKommetController
 	protected String getSuccessDataJSON(String data)
 	{
 		return "{ \"status\": \"success\", \"data\": " + data + " }";
+	}
+	
+	public String getContextPath (HttpSession session)
+	{
+		String host = AuthUtil.getAuthData(session).getUserCascadeSettings().get(UserSettingKeys.KM_SYS_HOST);
+		return StringUtils.hasText(host) ? host : session.getServletContext().getContextPath();
 	}
 }

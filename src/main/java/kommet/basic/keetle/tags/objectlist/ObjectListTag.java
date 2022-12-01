@@ -187,6 +187,7 @@ public class ObjectListTag extends KommetTag implements ListDisplay
 			this.config.setEnv(getEnv());
 			this.config.setDalFilter(this.dalFilter);
 			this.config.setPageContext(this.pageContext);
+			this.config.setServletHost(getHost());
 			this.config.setId(this.id);
 			this.config.setIdField(this.idField);
 			this.config.setPageNo(pageNo != null ? pageNo : 1);
@@ -314,7 +315,7 @@ public class ObjectListTag extends KommetTag implements ListDisplay
 		// add breadcrumb to session
 		try
 		{
-			Breadcrumbs.add(this.getPageData().getRequestURL(), config.getTitle(), getViewWrapper().getAppConfig().getBreadcrumbMax(), this.pageContext.getSession());
+			Breadcrumbs.add(this.getPageData().getRequestURL(), config.getTitle(), getViewWrapper().getAppConfig().getBreadcrumbMax(), this.pageContext.getSession(), getHost());
 		}
 		catch (KommetException e1)
 		{

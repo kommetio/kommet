@@ -117,7 +117,7 @@ public class ActionController extends CommonKommetController
 		ModelAndView mv = new ModelAndView("actions/details");
 		Action action = actionService.getAction(KID.get(pageId), envService.getCurrentEnv(session));
 		
-		Breadcrumbs.add(req.getRequestURL().toString(), action.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), action.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return initActionPropertiesForDisplay(mv, action, envService.getCurrentEnv(session));
 	}

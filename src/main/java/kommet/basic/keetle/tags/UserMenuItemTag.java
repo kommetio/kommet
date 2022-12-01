@@ -98,7 +98,14 @@ public class UserMenuItemTag extends KommetTag
 			}
 		}
 		
-		menu.addItem(getCode(typeToDisplay, this.icon, actualLabel, this.url, this.cssClass, this.cssStyle, pageContext.getServletContext().getContextPath(), viewWrapper.getAuthData()));
+		try
+		{
+			menu.addItem(getCode(typeToDisplay, this.icon, actualLabel, this.url, this.cssClass, this.cssStyle, getHost(), viewWrapper.getAuthData()));
+		}
+		catch (Exception e)
+		{
+			return exitWithTagError("Error rendering menu item: " + e.getMessage());
+		}
 		
 		return EVAL_PAGE;
     }

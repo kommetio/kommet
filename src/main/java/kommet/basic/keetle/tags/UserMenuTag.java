@@ -89,12 +89,12 @@ public class UserMenuTag extends KommetTag
 		this.renderMyProfile = null;
 	}
 	
-	public static String getCode(ViewWrapperTag viewWrapper, List<String> menuItems, String icon, Boolean renderAllTypes, Boolean renderMyProfile, PageContext pageContext) throws KommetException
+	private String getCode (ViewWrapperTag viewWrapper, List<String> menuItems, String icon, Boolean renderAllTypes, Boolean renderMyProfile, PageContext pageContext) throws KommetException
 	{
 		return getCode(menuItems, icon, renderAllTypes, renderMyProfile, viewWrapper.getAuthData(), viewWrapper.getEnv(), pageContext);
 	}
 	
-	public static String getCode(List<String> menuItems, String iconFile, Boolean renderAllTypes, Boolean renderMyProfile, AuthData authData, EnvData env, PageContext pageContext) throws KommetException
+	private String getCode (List<String> menuItems, String iconFile, Boolean renderAllTypes, Boolean renderMyProfile, AuthData authData, EnvData env, PageContext pageContext) throws KommetException
 	{	
 		if (renderAllTypes == null)
 		{
@@ -112,11 +112,11 @@ public class UserMenuTag extends KommetTag
 		// system administrators and root users can see the setup section
 		if (authData.hasProfile(Profile.ROOT_NAME) || authData.hasProfile(Profile.SYSTEM_ADMINISTRATOR_NAME))
 		{
-			String setupIcon = "<span class=\"km-menu-icon\"><img src=\"" + pageContext.getServletContext().getContextPath() + "/resources/images/setup-white.png\"></img></span>";
-			code.append("<li>").append("<a href=\"").append(pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/setup").append("\">").append(setupIcon).append("<span class=\"km-menu-item-title\">Setup</span></a><li>");
+			String setupIcon = "<span class=\"km-menu-icon\"><img src=\"" + getHost() + "/resources/images/setup-white.png\"></img></span>";
+			code.append("<li>").append("<a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/setup").append("\">").append(setupIcon).append("<span class=\"km-menu-item-title\">Setup</span></a><li>");
 		}
 		
-		String defaultMenuIcon = "<span class=\"km-menu-icon\"><img src=\"" + pageContext.getServletContext().getContextPath() + "/resources/images/" + iconFile + "\"></img></span>";
+		String defaultMenuIcon = "<span class=\"km-menu-icon\"><img src=\"" + getHost() + "/resources/images/" + iconFile + "\"></img></span>";
 		
 		// if links for all types are supposed to be rendered, render them
 		if (renderAllTypes)
@@ -125,7 +125,7 @@ public class UserMenuTag extends KommetTag
 			{
 				if (!type.isAutoLinkingType() && authData.canReadType(type.getKID(), false, env))
 				{
-					code.append("<li>").append("<a href=\"").append(pageContext.getServletContext().getContextPath()).append("/").append(type.getKeyPrefix()).append("\">");
+					code.append("<li>").append("<a href=\"").append(getHost()).append("/").append(type.getKeyPrefix()).append("\">");
 					code.append(defaultMenuIcon).append("<span class=\"km-menu-item-title\">");
 					code.append(type.getInterpretedPluralLabel(authData)).append("</span></a>");
 					code.append("</li>");
@@ -144,11 +144,11 @@ public class UserMenuTag extends KommetTag
 		if (renderMyProfile)
 		{
 			// add my profile link
-			code.append("<li><a href=\"").append(pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/me\">").append(defaultMenuIcon).append("<span class=\"km-menu-item-title\">").append(authData.getI18n().get("menu.myprofile")).append("</span></a></li>");
+			code.append("<li><a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/me\">").append(defaultMenuIcon).append("<span class=\"km-menu-item-title\">").append(authData.getI18n().get("menu.myprofile")).append("</span></a></li>");
 		}
 		
 		// add log out link
-		code.append("<li><a href=\"").append(pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/logout?env=").append(env.getId()).append("\">").append(defaultMenuIcon).append("<span class=\"km-menu-item-title\">").append(authData.getI18n().get("menu.logout")).append("</span></a></li>");
+		code.append("<li><a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/logout?env=").append(env.getId()).append("\">").append(defaultMenuIcon).append("<span class=\"km-menu-item-title\">").append(authData.getI18n().get("menu.logout")).append("</span></a></li>");
 		
 		code.append("</ul></div>");
 		return code.toString();

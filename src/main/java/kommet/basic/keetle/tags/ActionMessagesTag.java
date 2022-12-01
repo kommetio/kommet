@@ -80,7 +80,7 @@ public class ActionMessagesTag extends KommetTag
 			
 		try
 		{
-			this.pageContext.getOut().write(getCode(msgs, pageContext.getServletContext().getContextPath(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getViewWrapper().getAuthData().getI18n()));
+			this.pageContext.getOut().write(getCode(msgs, getHost(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getViewWrapper().getAuthData().getI18n()));
 		}
 		catch (IOException e)
 		{

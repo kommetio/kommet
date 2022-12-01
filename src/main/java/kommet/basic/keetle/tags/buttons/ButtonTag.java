@@ -11,10 +11,11 @@ import javax.servlet.jsp.JspException;
 
 import org.springframework.util.StringUtils;
 
+import kommet.auth.AuthData;
 import kommet.auth.AuthUtil;
 import kommet.basic.keetle.tags.FormTag;
-import kommet.basic.keetle.tags.ObjectDetailsTag;
 import kommet.basic.keetle.tags.KommetTag;
+import kommet.basic.keetle.tags.ObjectDetailsTag;
 import kommet.data.KommetException;
 import kommet.utils.XMLUtil;
 
@@ -43,10 +44,11 @@ public class ButtonTag extends KommetTag
     public int doStartTag() throws JspException
     {
 		String actualLabel = label;
+		AuthData authData = AuthUtil.getAuthData(pageContext.getSession());
 		
 		if (StringUtils.hasText(labelKey))
 		{
-			actualLabel = AuthUtil.getAuthData(pageContext.getSession()).getI18n().get(this.labelKey);
+			actualLabel = authData.getI18n().get(this.labelKey);
 		}
 		
 		ButtonPrototype button = new Button(ButtonType.CUSTOM);
@@ -65,8 +67,16 @@ public class ButtonTag extends KommetTag
 				return exitWithTagError("Button with type 'submit' has to be placed within a form tag");
 			}
 			
-			String saveOnClick = "document.getElementById('" + form.getId() + "').action = '" + this.pageContext.getServletContext().getContextPath() + "/" + this.url + "'; document.getElementById('" + form.getId() + "').submit();";
+			try
+			{
+				String saveOnClick = "document.getElementById('" + form.getId() + "').action = '" + getHost() + "/" + this.url + "'; document.getElementById('" + form.getId() + "').submit();";
 			this.onClick = StringUtils.hasText(this.onClick) ? (this.onClick + "; " + saveOnClick) : saveOnClick;
+			}
+			catch (KommetException e)
+			{
+				return exitWithTagError("Error rendering button tag: " + e.getMessage());
+			}
+			
 			this.url = "javascript:;";
 			appendPageContext = false;
 		}
@@ -101,7 +111,15 @@ public class ButtonTag extends KommetTag
 				
 				if (appendPageContext)
 				{
-					actualUrl = this.pageContext.getServletContext().getContextPath();
+					try
+					{
+						actualUrl = getHost();
+					}
+					catch (Exception e)
+					{
+						return exitWithTagError("Error rendering button tag: " + e.getMessage());
+					}
+					
 					if (!this.url.startsWith("/"))
 					{
 						actualUrl += "/";

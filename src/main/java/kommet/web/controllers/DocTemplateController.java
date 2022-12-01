@@ -75,7 +75,7 @@ public class DocTemplateController extends CommonKommetController
 		mv.addObject("content", MiscUtils.newLinesToBr(template.getContent()));
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Data types", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Data types", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

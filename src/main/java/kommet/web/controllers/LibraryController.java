@@ -637,7 +637,7 @@ public class LibraryController extends BasicRestController
 			return getErrorPage("Library with ID " + libId + " not found");
 		}
 		
-		Breadcrumbs.add(req.getRequestURL().toString(), "Library: " + lib.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Library: " + lib.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("libraries/details");
 		mv.addObject("lib", lib);
@@ -692,7 +692,7 @@ public class LibraryController extends BasicRestController
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/libraries/list", method = RequestMethod.GET)
 	public ModelAndView list(HttpSession session, HttpServletRequest req) throws KommetException
 	{
-		Breadcrumbs.add(req.getRequestURL().toString(), "Libraries", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Libraries", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		return new ModelAndView("libraries/list");
 	}
 	

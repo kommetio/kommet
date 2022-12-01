@@ -80,18 +80,19 @@ public class RecordSharingTag extends KommetTag
 		}
 		
 		StringBuilder code = new StringBuilder();
+		String actualTitle = null;
+		
+		try
+		{
 		code.append("\n\n<script language=\"Javascript\">");
-		code.append("function deleteSharing(sharingId) { $.post(\"" + pageContext.getServletContext().getContextPath() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX  + "/deleteuserrecordsharing\", { sharingId: sharingId }, ");
+			code.append("function deleteSharing(sharingId) { $.post(\"" + getHost() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX  + "/deleteuserrecordsharing\", { sharingId: sharingId }, ");
 		code.append("function(data) {");
 		code.append("if (data.result == \"success\") { $(\"#file-row-\" + sharingId).remove(); } ");
 		code.append("}, \"json\"); }");
 		code.append("</script>\n\n");
 		code.append("<div class=\"").append(parent.getRelatedListCssClass()).append("\" id=\"").append(listId).append("\">");
 		
-		String actualTitle = StringUtils.hasText(this.title) ? this.title : i18n.get("urs.title");
-		
-		try
-		{
+			actualTitle = StringUtils.hasText(this.title) ? this.title : i18n.get("urs.title");
 			code.append(ObjectListConfig.detachedBtnPanel(null, actualTitle, null, null, null, getEnv()));
 			code.append(shareForm(recordId, parent, getViewWrapper(), this.pageContext, i18n.get("urs.share"), i18n));
 		}
@@ -115,7 +116,7 @@ public class RecordSharingTag extends KommetTag
 				for (UserRecordSharing sharing : sharings)
 				{
 					code.append("<tr id=\"file-row-").append(sharing.getId()).append("\">");
-					code.append("<td>").append(UserLinkTag.getCode(sharing.getUser().getId(), getEnv(), this.pageContext.getServletContext().getContextPath(), parentView.getUserService())).append("</td>");
+					code.append("<td>").append(UserLinkTag.getCode(sharing.getUser().getId(), getEnv(), getHost(), parentView.getUserService())).append("</td>");
 					// render date according to user's locale
 					code.append("<td>").append(MiscUtils.formatDateTimeByUserLocale(sharing.getCreatedDate(), parentView.getAuthData())).append("</td>");
 					
@@ -133,7 +134,7 @@ public class RecordSharingTag extends KommetTag
 					
 					code.append("<td>").append(truncComment(sharing.getReason())).append("</td>");
 					code.append("<td>").append(sharing.getIsGeneric()).append("</td>");
-					code.append("<td>").append(UserLinkTag.getCode(sharing.getCreatedBy().getId(), getEnv(), this.pageContext.getServletContext().getContextPath(), parentView.getUserService())).append("</td>");
+					code.append("<td>").append(UserLinkTag.getCode(sharing.getCreatedBy().getId(), getEnv(), getHost(), parentView.getUserService())).append("</td>");
 					code.append("<td><a href=\"javascript:;\" onclick=\"ask('").append(i18n.get("urs.delete.warning")).append("', 'warn-").append(listId).append("', function() { deleteSharing('" + sharing.getId() + "'); }, 'rel-list-del-ask');\">").append(i18n.get("btn.delete")).append("</a></td>");
 					code.append("</tr>");
 				}
@@ -193,7 +194,7 @@ public class RecordSharingTag extends KommetTag
 		
 		// start searchUsers function
 		code.append("function searchUsers (req, resp) {");
-		code.append("$.post(\"").append(pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/searchrecords\", ");
+		code.append("$.post(\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/searchrecords\", ");
 		code.append("{ typeId: \"").append(getEnv().getType(KeyPrefix.get(KID.USER_PREFIX)).getKID().getId()).append("\", keyword: $(\"#userToShare\").val(), searchField: \"userName\" }, ");
 		code.append("function(data) { resp(data); }, \"json\"");
 		// end $.post call
@@ -203,7 +204,7 @@ public class RecordSharingTag extends KommetTag
 		
 		// add shareRecord function
 		code.append("function shareRecord(permissionFieldId) {");
-		code.append("$.post(\"").append(pageContext.getServletContext().getContextPath()).append("/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/sharerecord\", ");
+		code.append("$.post(\"").append(getHost()).append("/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/sharerecord\", ");
 		code.append("{ recordId: \"").append(recordId).append("\", userId: $(\"#sharedUserId\").val(), permissions: $(\"#" + permissionFieldId + "\").val() }, ");
 		code.append("function(data) { ");
 		code.append("if (data.status == \"success\") { km.js.ui.statusbar.show(km.js.config.i18n[\"urs.sharingAdded\"]); } else {");

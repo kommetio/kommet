@@ -64,7 +64,7 @@ public class Breadcrumbs
 		this.items.add(new Breadcrumb(url, title));
 	}
 	
-	public String getCode(I18nDictionary i18n, boolean isAlwaysVisible)
+	public String getCode (I18nDictionary i18n, boolean isAlwaysVisible)
 	{
 		StringBuilder code = new StringBuilder();
 		
@@ -74,9 +74,7 @@ public class Breadcrumbs
 		{
 			// render list link
 			code.append("<a href=\"").append(this.listLinkURL).append("\" class=\"bc km-breadcrumbs-rec-list\">");
-			
 			code.append("<span class=\"km-back-icon-span\"><img src=\"").append(this.contextPath).append("/resources/images/list.png\"></img></span>");
-			
 			code.append(this.listLinkLabel).append("</a>");
 		}
 		
@@ -108,12 +106,12 @@ public class Breadcrumbs
 		return code.toString();
 	}
 	
-	public static void setListLink (String url, String label, int max, HttpSession session)
+	public static void setListLink (String url, String label, int max, HttpSession session, String contextPath)
 	{
 		Breadcrumbs crumbs = (Breadcrumbs)session.getAttribute(SESSION_KEY);
 		if (crumbs == null)
 		{
-			crumbs = new Breadcrumbs(max, session.getServletContext().getContextPath());
+			crumbs = new Breadcrumbs(max, contextPath);
 		}
 		
 		crumbs.setListLinkLabel(label);
@@ -121,12 +119,12 @@ public class Breadcrumbs
 		session.setAttribute(SESSION_KEY, crumbs);
 	}
 	
-	public static void add (String url, String title, int max, HttpSession session)
+	public static void add (String url, String title, int max, HttpSession session, String contextPath)
 	{
 		Breadcrumbs crumbs = (Breadcrumbs)session.getAttribute(SESSION_KEY);
 		if (crumbs == null)
 		{
-			crumbs = new Breadcrumbs(max, session.getServletContext().getContextPath());
+			crumbs = new Breadcrumbs(max, contextPath);
 		}
 		
 		crumbs.add(url, title);

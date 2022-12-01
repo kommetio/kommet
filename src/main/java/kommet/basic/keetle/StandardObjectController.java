@@ -109,10 +109,10 @@ public class StandardObjectController extends BaseController implements SystemCo
 		pd.setValue("pluralLabel", type.getInterpretedPluralLabel(getAuthData()));
 		
 		// nullify list links
-		Breadcrumbs.setListLink(null, null, getAppConfig().getBreadcrumbMax(), getRequest().getSession());
+		Breadcrumbs.setListLink(null, null, getAppConfig().getBreadcrumbMax(), getRequest().getSession(), getContextPath());
 		
 		// add breadcrumbs
-		Breadcrumbs.add(getRequest().getRequestURL().toString(), type.getPluralLabel(), getAppConfig().getBreadcrumbMax(), getRequest().getSession());
+		Breadcrumbs.add(getRequest().getRequestURL().toString(), type.getPluralLabel(), getAppConfig().getBreadcrumbMax(), getRequest().getSession(), getContextPath());
 		
 		return pd;
 	}
@@ -166,10 +166,10 @@ public class StandardObjectController extends BaseController implements SystemCo
       	
       	// always add record list to breadcrumbs
       	//Breadcrumbs.add(getRequest().getRequestURL().toString(), getType().getPluralLabel(), getAppConfig().getBreadcrumbMax(), getRequest().getSession());
-      	Breadcrumbs.setListLink(getRequest().getContextPath() + "/" + getType().getKeyPrefix(), getType().getPluralLabel(), getAppConfig().getBreadcrumbMax(), getRequest().getSession());
+      	Breadcrumbs.setListLink(getRequest().getContextPath() + "/" + getType().getKeyPrefix(), getType().getPluralLabel(), getAppConfig().getBreadcrumbMax(), getRequest().getSession(), getContextPath());
       	
       	// add breadcrumbs
-     	Breadcrumbs.add(getRequest().getRequestURL().toString(), getType().getLabel() + ": " + record.getField(getType().getDefaultFieldApiName()), getAppConfig().getBreadcrumbMax(), getRequest().getSession());
+     	Breadcrumbs.add(getRequest().getRequestURL().toString(), getType().getLabel() + ": " + record.getField(getType().getDefaultFieldApiName()), getAppConfig().getBreadcrumbMax(), getRequest().getSession(), getContextPath());
       	
 		return getPageData();
 	}

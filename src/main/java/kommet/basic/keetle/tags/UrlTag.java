@@ -35,9 +35,9 @@ public class UrlTag extends KommetTag
 		
 		try
 		{
-			this.pageContext.getOut().write("<a href=\"" + this.pageContext.getServletContext().getContextPath() + "/" + this.url + "\">");
+			this.pageContext.getOut().write("<a href=\"" + getHost() + "/" + this.url + "\">");
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			return exitWithTagError("Cannot render URL tag: " + e.getMessage());
 		}
