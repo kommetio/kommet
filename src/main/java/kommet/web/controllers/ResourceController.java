@@ -79,6 +79,12 @@ public class ResourceController extends BasicRestController
 		
 		AuthData authData = AuthUtil.getAuthData(session);
 		
+		String servletHost = authData.getUserCascadeSettings().get(UserSettingKeys.KM_SYS_HOST);
+		if (StringUtils.isEmpty(servletHost))
+		{
+			servletHost = req.getContextPath();
+		}
+		
 		// if auth data is null, then the getCurrentEnv method will throw an error
 		EnvData env = authData != null ? envService.getCurrentEnv(session) : null;
 		
@@ -124,13 +130,13 @@ public class ResourceController extends BasicRestController
 		code.append("envId: ").append(env != null ? "\"" + env.getId() + "\"" : "null").append(",\n");
 		
 		// add context path
-		code.append("\tcontextPath: \"" + req.getContextPath() + "\",\n");
+		code.append("\tcontextPath: \"" + servletHost + "\",\n");
 		
 		// add system context path
-		code.append("\tsysContextPath: \"" + req.getContextPath() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "\",\n");
+		code.append("\tsysContextPath: \"" + servletHost + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "\",\n");
 		
 		// add image path
-		code.append("\timagePath: \"" + req.getContextPath() + "/resources/images\",\n");
+		code.append("\timagePath: \"" + servletHost + "/resources/images\",\n");
 		
 		// add component types
 		List<String> componentTypes = new ArrayList<String>();
