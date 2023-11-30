@@ -95,7 +95,7 @@ public class AssociationPanel
 	 * @return
 	 * @throws KommetException 
 	 */
-	public String getCode(List<Record> items, TagMode mode, String contextPath) throws TagException
+	public String getCode (List<Record> items, TagMode mode, String contextPath) throws TagException
 	{
 		try
 		{

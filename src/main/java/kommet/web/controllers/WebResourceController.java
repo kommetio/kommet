@@ -131,7 +131,7 @@ public class WebResourceController extends CommonKommetController
 	public ModelAndView list(HttpServletRequest req, HttpSession session) throws KommetException
 	{ 	
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Web resources", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Web resources", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("webresources/list");
 		return mv;
@@ -153,7 +153,7 @@ public class WebResourceController extends CommonKommetController
 		AuthData authData = AuthUtil.getAuthData(session);
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), resource.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), resource.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("webresources/details");
 		mv.addObject("resource", resource);

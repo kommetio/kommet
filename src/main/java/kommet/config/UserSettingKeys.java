@@ -46,6 +46,8 @@ public class UserSettingKeys
 	
 	public static final String KM_ROOT_MAX_TEXTFIELD_LENGTH = "km.root.max.textfield.length";
 	
+	public static final String KM_SYS_HOST = "km.sys.host";
+	
 	/**
 	 * This setting overrides the default view for the given type. The setting key is just a prefix that should be suffixed with the type KID,
 	 * and the value should be the view KID.
@@ -91,6 +93,10 @@ public class UserSettingKeys
 		else if (KM_SYS_404_URL.equals(key))
 		{
 			return "404 action URL";
+		}
+		else if (KM_SYS_HOST.equals(key))
+		{
+			return "Host URL";
 		}
 		else
 		{

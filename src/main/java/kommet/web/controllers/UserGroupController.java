@@ -69,7 +69,7 @@ public class UserGroupController extends CommonKommetController
 	public ModelAndView list(HttpSession session, HttpServletRequest req) throws KommetException
 	{
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "User groups", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "User groups", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 				
 		ModelAndView mv = new ModelAndView("usergroups/list");
 		mv.addObject("i18n", AuthUtil.getAuthData(session).getI18n());
@@ -209,7 +209,7 @@ public class UserGroupController extends CommonKommetController
 		UserGroup group = userGroupService.get(KID.get(sGroupId), authData, env);
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), group.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), group.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		mv.addObject("group", group);
 		mv.addObject("i18n", authData.getI18n());

@@ -69,7 +69,7 @@ public class UserSettingController extends CommonKommetController
 	public ModelAndView list(HttpSession session, HttpServletRequest req) throws KommetException
 	{ 	
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "User settings", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "User settings", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 				
 		ModelAndView mv = new ModelAndView("usersettings/list");
 		return mv;
@@ -315,6 +315,14 @@ public class UserSettingController extends CommonKommetController
 				{
 					addError(authData.getI18n().get("usersetting.key.systempermission.access"));
 				}
+			}
+		}
+		
+		if (UserSettingKeys.KM_SYS_HOST.equals(key))
+		{
+			if (StringUtils.hasText(value) && !(value.startsWith("http://") || value.startsWith("https://")))
+			{
+				addError(authData.getI18n().get("usersetting.key.host.prefix"));
 			}
 		}
 		

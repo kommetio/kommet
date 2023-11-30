@@ -124,7 +124,7 @@ public class ValidationRuleController extends CommonKommetController
 		mv.addObject("vrs", rules);
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Validation rules", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Validation rules", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}
@@ -338,7 +338,7 @@ public class ValidationRuleController extends CommonKommetController
 		mv = prepareRuleDetails(mv, sRuleId, envService.getCurrentEnv(session));
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), ((ValidationRule)mv.getModel().get("vr")).getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), ((ValidationRule)mv.getModel().get("vr")).getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

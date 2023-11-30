@@ -59,7 +59,7 @@ public class TextLabelController extends CommonKommetController
 	public ModelAndView list (HttpServletRequest req, HttpSession session) throws KommetException
 	{
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Text labels", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Text labels", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		ModelAndView mv = new ModelAndView("textlabels/list");
 		return mv;
@@ -84,7 +84,7 @@ public class TextLabelController extends CommonKommetController
 		TextLabel label = ((TextLabel)mv.getModel().get("label"));
 		if (label != null)
 		{
-			Breadcrumbs.add(req.getRequestURL().toString(), "Text label: " + label.getKey(), appConfig.getBreadcrumbMax(), session);
+			Breadcrumbs.add(req.getRequestURL().toString(), "Text label: " + label.getKey(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		}
 				
 		return mv;

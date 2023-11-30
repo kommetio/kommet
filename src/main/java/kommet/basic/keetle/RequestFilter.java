@@ -1195,7 +1195,7 @@ public class RequestFilter extends OncePerRequestFilter
 						log.debug("Dispatching view [" + requestID + "] [" + (System.currentTimeMillis() - reqStartTime) + "]");
 					}
 					
-					if (pageData.getHttpResponse().getStatusCode() != null)
+					if (pageData.getHttpResponse() != null && pageData.getHttpResponse().getStatusCode() != null)
 					{
 						response.setStatus(pageData.getHttpResponse().getStatusCode());
 					}

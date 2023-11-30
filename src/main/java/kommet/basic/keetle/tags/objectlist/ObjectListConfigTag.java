@@ -34,6 +34,7 @@ public class ObjectListConfigTag extends KommetTag
 			config.setEnv(getEnv());
 			config.setI18n(authData.getI18n());
 			config.setPageContext(this.pageContext);
+			config.setServletHost(getHost());
 			writeToPage(ObjectListConfig.getCode(config, getEnv()));
 		}
 		catch (KommetException e)

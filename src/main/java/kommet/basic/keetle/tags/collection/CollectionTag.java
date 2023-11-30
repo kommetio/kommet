@@ -111,7 +111,7 @@ public class CollectionTag extends KommetTag
 			CollectionCode code = coll.getCode(this.mode, getViewWrapper().getAuthData(), getEnv());
 			
 			// include JS libraries
-			//getViewWrapper().addPreViewCode(KeetleUtil.includeJSLibraries(getContextPath()));
+			//getViewWrapper().addPreViewCode(KeetleUtil.includeJSLibraries(...));
 			
 			// include initialization code at the end of the view
 			getViewWrapper().addPostViewCode(code.getInitializationCode());

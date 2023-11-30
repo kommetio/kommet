@@ -14,7 +14,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.util.StringUtils;
+
 import kommet.auth.AuthData;
+import kommet.config.UserSettingKeys;
 import kommet.data.DataService;
 import kommet.data.KommetException;
 import kommet.data.sharing.SharingService;
@@ -49,7 +52,7 @@ public abstract class BaseController
   	
   	private SystemContext sys;
 
-	public void setEnv(EnvData env)
+	public void setEnv (EnvData env)
 	{
 		this.env = env;
 	}
@@ -243,6 +246,7 @@ public abstract class BaseController
 	
 	public String getContextPath()
 	{
-		return this.request.getContextPath();
+		String host = (String)this.authData.getUserCascadeSettings().get(UserSettingKeys.KM_SYS_HOST);
+		return StringUtils.hasText(host) ? host : this.request.getContextPath();
 	}
 }

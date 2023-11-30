@@ -54,7 +54,7 @@ public class UserLinkTag extends KommetTag
 		
 		try
 		{
-			this.pageContext.getOut().write(getCode(userKID, parentView.getEnv(), this.pageContext.getServletContext().getContextPath(), parentView.getUserService()));
+			this.pageContext.getOut().write(getCode(userKID, parentView.getEnv(), getHost(), parentView.getUserService()));
 		}
 		catch (IOException e)
 		{

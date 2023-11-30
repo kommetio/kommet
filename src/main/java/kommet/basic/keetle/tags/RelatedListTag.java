@@ -407,6 +407,7 @@ public class RelatedListTag extends KommetTag implements ListDisplay
 				config.setColumns(this.columns);
 				config.setEnv(parent.getEnv());
 				config.setPageContext(this.pageContext);
+				config.setServletHost(getHost());
 				config.setTitle(actualTitle);
 				config.setPageSize(this.pageSize != null ? this.pageSize : 20);
 				config.setPageNo(1);
@@ -464,14 +465,14 @@ public class RelatedListTag extends KommetTag implements ListDisplay
 		String targetElement = "<div class=\"km-relatedlist-container\"><a name=\"anchor-" + tabId + "\"></a><div id=\"" + targetId + "\"></div></div>";
 		String jqueryTarget = "$(\"#" + targetId + "\")";
 		
-		String tabRenderCallback = getTabJavascriptRenderFunction(field, columns, queriedFields, jqueryTarget, record.getType(), title, record, pageSize, parent.getPageContext(), parent.getAuthData(), env);
+		String tabRenderCallback = getTabJavascriptRenderFunction(field, columns, queriedFields, jqueryTarget, record.getType(), title, record, pageSize, parent.getPageContext(), parent.getAuthData(), parent.getViewWrapper(), env);
 		ObjectDetailsTag.Tab tab = parent.new Tab(title, targetElement, jqueryTarget, tabRenderCallback, tabId, null);
 		tab.setTabStyle(TabStyle.TOP);
 		
 		return tab;
 	}
 	
-	private static String getTabJavascriptRenderFunction(Field field, List<ListColumn> columns, Set<String> queriedFields, String jqueryTarget, Type type, String actualTitle, Record record, Integer pageSize, PageContext pageContext, AuthData authData, EnvData env) throws KommetException
+	private static String getTabJavascriptRenderFunction(Field field, List<ListColumn> columns, Set<String> queriedFields, String jqueryTarget, Type type, String actualTitle, Record record, Integer pageSize, PageContext pageContext, AuthData authData, ViewWrapperTag viewWrapper, EnvData env) throws KommetException
 	{
 		Type collectionType = null;
 		
@@ -530,7 +531,7 @@ public class RelatedListTag extends KommetTag implements ListDisplay
 				}
 				else
 				{
-					dtColumn.setUrl(pageContext.getServletContext().getContextPath() + "/{id}");
+					dtColumn.setUrl(viewWrapper.getHost() + "/{id}");
 				}
 				
 				dtColumns.add(dtColumn);

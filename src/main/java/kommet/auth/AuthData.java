@@ -589,7 +589,7 @@ public class AuthData
 	 * @param env
 	 * @throws KommetException
 	 */
-	public void initUserCascadeSettings(UserCascadeHierarchyService uchService, EnvData env) throws KommetException
+	public void initUserCascadeSettings (UserCascadeHierarchyService uchService, EnvData env) throws KommetException
 	{
 		// find all user cascade settings
 		// TODO make this method more optimal because it is called very often - every time a user logs in

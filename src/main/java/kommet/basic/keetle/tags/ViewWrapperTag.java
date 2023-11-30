@@ -10,6 +10,7 @@ package kommet.basic.keetle.tags;
 import javax.servlet.jsp.JspException;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -18,7 +19,9 @@ import kommet.auth.AuthUtil;
 import kommet.auth.UserService;
 import kommet.basic.keetle.LayoutService;
 import kommet.comments.CommentService;
+import kommet.config.UserSettingKeys;
 import kommet.data.DataService;
+import kommet.data.KeyPrefixException;
 import kommet.data.KommetException;
 import kommet.data.sharing.SharingService;
 import kommet.env.EnvData;
@@ -88,7 +91,7 @@ public class ViewWrapperTag extends KommetTag
 		{
 			try
 			{
-				Breadcrumbs.add(((HttpServletRequest)this.pageContext.getRequest()).getRequestURI(), "some page", appConfig.getBreadcrumbMax(), this.pageContext.getSession());
+				Breadcrumbs.add(((HttpServletRequest)this.pageContext.getRequest()).getRequestURI(), "some page", appConfig.getBreadcrumbMax(), this.pageContext.getSession(), getHost());
 			}
 			catch (PropertyUtilException e)
 			{
@@ -244,4 +247,11 @@ public class ViewWrapperTag extends KommetTag
 	{
 		return this.uchService;
 	}
+	
+	public String getHost() throws KommetException
+	{
+		String host = this.uchService.getUserSettingAsString(UserSettingKeys.KM_SYS_HOST, this.authData, this.authData, env);
+		return StringUtils.hasText(host) ? host : this.pageContext.getServletContext().getContextPath();
+	}
+	
 }

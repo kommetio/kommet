@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import kommet.basic.keetle.tags.ObjectDetailsTag;
 import kommet.basic.keetle.tags.KommetTag;
+import kommet.basic.keetle.tags.MisplacedTagException;
 import kommet.basic.keetle.tags.TagException;
 import kommet.basic.keetle.tags.TagMode;
 import kommet.data.KID;
@@ -124,9 +125,17 @@ public class AssociationPanelTag extends KommetTag
 		
 		try
 		{
-			writeToPage(panel.getCode(null, this.mode, this.pageContext.getServletContext().getContextPath()));
+			writeToPage(panel.getCode(null, this.mode, getHost()));
 		}
 		catch (TagException e)
+		{
+			return exitWithTagError(MiscUtils.getExceptionDesc(e));
+		}
+		catch (MisplacedTagException e)
+		{
+			return exitWithTagError(MiscUtils.getExceptionDesc(e));
+		}
+		catch (KommetException e)
 		{
 			return exitWithTagError(MiscUtils.getExceptionDesc(e));
 		}

@@ -122,7 +122,7 @@ public class ViewResourceController extends CommonKommetController
 	public ModelAndView list(HttpSession session, HttpServletRequest req) throws KommetException
 	{ 	
 		ModelAndView mv = new ModelAndView("viewresources/list");
-		Breadcrumbs.add(req.getRequestURL().toString(), "View Resources", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "View Resources", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		return mv;
 	}
 	
@@ -138,7 +138,7 @@ public class ViewResourceController extends CommonKommetController
 		}
 		
 		ModelAndView mv = new ModelAndView("viewresources/details");
-		Breadcrumbs.add(req.getRequestURL().toString(), "View Resource: " + resource.getName(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "View Resource: " + resource.getName(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		mv.addObject("resource", resource);
 		return mv;
 	}

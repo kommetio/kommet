@@ -127,12 +127,17 @@ public class ListFilterTag extends KommetTag
 		
 		try
 		{
-			code.append("<input type=\"submit\" value=\"").append(getParentView().getI18n().get(getParentView().getAuthData().getUser().getLocaleSetting(), "btn.search")).append("\" onclick=\"submitObjectListSearch(objectListConfigs['").append(parentList.getId()).append("'], 'searchform").append(parentList.getId()).append("', '").append(parentList.getConfig().getRecordListId()).append("', '").append(pageContext.getServletContext().getContextPath() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("');");
+			code.append("<input type=\"submit\" value=\"").append(getParentView().getI18n().get(getParentView().getAuthData().getUser().getLocaleSetting(), "btn.search")).append("\" onclick=\"submitObjectListSearch(objectListConfigs['").append(parentList.getId()).append("'], 'searchform").append(parentList.getId()).append("', '").append(parentList.getConfig().getRecordListId()).append("', '").append(getHost() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("');");
 		}
 		catch (MisplacedTagException e)
 		{
 			return exitWithTagError("Misplaced tag error: " + e.getMessage());
 		}
+		catch (KommetException e)
+		{
+			return exitWithTagError("Error rendering tag: " + e.getMessage());
+		}
+		
 		code.append(" return false;\" class=\"sbtn\">");
 		code.append("</td></tr>");
 		

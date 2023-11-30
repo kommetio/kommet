@@ -252,15 +252,13 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 		}
 		
 		mainTabCode.append("<div class=\"object-detail-main-panel\">");
-		
-		// include javascript utils for object details tag
-		mainTabCode.append("<script type=\"text/javascript\" src=\"").append(pageContext.getServletContext().getContextPath()).append("/resources/js/object-details.js\"></script>");
-		//mainTabCode.append("<script type=\"text/javascript\" src=\"").append(pageContext.getServletContext().getContextPath()).append("/resources/km/js/km.filelookup.js\"></script>");
-		
 		String fieldLayout = null;
 		
 		try
 		{
+			// include javascript utils for object details tag
+			mainTabCode.append("<script type=\"text/javascript\" src=\"").append(getHost()).append("/resources/js/object-details.js\"></script>");
+			
 			if (displayMessages)
 			{
 				// Display action and error messages, if there are any. The reason why messages are displayed here, not
@@ -289,9 +287,9 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 			KmParamNode rmParams = getPageData().getRmParams();
 			
 			// add back to list link
-			//String backUrl = this.pageContext.getServletContext().getContextPath() + "/" + type.getKeyPrefix();
+			//String backUrl = getHost() + "/" + type.getKeyPrefix();
 			//mainTabCode.append("<div class=\"upper-links\">");
-			//mainTabCode.append("<span class=\"km-back-icon-span\"><img src=\"").append(this.pageContext.getServletContext().getContextPath()).append("/resources/images/list.png\"></img></span>");
+			//mainTabCode.append("<span class=\"km-back-icon-span\"><img src=\"").append(getHost()).append("/resources/images/list.png\"></img></span>");
 			//mainTabCode.append("<a href=\"").append(backUrl).append("\">").append(type.getLabel()).append(" - ").append(i18n.get("back.to.record.list.post")).append("</a></div>");
 			
 			if (Boolean.TRUE.equals(this.renderTitle))
@@ -357,28 +355,28 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 				// render edit button if user can edit this record
 				if (this.type != null && !TagMode.EDIT.equals(this.mode) && (authData.canEditAllType(type.getKID(), false, getEnv()) || (authData.canEditType(type.getKID(), false, getEnv()) && getViewWrapper().getSharingService().canEditRecord(record.getKID(), authData.getUserId(), getEnv()))))
 				{
-					this.buttonPanel.addButton(ButtonFactory.getEditButton(record.getKID(), i18n, this.pageContext.getServletContext().getContextPath()));
+					this.buttonPanel.addButton(ButtonFactory.getEditButton(record.getKID(), i18n, getHost()));
 				}
 				
 				// render delete button if user can delete object
 				if (canDelete)
 				{
-					this.buttonPanel.addButton(ButtonFactory.getDeleteButton(record.getKID(), i18n, this.pageContext.getServletContext().getContextPath()));
+					this.buttonPanel.addButton(ButtonFactory.getDeleteButton(record.getKID(), i18n, getHost()));
 				}
 				
-				this.buttonPanel.addButton(ButtonFactory.getListButton(type, i18n, this.pageContext.getServletContext().getContextPath()));
+				this.buttonPanel.addButton(ButtonFactory.getListButton(type, i18n, getHost()));
 			
 				if (TagMode.EDIT.equals(this.mode))
 				{
 					// add save button
-					this.buttonPanel.addButton(ButtonFactory.getSaveButton(record.getType().getKeyPrefix(), parentForm != null ? parentForm.getId() : this.mockWrapperForm.getId(), i18n.get("btn.save"), i18n, this.pageContext.getServletContext().getContextPath()));
+					this.buttonPanel.addButton(ButtonFactory.getSaveButton(record.getType().getKeyPrefix(), parentForm != null ? parentForm.getId() : this.mockWrapperForm.getId(), i18n.get("btn.save"), i18n, getHost()));
 					
 					Button cancelBtn = null;
 					
 					// add cancel button
 					if (!StringUtils.hasText(lookupId))
 					{
-						cancelBtn = ButtonFactory.getCancelButton(record.attemptGetKID(), record.getType().getKeyPrefix(), i18n.get("btn.cancel"), i18n, this.pageContext.getServletContext().getContextPath());
+						cancelBtn = ButtonFactory.getCancelButton(record.attemptGetKID(), record.getType().getKeyPrefix(), i18n.get("btn.cancel"), i18n, getHost());
 					}
 					else
 					{
@@ -409,7 +407,7 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 						
 						if (displayButton)
 						{
-							buttonPanel.addButton(Button.fromCustomButton(btn, record, getPageContext().getServletContext().getContextPath(), authData, getEnv()));
+							buttonPanel.addButton(Button.fromCustomButton(btn, record, getHost(), authData, getEnv()));
 						}
 					}
 				}
@@ -439,7 +437,7 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 			}
 			
 			// render button panel
-			mainTabCode.append(getBtnPanel(buttonPanel, this.record.attemptGetKID(), authData.getI18n(), this.pageContext.getServletContext().getContextPath(), getViewWrapper(), authData, getEnv()));
+			mainTabCode.append(getBtnPanel(buttonPanel, this.record.attemptGetKID(), authData.getI18n(), getHost(), getViewWrapper(), authData, getEnv()));
 		}
 		catch (KommetException e)
 		{
@@ -759,7 +757,7 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 		{
 			if (this.mode.equals(TagMode.VIEW))
 			{
-				Breadcrumbs.add(this.getPageData().getRequestURL(), getRecord().getDefaultFieldValue(authData.getLocale()), getViewWrapper().getAppConfig().getBreadcrumbMax(), this.pageContext.getSession());
+				Breadcrumbs.add(this.getPageData().getRequestURL(), getRecord().getDefaultFieldValue(authData.getLocale()), getViewWrapper().getAppConfig().getBreadcrumbMax(), this.pageContext.getSession(), getHost());
 			}
 		}
 		catch (KommetException e1)
@@ -947,20 +945,20 @@ public class ObjectDetailsTag extends KommetTag implements RecordContext
 		
 		// get action messages
 		List<String> msgs = (ArrayList<String>)pageData.getValue(PageData.ACTION_MSGS_KEY);
-		code.append(ActionMessagesTag.getCode(msgs, this.pageContext.getServletContext().getContextPath(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getAuthData().getI18n()));
+		code.append(ActionMessagesTag.getCode(msgs, getHost(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getAuthData().getI18n()));
 		
 		// get error messages
 		msgs = (ArrayList<String>)pageData.getValue(PageData.ERROR_MSGS_KEY);
-		code.append(ErrorMessagesTag.getCode(msgs, this.pageContext.getServletContext().getContextPath(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getAuthData().getI18n()));
+		code.append(ErrorMessagesTag.getCode(msgs, getHost(), getViewWrapper().getAppConfig().getMaxMessagesDisplayed(), getAuthData().getI18n()));
 		
 		return code.toString();
 	}
 
-	private Button getTabLink (String title, String id, PageContext pageContext)
+	private Button getTabLink (String title, String id, PageContext pageContext) throws MisplacedTagException, KommetException
 	{
 		StringBuilder code = new StringBuilder("<div class=\"rel-list-tab\" onclick=\"showTab('").append(id).append("');document.location = (document.location.href.split('#')[0]) + '#anchor-").append(id).append("';return false;\">");
 		code.append("<span>").append(title);
-		code.append("</span><img src=\"").append(pageContext.getServletContext().getContextPath()).append("/resources/images/list.png\">");
+		code.append("</span><img src=\"").append(getHost()).append("/resources/images/list.png\">");
 		code.append("</div>");
 		return new Button(code.toString());
 	}

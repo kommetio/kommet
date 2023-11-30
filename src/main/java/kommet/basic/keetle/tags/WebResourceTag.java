@@ -58,22 +58,29 @@ public class WebResourceTag extends KommetTag
 		
 		WebResource resource = resources.get(0);
 		
+		try
+		{
 		if (resource.getMimeType().equals("text/css"))
 		{
-			writeToPage("<link href=\"" + this.pageContext.getServletContext().getContextPath() + "/downloadresource?name=" + resource.getFile().getId() + "\" rel=\"stylesheet\" type=\"text/css\" />");
+				writeToPage("<link href=\"" + this.getHost() + "/downloadresource?name=" + resource.getFile().getId() + "\" rel=\"stylesheet\" type=\"text/css\" />");
 		}
 		else if (resource.getMimeType().equals("application/javascript"))
 		{
-			writeToPage("<script type=\"text/javascript\" src=\"" + this.pageContext.getServletContext().getContextPath() + "/downloadresource?name=" + resource.getFile().getId() + "\" />");
+				writeToPage("<script type=\"text/javascript\" src=\"" + this.getHost() + "/downloadresource?name=" + resource.getFile().getId() + "\" />");
 		}
 		else if (resource.getMimeType().equals("image/jpeg") || resource.getMimeType().equals("image/jpg") || resource.getMimeType().equals("image/png"))
 		{
-			writeToPage("<img src=\"" + this.pageContext.getServletContext().getContextPath() + "/downloadresource?name=" + resource.getFile().getId() + "\" />");
+				writeToPage("<img src=\"" + this.getHost() + "/downloadresource?name=" + resource.getFile().getId() + "\" />");
 		}
 		else
 		{
 			cleanUp();
 			return exitWithTagError("Unsupported resource MIME type " + resource.getMimeType());
+			}
+		}
+		catch (KommetException e)
+		{
+			return exitWithTagError("Error including web resource" + (e.getMessage() != null ? (". " + e.getMessage()) : ""));
 		}
 		
 		cleanUp();

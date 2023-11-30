@@ -114,7 +114,7 @@ public class ViewController extends CommonKommetController
 		mv.addObject("views", views);
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Views", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Views", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

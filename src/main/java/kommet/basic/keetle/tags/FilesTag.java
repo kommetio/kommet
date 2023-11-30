@@ -112,20 +112,20 @@ public class FilesTag extends KommetTag
 			filter.addRecordId(recordId);
 			filter.setInitFiles(true);
 			List<FileRecordAssignment> assignments = null;
-			
 			StringBuilder code = new StringBuilder();
+			
+			try
+			{
 			code.append("\n\n<script language=\"Javascript\">");
-			code.append("function deleteFile(assignmentId) { $.post(\"" + pageContext.getServletContext().getContextPath() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/unassignfile\", { assignmentId: assignmentId }, ");
+				code.append("function deleteFile(assignmentId) { $.post(\"" + getHost() + "/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/unassignfile\", { assignmentId: assignmentId }, ");
 			code.append("function(data) {");
 			code.append("if (data.result == \"success\") { $(\"#file-row-\" + assignmentId).remove(); km.js.ui.statusbar.show(km.js.config.i18n[\"files.deleted.msg\"]); } ");
 			code.append("}, \"json\"); }");
 			code.append("</script>\n\n");
 			code.append("<div class=\"").append(parent.getRelatedListCssClass()).append("\" id=\"").append(listId).append("\">");
 			
-			try
-			{
 				assignments = parentView.getFileService().findAssignments(filter, parent.getAuthData(), getEnv());
-				code.append(ObjectListConfig.detachedBtnPanel(null, actualTitle, null, this.pageContext.getServletContext().getContextPath(), i18n, getEnv(), uploadBtn(recordId, getViewWrapper(), this.pageContext, i18n.get("files.upload"))));
+				code.append(ObjectListConfig.detachedBtnPanel(null, actualTitle, null, getHost(), i18n, getEnv(), uploadBtn(recordId, getViewWrapper(), this.pageContext, i18n.get("files.upload"))));
 			}
 			catch (KommetException e)
 			{
@@ -150,11 +150,11 @@ public class FilesTag extends KommetTag
 						
 						if (actualOnClick.equals("view"))
 						{
-							code.append("<td><a href=\"").append(this.pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/files/").append(assignment.getFile().getId()).append("?recordId=").append(recordId).append("\">").append(assignment.getFile().getName()).append("</a></td>");
+							code.append("<td><a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/files/").append(assignment.getFile().getId()).append("?recordId=").append(recordId).append("\">").append(assignment.getFile().getName()).append("</a></td>");
 						}
 						else if (actualOnClick.equals("download"))
 						{
-							code.append("<td><a href=\"").append(this.pageContext.getServletContext().getContextPath()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/download/").append(assignment.getFile().getId()).append("\">").append(assignment.getFile().getName()).append("</a></td>");
+							code.append("<td><a href=\"").append(getHost()).append("/").append(UrlUtil.SYSTEM_ACTION_URL_PREFIX).append("/download/").append(assignment.getFile().getId()).append("\">").append(assignment.getFile().getName()).append("</a></td>");
 						}
 						else if (actualOnClick.startsWith(JS_PREFIX))
 						{
@@ -164,7 +164,7 @@ public class FilesTag extends KommetTag
 						
 						// render date according to user's locale
 						code.append("<td>").append(MiscUtils.formatDateTimeByUserLocale(assignment.getFile().getCreatedDate(), parentView.getAuthData())).append("</td>");
-						code.append("<td>").append(UserLinkTag.getCode(assignment.getFile().getCreatedBy().getId(), getEnv(), this.pageContext.getServletContext().getContextPath(), parentView.getUserService())).append("</td>");
+						code.append("<td>").append(UserLinkTag.getCode(assignment.getFile().getCreatedBy().getId(), getEnv(), getHost(), parentView.getUserService())).append("</td>");
 						// TODO truncate comment
 						code.append("<td>").append(assignment.getComment() != null ? truncComment(assignment.getComment()) : "").append("</td>");
 						code.append("<td><a href=\"javascript:;\" onclick=\"ask('").append(i18n.get("files.delete.warning")).append("', 'warn-").append(listId).append("', function() { deleteFile('" + assignment.getId() + "'); }, 'rel-list-del-ask');\">").append(i18n.get("btn.delete")).append("</a></td>");
@@ -242,7 +242,7 @@ public class FilesTag extends KommetTag
 		dt.setPaginationActive(true);
 		dt.setTitle(actualTitle);
 		dt.setJqueryTarget(jqueryTarget);
-		dt.setProperties(getFileColumns(pageContext, onClickAction));
+		dt.setProperties(getFileColumns(parent.getHost(), onClickAction));
 		
 		StringBuilder btnPanelCode = new StringBuilder();
 		
@@ -307,7 +307,7 @@ public class FilesTag extends KommetTag
 		return "showUpload" + rand;
 	}
 
-	private static List<DataTableColumn> getFileColumns(PageContext pageContext, String onClickAction)
+	private static List<DataTableColumn> getFileColumns (String contextPath, String onClickAction)
 	{
 		List<DataTableColumn> dtColumns = new ArrayList<DataTableColumn>();
 		
@@ -318,11 +318,11 @@ public class FilesTag extends KommetTag
 		
 		if ("view".equals(onClickAction))
 		{
-			nameColumn.setUrl(pageContext.getServletContext().getContextPath() + "/km/files/{file.id}");
+			nameColumn.setUrl(contextPath + "/km/files/{file.id}");
 		}
 		else if ("download".equals(onClickAction))
 		{
-			nameColumn.setUrl(pageContext.getServletContext().getContextPath() + "/km/download/{file.id}");
+			nameColumn.setUrl(contextPath + "/km/download/{file.id}");
 		}
 		else if (onClickAction.startsWith(JS_PREFIX))
 		{

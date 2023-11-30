@@ -18,7 +18,12 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.springframework.util.StringUtils;
+
+import kommet.auth.AuthData;
+import kommet.auth.AuthUtil;
 import kommet.basic.keetle.PageData;
+import kommet.config.UserSettingKeys;
 import kommet.data.KommetException;
 import kommet.env.EnvData;
 import kommet.utils.MiscUtils;
@@ -243,5 +248,22 @@ public abstract class KommetTag extends BodyTagSupport
 	public boolean hasErrorMsgs()
 	{
 		return this.errorMsgs != null && !this.errorMsgs.isEmpty();
+	}
+	
+	/**
+	 * Returns the host at which resources are served.
+	 * @return
+	 * @throws KommetException
+	 */
+	protected String getHost() throws KommetException
+	{
+		if (this.viewWrapper != null)
+		{
+			return this.viewWrapper.getHost();
+		}
+		
+		AuthData authData = AuthUtil.getAuthData(pageContext.getSession());
+		String host = authData.getUserCascadeSettings().get(UserSettingKeys.KM_SYS_HOST);
+		return StringUtils.hasText(host) ? host : this.pageContext.getServletContext().getContextPath();
 	}
 }

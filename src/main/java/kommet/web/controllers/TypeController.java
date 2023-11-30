@@ -296,7 +296,7 @@ public class TypeController extends CommonKommetController
 		 */
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), type.getLabel(), appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), type.getLabel(), appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}
@@ -748,7 +748,7 @@ public class TypeController extends CommonKommetController
 		mv.addObject("customTypes", customTypes);
 		
 		// add breadcrumbs
-		Breadcrumbs.add(req.getRequestURL().toString(), "Objects", appConfig.getBreadcrumbMax(), session);
+		Breadcrumbs.add(req.getRequestURL().toString(), "Objects", appConfig.getBreadcrumbMax(), session, getContextPath(session));
 		
 		return mv;
 	}

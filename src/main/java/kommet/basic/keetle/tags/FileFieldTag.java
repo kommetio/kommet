@@ -60,7 +60,7 @@ public class FileFieldTag extends KommetTag
 		
 		try
 		{
-			this.pageContext.getOut().write(getCode(fileKID, fileName, parentView.getEnv(), parentView.nextComponentId(), this.pageContext.getServletContext().getContextPath()));
+			this.pageContext.getOut().write(getCode(fileKID, fileName, parentView.getEnv(), parentView.nextComponentId(), getHost()));
 		}
 		catch (IOException e)
 		{

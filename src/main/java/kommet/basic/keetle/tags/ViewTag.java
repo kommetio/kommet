@@ -95,7 +95,17 @@ public class ViewTag extends KommetTag
 		code.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
 		
 		// include stylesheet
-		String contextPath = this.pageContext.getServletContext().getContextPath();
+		String contextPath = null;
+		
+		try
+		{
+			contextPath = getHost();
+		}
+		catch (KommetException e)
+		{
+			return exitWithTagError("Error rendering tag: " + e.getMessage());
+		}
+		
 		code.append("<link href=\"").append(contextPath).append("/resources/layout.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
 		code.append("<link href=\"").append(contextPath).append("/resources/header.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
 		code.append("<link href=\"").append(contextPath).append("/resources/tag-styles.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
