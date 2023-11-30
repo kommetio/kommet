@@ -458,7 +458,14 @@ public class EnvService
 				cls.setJavaCode(null);
 
 				// this is a silent update that does not change the last modified- properties of the class
+				try
+				{
 				classService.fullSave(cls, dataService, false, true, AuthData.getRootAuthData(env), env);
+			}
+				catch (Exception e)
+				{
+					
+				}
 			}
 		}
 	}
@@ -721,6 +728,12 @@ public class EnvService
 						logService.log("Compilation error during env startup: " + e.getCompilationResult().getDescription(), ErrorLogSeverity.FATAL, this.getClass().getName(), -1, AuthData.getRootAuthData(envData).getUserId(), AuthData.getRootAuthData(envData), envData);
 					}
 					catch (KollParserException e)
+					{
+						classesWithCompileErrors.add(cls.getId());
+						log.error("Compilation error during env startup (class " + cls.getQualifiedName() + "): " + e.getMessage());
+						logService.log("Compilation error during env startup: " + e.getMessage(), ErrorLogSeverity.FATAL, this.getClass().getName(), -1, AuthData.getRootAuthData(envData).getUserId(), AuthData.getRootAuthData(envData), envData);
+					}
+					catch (ClassCircularityError e)
 					{
 						classesWithCompileErrors.add(cls.getId());
 						log.error("Compilation error during env startup (class " + cls.getQualifiedName() + "): " + e.getMessage());
