@@ -9,6 +9,9 @@ jobs:
         build:
                 runs-on: ubuntu-latest
                 steps:
+                        - name: Check Maven version
+                          run: mvn --version
+                
                         - uses: actions/checkout@v2
                         - name: Build package
                           run: mvn package -DskipTests=true
