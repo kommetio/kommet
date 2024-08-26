@@ -67,8 +67,9 @@ public class ViewResourceController extends CommonKommetController
 		}
 		else
 		{
+			String mimeSuffix = getMimeSuffix(mimeType);
 			// generate random disk file name
-			resource.setPath(MiscUtils.getHash(30));
+			resource.setPath(MiscUtils.getHash(30) + mimeSuffix);
 		}
 		
 		resource.setMimeType(mimeType);
@@ -98,6 +99,21 @@ public class ViewResourceController extends CommonKommetController
 		return new ModelAndView("redirect:/" + UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/viewresources/" + resource.getId());
 	}
 	
+	public static String getMimeSuffix (String mimeType)
+	{
+		if (mimeType == null)
+		{
+			return "";
+		}
+		
+		switch (mimeType.toLowerCase())
+		{
+			case "text/css": return "css";
+			case "application/javascript": return "js";
+			default: return "xyz";
+		}
+	}
+
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/viewresources/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public void delete(@RequestParam("resourceId") String id, HttpSession session, HttpServletResponse response) throws IOException, KommetException

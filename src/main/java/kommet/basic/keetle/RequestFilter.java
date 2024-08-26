@@ -255,7 +255,15 @@ public class RequestFilter extends OncePerRequestFilter
 		if (requestedUrl.startsWith("resources/"))
 		{	
 			// skip filter and continue
+			if (requestedUrl.endsWith("js"))
+			{
 			response.setContentType("application/javascript");
+			}
+			else if (requestedUrl.endsWith("css"))
+			{
+				response.setContentType("text/css");
+			}
+			
 			chain.doFilter(request, response);
 			return;
 		}
