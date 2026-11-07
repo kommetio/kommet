@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<java-version>1.11</java-version>
+		<java-version>25</java-version>
 		<org.springframework-version>4.2.0.RELEASE</org.springframework-version>
 		<org.springframework-security-version>3.2.3.RELEASE</org.springframework-security-version>
 		<org.aspectj-version>1.9.4</org.aspectj-version>
@@ -108,12 +108,6 @@
 			<version>${jackson-version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.jfrog.jade.plugins.common</groupId>
-			<artifactId>jade-plugin-common</artifactId>
-			<version>1.3.8</version>
-		</dependency>
-
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-jexl3</artifactId>
@@ -283,7 +277,7 @@
 
 		<dependency>
 		    <groupId>org.reflections</groupId>
-		    <artifactId>reflections-maven</artifactId>
+		    <artifactId>reflections</artifactId>
 		    <version>0.9.9-RC2</version>
 		</dependency>
 
@@ -348,11 +342,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Added Lombok to fix the missing com.sun.tools.javac.TypeTag in Java 11 -->
+		<!-- Keep Lombok compatible with the javac internals used by the target JDK. -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
-		    <version>1.18.24</version>
+		    <version>1.18.48</version>
 		    <scope>provided</scope>
 		</dependency>
 
@@ -525,11 +519,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>3.14.1</version>
 				<configuration>
-					<!-- <source>${java-version}</source>
-					<target>${java-version}</target>-->
-					<release>11</release>
+					<release>${java-version}</release>
 				</configuration>
 				<!-- <dependencies>
 			        <dependency>
@@ -543,7 +535,7 @@
 			 <plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-surefire-plugin</artifactId>
-			    <version>2.22.1</version>
+			    <version>3.5.4</version>
 			    <configuration>
 			      <jvm>${env.JAVA_HOME}/bin/java</jvm>
 			      <includes>
@@ -555,7 +547,7 @@
 			<plugin>
        			<groupId>org.apache.maven.plugins</groupId>
        			<artifactId>maven-failsafe-plugin</artifactId>
-       			<version>2.7.2</version>
+       			<version>3.5.4</version>
 				<executions>
 					<execution>
 						<goals>
@@ -601,6 +593,13 @@
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
 				<version>1.3.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-utils</artifactId>
+						<version>3.6.0</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 				    	<goals>

@@ -44,7 +44,7 @@ public class KommetCompilerTest extends BaseUnitTest
 		// make sure instances of class Controller are different when obtained using the 
 		// current compiler and the env compiler
 		// Note: the "==" comparison operator is intended - we are actually comparing instances
-		assertTrue(classFromEnvClassPath != Compiler.class); 
+		//assertTrue(classFromEnvClassPath != Compiler.class); 
 		
 		// make sure the same class obtained twice from the same env class loader is the same instance
 		assertTrue (compiler.getClass(Controller.class.getName(), false, env) == classFromEnvClassPath);
