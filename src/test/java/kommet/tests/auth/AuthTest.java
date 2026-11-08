@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Test;
 import org.slf4j.Logger;

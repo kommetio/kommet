@@ -10,8 +10,8 @@ package kommet.basic.keetle.tags;
 import java.io.IOException;
 import java.util.Date;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 import kommet.auth.AuthUtil;
 import kommet.data.KommetException;

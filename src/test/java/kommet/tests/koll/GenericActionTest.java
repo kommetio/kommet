@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.junit.Test;

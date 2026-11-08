@@ -9,7 +9,7 @@ package kommet.env;
 
 import java.util.Properties;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;

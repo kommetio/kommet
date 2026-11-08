@@ -21,10 +21,10 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Test;
 
 import kommet.auth.AuthData;

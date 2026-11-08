@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.util.StringUtils;

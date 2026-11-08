@@ -9,7 +9,7 @@ package kommet.auth.tags;
 
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import org.springframework.util.StringUtils;
 

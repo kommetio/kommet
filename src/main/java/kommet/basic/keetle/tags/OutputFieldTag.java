@@ -9,7 +9,7 @@ package kommet.basic.keetle.tags;
 
 import java.util.Date;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 
 import org.springframework.util.StringUtils;
 

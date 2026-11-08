@@ -9,7 +9,7 @@ package kommet.tests.webmock;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;

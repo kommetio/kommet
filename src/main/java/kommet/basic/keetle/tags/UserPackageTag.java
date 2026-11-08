@@ -7,7 +7,7 @@
 
 package kommet.basic.keetle.tags;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.util.StringUtils;

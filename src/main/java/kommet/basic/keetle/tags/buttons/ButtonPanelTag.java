@@ -7,7 +7,7 @@
 
 package kommet.basic.keetle.tags.buttons;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import kommet.basic.keetle.tags.LookupTag;
 import kommet.basic.keetle.tags.ObjectDetailsTag;

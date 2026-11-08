@@ -1,46 +1,38 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
-"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd"> 
-
-<taglib> 
-	<tlibversion>1.0</tlibversion> 
-	<jspversion>1.1</jspversion>
-	<shortname>Kommet auth tags</shortname>
+<?xml version="1.0" encoding="utf-8"?>
+<taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
+	version="3.0">
+	<description>Kommet auth tag library</description>
+	<display-name>Kommet auth tags</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>kommet-auth</short-name>
 	<uri>http://kommet.io</uri>
-	<info>Kommet auth tag library</info>
-
-	<tag> 
-		<name>check</name> 
-		<tagclass>kommet.auth.tags.CheckAccessTag</tagclass>
-		<info>Check access</info>
-		<bodycontent>scriptless</bodycontent>
-		
-		<attribute>
-			<name>profile</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>checkTypeAccess</name> 
-		<tagclass>kommet.auth.tags.CheckTypeAccessTag</tagclass>
-		<info>Check type access</info>
-		<bodycontent>scriptless</bodycontent>
-		
-		<attribute>
-			<name>access</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
+	<tag>
+		<description>Check type access</description>
+		<name>checkTypeAccess</name>
+		<tag-class>kommet.auth.tags.CheckTypeAccessTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>typeId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>access</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
 	</tag>
-
+	<tag>
+		<description>Check access</description>
+		<name>check</name>
+		<tag-class>kommet.auth.tags.CheckAccessTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>profile</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

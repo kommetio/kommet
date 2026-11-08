@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.sql.DataSource;
 
 import org.junit.Test;

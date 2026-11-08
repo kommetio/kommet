@@ -10,7 +10,7 @@ package kommet.basic.keetle.tags.datatable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import kommet.basic.keetle.tags.FilterField;
 import kommet.basic.keetle.tags.KommetTag;

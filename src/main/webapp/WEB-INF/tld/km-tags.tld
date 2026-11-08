@@ -1,1541 +1,1265 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
-"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd"> 
-
-<taglib> 
-	<tlibversion>1.0</tlibversion>
-	<jspversion>1.1</jspversion>
-	<shortname>Kommet tag library</shortname>
+<?xml version="1.0" encoding="utf-8"?>
+<taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
+	version="3.0">
+	<description>Kommet tag library</description>
+	<display-name>Kommet tag library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>kommet</short-name>
 	<uri>http://kommet.io</uri>
-	<info>Kommet tag library</info>
-
-	<tag> 
-		<name>input</name> 
-		<tagclass>kommet.basic.keetle.tags.InputTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Input Field</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>url</name> 
-		<tagclass>kommet.basic.keetle.tags.UrlTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>URL tag</info>
-		
-		<attribute>
-			<name>url</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>resource</name> 
-		<tagclass>kommet.basic.keetle.tags.WebResourceTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Web resource tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>if</name> 
-		<tagclass>kommet.basic.keetle.tags.IfTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>If tag</info>
-		
-		<attribute>
-			<name>exists</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>buttons</name> 
-		<tagclass>kommet.basic.keetle.tags.buttons.ButtonPanelTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Button panel</info>
-	</tag>
-	
-	<tag> 
-		<name>button</name> 
-		<tagclass>kommet.basic.keetle.tags.buttons.ButtonTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Button</info>
-		
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>labelKey</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>type</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>onClick</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>section</name> 
-		<tagclass>kommet.basic.keetle.tags.SectionTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Section tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>objectListConfig</name> 
-		<tagclass>kommet.basic.keetle.tags.objectlist.ObjectListConfigTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Object list config tag</info>
-		
-		<attribute>
-			<name>config</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>objectList</name>
-		<tagclass>kommet.basic.keetle.tags.objectlist.ObjectListTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Object list tag</info>
-		
-		<attribute>
-			<name>items</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>itemVar</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>itemType</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>idField</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>dalFilter</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>sortBy</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>type</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>pageNo</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>pageSize</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>userMenu</name> 
-		<tagclass>kommet.basic.keetle.tags.UserMenuTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>User menu tag</info>
-		
-		<attribute>
-			<name>renderAllTypes</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>renderMyProfile</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>menuItem</name> 
-		<tagclass>kommet.basic.keetle.tags.UserMenuItemTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>User menu item tag</info>
-		
-		<attribute>
-			<name>type</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>labelKey</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>listColumn</name> 
-		<tagclass>kommet.basic.keetle.tags.objectlist.ListColumnTag</tagclass>
-		<bodycontent>tagdependent</bodycontent>
-		<info>List column tag</info>
-		
-		<attribute>
-			<name>field</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>sortable</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>isLink</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>idField</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>nameField</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>javaCallback</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>onClick</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>listFilterField</name> 
-		<tagclass>kommet.basic.keetle.tags.objectlist.ListFilterFieldTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>List filter field tag</info>
-		
-		<attribute>
-			<name>field</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>comparison</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
 	<tag>
-		<name>listFilter</name> 
-		<tagclass>kommet.basic.keetle.tags.objectlist.ListFilterTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>List filter tag</info>
-	</tag>
-	
-	<tag> 
-		<name>hiddenField</name> 
-		<tagclass>kommet.basic.keetle.tags.HiddenFieldTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Hidden field tag</info>
-		
-		<attribute>
-			<name>field</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>objectDetails</name> 
-		<tagclass>kommet.basic.keetle.tags.ObjectDetailsTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Object details tag</info>
-		
-		<attribute>
-			<name>record</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>mode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>fieldNamePrefix</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>failOnUninitializedFields</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>displayMessages</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>renderContainerBox</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>renderTitle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>tabStyle</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>relatedList</name> 
-		<tagclass>kommet.basic.keetle.tags.RelatedListTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Related list tag</info>
-		
-		<attribute>
-			<name>field</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>pageSize</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>sortProperty</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>sortOrder</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>itemVar</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>tabConfig</name> 
-		<tagclass>kommet.basic.keetle.tags.TabConfigTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Tabs configuration for object details</info>
-		
-		<attribute>
-			<name>var</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>afterRender</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>objectDetailsTab</name> 
-		<tagclass>kommet.basic.keetle.tags.ObjectDetailsTabTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Object details tab</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>titleKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>render</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>files</name> 
-		<tagclass>kommet.basic.keetle.tags.FilesTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Files tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>onClick</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>pageSize</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>tasks</name> 
-		<tagclass>kommet.basic.keetle.tags.TasksTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Tasks tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>recordSharing</name> 
-		<tagclass>kommet.basic.keetle.tags.RecordSharingTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Record sharing tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>fieldHistory</name> 
-		<tagclass>kommet.basic.keetle.tags.fieldhistory.FieldHistoryTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Field history tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>recordId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>fieldHistoryField</name> 
-		<tagclass>kommet.basic.keetle.tags.fieldhistory.FieldHistoryFieldTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Field history field tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>comments</name> 
-		<tagclass>kommet.basic.keetle.tags.CommentsTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Comments tag</info>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>recordId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>buttonsPostprocessor</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>queriedFields</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>form</name> 
-		<tagclass>kommet.basic.keetle.tags.FormTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Form tag</info>
-		
-		<attribute>
-			<name>action</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>method</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>propertyLabel</name> 
-		<tagclass>kommet.basic.keetle.tags.PropertyLabelTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Property label tag</info>
-		
-		<attribute>
-			<name>field</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>required</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>propertyValue</name> 
-		<tagclass>kommet.basic.keetle.tags.PropertyValueTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Property value tag</info>
-	</tag>
-	
-	<tag> 
-		<name>property</name> 
-		<tagclass>kommet.basic.keetle.tags.PropertyTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Property tag</info>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>propertyTable</name> 
-		<tagclass>kommet.basic.keetle.tags.PropertyTableTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Property table tag</info>
-		
-		<attribute>
-			<name>columns</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>propertyRow</name> 
-		<tagclass>kommet.basic.keetle.tags.PropertyRowTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Property row tag</info>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>field</name> 
-		<tagclass>kommet.basic.keetle.tags.FieldTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Input field tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>record</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>inputField</name> 
-		<tagclass>kommet.basic.keetle.tags.InputFieldTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Input field tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>record</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>outputField</name> 
-		<tagclass>kommet.basic.keetle.tags.OutputFieldTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Output field tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>record</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>typeLookup</name> 
-		<tagclass>kommet.basic.keetle.tags.TypeLookupTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Type lookup tag</info>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>types</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>onSelect</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag>
-		<name>lookup</name> 
-		<tagclass>kommet.basic.keetle.tags.LookupTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Object lookup tag</info>
-		
-		<attribute>
-			<name>type</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>filter</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>value</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>displayFields</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>inputName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>titleKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>itemVar</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>afterSelect</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-	</tag>
-	
-	<tag> 
+		<description>DateTime tag</description>
 		<name>dateTime</name>
-		<tagclass>kommet.basic.keetle.tags.DateTimeTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>DateTime tag</info>
-		
-		<attribute>
-			<name>value</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
+		<tag-class>kommet.basic.keetle.tags.DateTimeTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>format</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>messages</name> 
-		<tagclass>kommet.basic.keetle.tags.ActionMessagesTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Action messages</info> 
-	</tag>
-	
-	<tag> 
-		<name>errors</name> 
-		<tagclass>kommet.basic.keetle.tags.ErrorMessagesTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Error messages</info> 
-	</tag>
-	
-	<tag> 
-		<name>view</name> 
-		<tagclass>kommet.basic.keetle.tags.ViewTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>View tag</info>
-		
-		<!-- attribute name is not really used, it is only there to allow for assigning it in keetle -->
 		<attribute>
-			<name>name</name>
+			<name>value</name>
 			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
-		<attribute>
-			<name>object</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<!-- attribute package is not really used, it is only there to allow for assigning it in keetle -->
-		<attribute>
-			<name>package</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
+	</tag>
+	<tag>
+		<description>Object lookup tag</description>
+		<name>lookup</name>
+		<tag-class>kommet.basic.keetle.tags.LookupTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>inputName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>afterSelect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>itemVar</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>filter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayFields</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Type lookup tag</description>
+		<name>typeLookup</name>
+		<tag-class>kommet.basic.keetle.tags.TypeLookupTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>onSelect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>types</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>View tag</description>
+		<name>view</name>
+		<tag-class>kommet.basic.keetle.tags.ViewTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>layout</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>package</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>object</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>layout</name> 
-		<tagclass>kommet.basic.keetle.tags.LayoutTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Layout tag</info>
-		
+	<tag>
+		<description>Error messages</description>
+		<name>errors</name>
+		<tag-class>kommet.basic.keetle.tags.ErrorMessagesTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	<tag>
+		<description>Action messages</description>
+		<name>messages</name>
+		<tag-class>kommet.basic.keetle.tags.ActionMessagesTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	<tag>
+		<description>Output field tag</description>
+		<name>outputField</name>
+		<tag-class>kommet.basic.keetle.tags.OutputFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>record</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Property table tag</description>
+		<name>propertyTable</name>
+		<tag-class>kommet.basic.keetle.tags.PropertyTableTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>columns</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Property tag</description>
+		<name>property</name>
+		<tag-class>kommet.basic.keetle.tags.PropertyTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Property value tag</description>
+		<name>propertyValue</name>
+		<tag-class>kommet.basic.keetle.tags.PropertyValueTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+	<tag>
+		<description>Input field tag</description>
+		<name>inputField</name>
+		<tag-class>kommet.basic.keetle.tags.InputFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>record</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Input field tag</description>
+		<name>field</name>
+		<tag-class>kommet.basic.keetle.tags.FieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>record</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Property row tag</description>
+		<name>propertyRow</name>
+		<tag-class>kommet.basic.keetle.tags.PropertyRowTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Layout tag</description>
+		<name>layout</name>
+		<tag-class>kommet.basic.keetle.tags.LayoutTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>viewWrapper</name> 
-		<tagclass>kommet.basic.keetle.tags.ViewWrapperTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>View wrapper tag</info>
-	</tag>
-	
-	<tag> 
-		<name>collection</name> 
-		<tagclass>kommet.basic.keetle.tags.collection.CollectionTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Collection field</info>
-		
+	<tag>
+		<description>Data Table Option tag</description>
+		<name>dataTableOption</name>
+		<tag-class>kommet.basic.keetle.tags.datatable.DataTableOptionTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<name>parentId</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>field</name>
+			<name>value</name>
 			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>mode</name>
-			<required>false</required>
+			<name>name</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>association</name> 
-		<tagclass>kommet.basic.keetle.tags.associationpanel.AssociationPanelTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Association panel</info>
-		
+	<tag>
+		<description>Data Table Search Field tag</description>
+		<name>dataTableSearchField</name>
+		<tag-class>kommet.basic.keetle.tags.datatable.DataTableSearchFieldTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<name>field</name>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>comparison</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
 			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>Data Table Search tag</description>
+		<name>dataTableSearch</name>
+		<tag-class>kommet.basic.keetle.tags.datatable.DataTableSearchTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+	<tag>
+		<description>View resource tag</description>
+		<name>viewResource</name>
+		<tag-class>kommet.basic.keetle.tags.ViewResourceTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<name>maxItems</name>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Tabbed view</description>
+		<name>tabs</name>
+		<tag-class>kommet.basic.keetle.tags.tabs.TabsTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>recordId</name>
+			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>A tab in a tabbed display</description>
+		<name>tab</name>
+		<tag-class>kommet.basic.keetle.tags.tabs.TabTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
-			<name>mode</name>
+			<name>render</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>displayField</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>Data Table Column tag</description>
+		<name>dataTableColumn</name>
+		<tag-class>kommet.basic.keetle.tags.datatable.DataTableColumnTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>linkStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>link</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>formatFunction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>filterable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>labelKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Association panel</description>
+		<name>association</name>
+		<tag-class>kommet.basic.keetle.tags.associationpanel.AssociationPanelTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>addAction</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>viewAction</name>
+			<name>displayField</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<rtexprvalue>false</rtexprvalue>
 		</attribute>
-		
 		<attribute>
 			<name>addButtonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>viewAction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>maxItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>field</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>recordId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
-	
-	
-	<tag> 
-		<name>associationButton</name> 
-		<tagclass>kommet.basic.keetle.tags.associationpanel.AssociationPanelButtonTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Association panel button</info>
-		
+	<tag>
+		<description>Collection field</description>
+		<name>collection</name>
+		<tag-class>kommet.basic.keetle.tags.collection.CollectionTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
-			<name>url</name>
-			<required>true</required>
+			<name>mode</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>type</name>
+			<name>field</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
+			<rtexprvalue>false</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>buttonImageURL</name>
+			<name>parentId</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>View wrapper tag</description>
+		<name>viewWrapper</name>
+		<tag-class>kommet.basic.keetle.tags.ViewWrapperTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+	<tag>
+		<description>Data Table tag</description>
+		<name>dataTable</name>
+		<tag-class>kommet.basic.keetle.tags.datatable.DataTableTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>cssClass</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>cssStyle</name>
+			<name>pageSize</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>linkText</name>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>paginationActive</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dataSourceType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>breadcrumbs</name> 
-		<tagclass>kommet.basic.keetle.tags.breadcrumbs.BreadcrumbsTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Breadcrumbs tag</info>
-		
+	<tag>
+		<description>Breadcrumbs tag</description>
+		<name>breadcrumbs</name>
+		<tag-class>kommet.basic.keetle.tags.breadcrumbs.BreadcrumbsTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
 			<name>isAlwaysVisible</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>dataTable</name> 
-		<tagclass>kommet.basic.keetle.tags.datatable.DataTableTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Data Table tag</info>
-		
+	<tag>
+		<description>Association panel button</description>
+		<name>associationButton</name>
+		<tag-class>kommet.basic.keetle.tags.associationpanel.AssociationPanelButtonTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<name>query</name>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>linkText</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>id</name>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>buttonImageURL</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>User menu tag</description>
+		<name>userMenu</name>
+		<tag-class>kommet.basic.keetle.tags.UserMenuTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>dataSourceType</name>
+			<name>renderMyProfile</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>paginationActive</name>
+			<name>renderAllTypes</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>Object list tag</description>
+		<name>objectList</name>
+		<tag-class>kommet.basic.keetle.tags.objectlist.ObjectListTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>sortBy</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dalFilter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>pageSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>cssClass</name>
+			<name>pageNo</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>var</name>
+			<name>itemVar</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>items</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+		<attribute>
+			<name>itemType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>dataTableColumn</name> 
-		<tagclass>kommet.basic.keetle.tags.datatable.DataTableColumnTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Data Table Column tag</info>
-		
 		<attribute>
-			<name>name</name>
+			<name>idField</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Object list config tag</description>
+		<name>objectListConfig</name>
+		<tag-class>kommet.basic.keetle.tags.objectlist.ObjectListConfigTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>config</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
+	</tag>
+	<tag>
+		<description>List filter field tag</description>
+		<name>listFilterField</name>
+		<tag-class>kommet.basic.keetle.tags.objectlist.ListFilterFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>comparison</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>labelKey</name>
+			<name>field</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>List column tag</description>
+		<name>listColumn</name>
+		<tag-class>kommet.basic.keetle.tags.objectlist.ListColumnTag</tag-class>
+		<body-content>tagdependent</body-content>
+		<attribute>
+			<name>javaCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>filterable</name>
+			<name>nameField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
-		<attribute>
-			<name>sortable</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>link</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>linkStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
 		<attribute>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>formatFunction</name>
+			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>dataTableSearch</name> 
-		<tagclass>kommet.basic.keetle.tags.datatable.DataTableSearchTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Data Table Search tag</info>
-	</tag>
-	
-	<tag> 
-		<name>dataTableSearchField</name> 
-		<tagclass>kommet.basic.keetle.tags.datatable.DataTableSearchFieldTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Data Table Search Field tag</info>
-		
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>comparison</name>
+			<name>idField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
-	</tag>
-	
-	<tag> 
-		<name>dataTableOption</name> 
-		<tagclass>kommet.basic.keetle.tags.datatable.DataTableOptionTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>Data Table Option tag</info>
-		
 		<attribute>
-			<name>name</name>
-			<required>true</required>
+			<name>field</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
-			<name>value</name>
-			<required>true</required>
+			<name>isLink</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	
-	<tag> 
-		<name>tab</name> 
-		<tagclass>kommet.basic.keetle.tags.tabs.TabTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>A tab in a tabbed display</info>
-		
 		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>render</name>
+			<name>sortable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>tabs</name> 
-		<tagclass>kommet.basic.keetle.tags.tabs.TabsTag</tagclass>
-		<bodycontent>scriptless</bodycontent>
-		<info>Tabbed view</info>
-		
+	<tag>
+		<description>User menu item tag</description>
+		<name>menuItem</name>
+		<tag-class>kommet.basic.keetle.tags.UserMenuItemTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
-			<name>id</name>
+			<name>cssStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		
 		<attribute>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>labelKey</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
 	</tag>
-	
-	<tag> 
-		<name>viewResource</name> 
-		<tagclass>kommet.basic.keetle.tags.ViewResourceTag</tagclass>
-		<bodycontent>empty</bodycontent>
-		<info>View resource tag</info>
-		
+	<tag>
+		<description>Section tag</description>
+		<name>section</name>
+		<tag-class>kommet.basic.keetle.tags.SectionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Web resource tag</description>
+		<name>resource</name>
+		<tag-class>kommet.basic.keetle.tags.WebResourceTag</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<!-- <function>
-        <name>includeWebResource</name>
-        <function-class>kommet.basic.keetle.KeetleUtil</function-class>
-        <function-signature>java.lang.String includeWebResource(kommet.basic.WebResource)</function-signature>
-    </function>-->
-
+	<tag>
+		<description>URL tag</description>
+		<name>url</name>
+		<tag-class>kommet.basic.keetle.tags.UrlTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Input Field</description>
+		<name>input</name>
+		<tag-class>kommet.basic.keetle.tags.InputTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Button</description>
+		<name>button</name>
+		<tag-class>kommet.basic.keetle.tags.buttons.ButtonTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>labelKey</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Button panel</description>
+		<name>buttons</name>
+		<tag-class>kommet.basic.keetle.tags.buttons.ButtonPanelTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+	<tag>
+		<description>If tag</description>
+		<name>if</name>
+		<tag-class>kommet.basic.keetle.tags.IfTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>exists</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>List filter tag</description>
+		<name>listFilter</name>
+		<tag-class>kommet.basic.keetle.tags.objectlist.ListFilterTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+	<tag>
+		<description>Field history field tag</description>
+		<name>fieldHistoryField</name>
+		<tag-class>kommet.basic.keetle.tags.fieldhistory.FieldHistoryFieldTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Field history tag</description>
+		<name>fieldHistory</name>
+		<tag-class>kommet.basic.keetle.tags.fieldhistory.FieldHistoryTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>recordId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Record sharing tag</description>
+		<name>recordSharing</name>
+		<tag-class>kommet.basic.keetle.tags.RecordSharingTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Property label tag</description>
+		<name>propertyLabel</name>
+		<tag-class>kommet.basic.keetle.tags.PropertyLabelTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>field</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Form tag</description>
+		<name>form</name>
+		<tag-class>kommet.basic.keetle.tags.FormTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>method</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Comments tag</description>
+		<name>comments</name>
+		<tag-class>kommet.basic.keetle.tags.CommentsTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>buttonsPostprocessor</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>queriedFields</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>recordId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Tasks tag</description>
+		<name>tasks</name>
+		<tag-class>kommet.basic.keetle.tags.TasksTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Related list tag</description>
+		<name>relatedList</name>
+		<tag-class>kommet.basic.keetle.tags.RelatedListTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>sortProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortOrder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>itemVar</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>field</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Object details tag</description>
+		<name>objectDetails</name>
+		<tag-class>kommet.basic.keetle.tags.ObjectDetailsTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>renderContainerBox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tabStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>renderTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayMessages</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>record</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>failOnUninitializedFields</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fieldNamePrefix</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Hidden field tag</description>
+		<name>hiddenField</name>
+		<tag-class>kommet.basic.keetle.tags.HiddenFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>field</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Files tag</description>
+		<name>files</name>
+		<tag-class>kommet.basic.keetle.tags.FilesTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Object details tab</description>
+		<name>objectDetailsTab</name>
+		<tag-class>kommet.basic.keetle.tags.ObjectDetailsTabTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>render</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Tabs configuration for object details</description>
+		<name>tabConfig</name>
+		<tag-class>kommet.basic.keetle.tags.TabConfigTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>afterRender</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

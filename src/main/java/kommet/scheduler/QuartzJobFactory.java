@@ -7,7 +7,7 @@
 
 package kommet.scheduler;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.quartz.SchedulerContext;
 import org.quartz.spi.TriggerFiredBundle;

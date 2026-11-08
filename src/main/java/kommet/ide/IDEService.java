@@ -9,7 +9,7 @@ package kommet.ide;
 
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
