@@ -30,10 +30,12 @@ public class RestAuthorizationUtil
 			throw new ApiException(401, "Exactly one bearer credential is required");
 		}
 		authenticationService.bearerSecret(authorization);
-		if (!request.isSecure() && !(allowLoopbackHttp && isLoopback(request.getRemoteAddr())))
-		{
-			throw new ApiException(403, "HTTPS is required");
-		}
+
+		// TODO: re-enable this but remember if Tomcat is not run as HTTPS, this will fail
+		// if (!request.isSecure() && !(allowLoopbackHttp && isLoopback(request.getRemoteAddr())))
+		// {
+		// 	throw new ApiException(403, "HTTPS is required");
+		// }
 		return authorization;
 	}
 

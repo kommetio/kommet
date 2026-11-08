@@ -33,7 +33,9 @@ import kommet.rest.SchemaApiService;
 import kommet.rest.SchemaDataTypeParser;
 import kommet.rest.SchemaPayload;
 
-/** Exposes authenticated JSON endpoints for custom type and field upserts. */
+/**
+ * Exposes authenticated JSON endpoints for custom type and field upserts.
+ */
 @Controller
 public class DeveloperApiController
 {
@@ -46,27 +48,29 @@ public class DeveloperApiController
 
 	@Inject
 	private EnvService envService;
+
 	@Inject
 	private RestAuthorizationUtil authorizationUtil;
+
 	@Inject
 	private SchemaApiService schemaService;
 
 	/** Handles creation or metadata updates of a custom type. */
 	@RequestMapping(value = TYPE_SAVE_PATH, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> saveType(@RequestBody(required = false) String body, HttpServletRequest request) throws KommetException
+	public ResponseEntity<Map<String, Object>> saveType (@RequestBody(required = false) String body, HttpServletRequest request) throws KommetException
 	{
 		return save(body, request, false);
 	}
 
 	/** Handles creation or compatible updates of a custom field. */
 	@RequestMapping(value = FIELD_SAVE_PATH, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> saveField(@RequestBody(required = false) String body, HttpServletRequest request) throws KommetException
+	public ResponseEntity<Map<String, Object>> saveField (@RequestBody(required = false) String body, HttpServletRequest request) throws KommetException
 	{
 		return save(body, request, true);
 	}
 
 	/** Validates transport and JSON, authenticates the caller, and dispatches the upsert. */
-	private ResponseEntity<Map<String, Object>> save(String body, HttpServletRequest request, boolean fieldOperation) throws KommetException
+	private ResponseEntity<Map<String, Object>> save (String body, HttpServletRequest request, boolean fieldOperation) throws KommetException
 	{
 		authorizationUtil.requireAuthorization(request);
 
@@ -107,7 +111,7 @@ public class DeveloperApiController
 		{
 			throw new ApiException(404, "Environment not found");
 		}
-        
+
 		EnvData env = envService.get(envId);
 		RestAuthenticationService.Authentication authentication = authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.WRITE);
 		Map<String, Object> data = schemaService.save(payload, authentication, fieldOperation);
