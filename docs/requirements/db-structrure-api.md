@@ -1,6 +1,6 @@
 # Database Structure API Proposal
 
-Status: Proposed; not implemented.
+Status: Implemented. Database-backed acceptance tests require the configured PostgreSQL fixture; live Tomcat validation is pending.
 
 ## Purpose
 
@@ -23,17 +23,40 @@ Each request includes an `environmentId` KID. The endpoint must not infer the ta
 
 ## Authentication
 
-Require `Authorization: Bearer <token>` on both endpoints. These endpoints use a dedicated developer API token, not the existing user password-grant/OAuth token flow.
+Require exactly one `Authorization: Bearer <token>` header on both endpoints. Tokens are the secrets issued for the built-in `kommet.basic.ApiToken` type; the legacy OAuth token store and configured developer secrets are not used.
 
-Proposed configuration:
+- `RestAuthenticationService` is a reusable, request-local authenticator. It validates the stored hash and expiration through `ApiTokenService`, loads the token's system user, rejects inactive users, and initializes the user's normal permissions and cascade settings.
+- Both schema endpoints require `isWritePermission`. Schema editing also requires the owner's root or system-administrator profile, matching the existing schema-editing controllers. Token capabilities do not grant that profile or substitute a root identity.
+- The request's explicit `environmentId` determines the target environment. Token lookup occurs only in that environment's database. No browser session or cookie is used or created, and no session fallback occurs on authentication failure.
+- A missing, revoked, expired, unknown, or wrong-environment token receives `401 Unauthorized` with `WWW-Authenticate: Bearer`. A valid token with insufficient capabilities or profile receives `403 Forbidden`. Tokens are environment-scoped database entries, not a global token allowlist; a token existing only in another environment is indistinguishable from an invalid token in the requested environment.
+- Secrets are never logged or included in errors. Rotate tokens by issuing a replacement and revoking the old record.
+- HTTPS is required by default. For local development only, `kommet.devapi.allowLoopbackHttp=true` allows HTTP from a loopback peer. Keep it disabled in production, including behind a reverse proxy; configure trusted proxy/Tomcat settings so `request.isSecure()` reflects HTTPS correctly.
+- Authentication handling for `@Rest`-annotated methods is unchanged. Only the two exact developer endpoint paths bypass the legacy request filter and use this controller's bearer authentication.
 
-- Environment variable `KOMMET_DEV_API_TOKEN` is the production source of the secret.
-- An optional `kommet.devapi.token` application property may be supported for local development, but production must not store the secret in committed properties.
-- Missing or empty configuration disables these endpoints; authentication must fail closed.
-- Compare the supplied token without timing-sensitive string comparison. Never log the token or include it in errors.
-- Require HTTPS outside local development and support token rotation by replacing the configured secret.
+## Curl Examples
 
-The token grants only developer-schema operations. Resolve it to an explicit service identity with the needed type/field permissions and an allowlist of environments. Do not silently use root authentication for arbitrary environments. A valid token with insufficient permissions or an out-of-scope environment receives `403 Forbidden`.
+Run in Bash, WSL, or Git Bash. Set `KOMMET_API_TOKEN` securely in your environment to a write-capable token owned by a root/system-administrator user. Replace the base URL and `environmentId` with your deployment and the token's environment.
+
+Create or update a type:
+
+```bash
+BASE_URL='https://example.com/km-1.0'
+curl -sS -i "$BASE_URL/api/dev/type/save" \
+  -H "Authorization: Bearer $KOMMET_API_TOKEN" \
+  -H 'Content-Type: application/json' \
+  --data '{"environmentId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice","label":"Invoice","pluralLabel":"Invoices"}}'
+```
+
+After the type exists, create or update a field:
+
+```bash
+curl -sS -i "$BASE_URL/api/dev/field/save" \
+  -H "Authorization: Bearer $KOMMET_API_TOKEN" \
+  -H 'Content-Type: application/json' \
+  --data '{"environmentId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice"},"field":{"apiName":"invoiceNumber","label":"Invoice number","dataType":{"kind":"text","length":80}}}'
+```
+
+`--data` selects POST. Successful creation returns `201`; subsequent saves of the same identity return `200`.
 
 ## Type Save Payload
 
@@ -115,6 +138,8 @@ Required field properties are `apiName`, `label`, and `dataType`. Optional metad
 | `inverseCollection` | `inverseType` as `{ "package": "...", "apiName": "..." }` and `inverseProperty` (field API name on the inverse type). |
 | `association` | `mode` and relationship references. For `mode: "direct"`, supply `associatedType`. For `mode: "linkingType"`, supply `linkingType`, `selfLinkingFieldApiName`, and `foreignLinkingFieldApiName`. All referenced objects must exist in the same environment. |
 
+The shared Formula engine is unchanged. Its parser currently supports only `TEXT` formulas with text-field concatenation and double-quoted literals. The API returns `400` for `NUMBER` and `DATETIME` formulas, and rejects apostrophes because the existing text parser does not escape them safely. Direct associations create their linking type through `DataService.createLinkingType` in the field-save transaction.
+
 For `enumeration`, values are arrays in JSON and are converted to the model's newline-separated representation. `multiEnumeration` values remain a set of strings. Dictionary, referenced-type, inverse-field, and association references are resolved by the server; clients should not send internal numeric database IDs.
 
 Example reference field:
@@ -170,9 +195,4 @@ Errors use the existing envelope:
 
 Proposed status codes are `200` for update, `201` for create, `400` for malformed or invalid payloads, `401` for missing/invalid bearer tokens, `403` for an authenticated token without the required permission or environment scope, `404` for a missing environment/type/reference, and `409` for immutable identity or incompatible schema changes.
 
-## Persistence and Acceptance Criteria
 
-- Resolve the environment and metadata references before mutation.
-- Create and update through `DataService.createType`, `DataService.updateType`, `DataService.createField`, and `DataService.updateField` with the authenticated service identity. Do not issue request-derived SQL or bypass the existing schema, cache, proxy, permission, and trigger updates.
-- Each request is atomic: either the metadata and required database changes complete together, or no part of that request is committed.
-- Integration tests cover type create/upsert, field create/upsert, each supported datatype shape, invalid references, duplicate/immutable names, authorization failures, environment scoping, and rollback on DDL or validation failure.

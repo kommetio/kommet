@@ -6,6 +6,8 @@
 - Use JDK 25 and Maven 3.9 or newer. The application targets Jakarta Servlet 6.0 containers, such as Tomcat 10.1.
 - Use `jakarta.*` for servlet, injection, and related Jakarta APIs. Keep Java SE APIs such as `javax.sql.DataSource` unchanged.
 - Follow nearby Java formatting: tabs for indentation and opening braces on separate lines. Preserve existing public APIs and avoid unrelated reformatting.
+- Add a brief purpose comment to every newly created class and method, including constructors and test methods.
+- Never use one-line `if`, `if-else`, `for`, `while`, `switch`, `try`, or `catch` clauses. Always put their opening and closing braces on separate lines, including `else` branches.
 
 ## Built-In Types
 

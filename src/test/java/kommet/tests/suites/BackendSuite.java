@@ -47,6 +47,8 @@ import kommet.tests.auth.AuthUtilTest;
 import kommet.tests.auth.ProfileTest;
 import kommet.tests.auth.SystemAdministratorTest;
 import kommet.tests.basic.BasicSetupTest;
+import kommet.tests.rest.SchemaApiTest;
+import kommet.tests.rest.SchemaApiPersistenceTest;
 import kommet.tests.basic.UserTest;
 import kommet.tests.bp.BusinessProcessTest;
 import kommet.tests.dal.DALCriteriaBuilderTest;
@@ -116,6 +118,8 @@ import kommet.tests.vendorapis.MsExcelApiTest;
 	AuthUtilTest.class,
 	ProfileTest.class,
 	BasicSetupTest.class,
+	SchemaApiTest.class,
+	SchemaApiPersistenceTest.class,
 	UserTest.class,
 	DALCriteriaBuilderTest.class,
 	DALTest.class,
