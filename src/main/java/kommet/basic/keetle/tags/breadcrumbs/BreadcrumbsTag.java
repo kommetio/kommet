@@ -7,7 +7,7 @@
 
 package kommet.basic.keetle.tags.breadcrumbs;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import kommet.auth.AuthData;
 import kommet.auth.AuthUtil;

@@ -9,7 +9,7 @@ package kommet.basic.keetle.tags.ref;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import kommet.auth.AuthUtil;
 import kommet.basic.keetle.tags.FieldTag;

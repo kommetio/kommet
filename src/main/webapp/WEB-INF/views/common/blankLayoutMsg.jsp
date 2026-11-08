@@ -1,6 +1,6 @@
 <%@ taglib prefix="kolmu" uri="/WEB-INF/tld/kolmu-tags.tld" %>
 <%@ taglib prefix="ko" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page session="false" %>
 
 <ko:blankLayout title="Message">

@@ -9,7 +9,7 @@ package kommet.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;

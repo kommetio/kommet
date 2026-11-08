@@ -14,8 +14,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;

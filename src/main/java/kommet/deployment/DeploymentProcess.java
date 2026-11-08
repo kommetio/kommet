@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
+import jakarta.annotation.Resource;
+import jakarta.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 

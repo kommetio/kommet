@@ -405,7 +405,7 @@ public class ViewUtil
 		StringBuilder sb = new StringBuilder();
 		
 		// add taglibs
-		sb.append(getTaglib("c", "http://java.sun.com/jsp/jstl/core")).append("\n");
+		sb.append(getTaglib("c", "jakarta.tags.core")).append("\n");
 		sb.append(getTaglib("km", "/WEB-INF/tld/km-tags.tld")).append("\n");
 		sb.append(getTagDir("ko", "/WEB-INF/tags")).append("\n");
 		
@@ -432,7 +432,7 @@ public class ViewUtil
 		StringBuilder sb = new StringBuilder();
 		
 		// add taglibs
-		sb.append(getNamespaceBinding("c", "http://java.sun.com/jsp/jstl/core")).append(" ");
+		sb.append(getNamespaceBinding("c", "jakarta.tags.core")).append(" ");
 		sb.append(getNamespaceBinding("ktl", "/WEB-INF/tld/ktl-tags.tld")).append(" ");
 		sb.append(getNamespaceBinding("km", "/WEB-INF/tld/km-tags.tld")).append(" ");
 		sb.append(getNamespaceBinding("ko", "/WEB-INF/tags")).append(" ");

@@ -7,7 +7,7 @@
 
 package kommet.basic.keetle.tags.tabs;
 
-import javax.servlet.jsp.tagext.BodyContent;
+import jakarta.servlet.jsp.tagext.BodyContent;
 
 /**
  * Represents a single tab in a tabbed display

@@ -9,7 +9,7 @@ package kommet.web.tags;
 
 import java.util.List;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 
 public class ActionMessages extends MessagesTag
 {	

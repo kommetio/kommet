@@ -1,5 +1,5 @@
 <%@ taglib prefix="ko" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page isErrorPage="true" session="false" %>
 
 <ko:homeLayout>

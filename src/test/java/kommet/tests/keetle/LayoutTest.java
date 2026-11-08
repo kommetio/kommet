@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Test;
 

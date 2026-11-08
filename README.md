@@ -14,3 +14,5 @@ selected as `JAVA_HOME`, then run:
 mvn clean test-compile
 mvn test
 ```
+
+Deploy the WAR to a Jakarta Servlet 6.0 container, such as Apache Tomcat 10.1.

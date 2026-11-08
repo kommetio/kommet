@@ -7,12 +7,12 @@
 
 package kommet.web.controllers;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UploadItem
 {
 	private String filename;
-	private CommonsMultipartFile fileData;
+	private MultipartFile fileData;
 
 	public String getFilename()
 	{
@@ -24,12 +24,12 @@ public class UploadItem
 		this.filename = filename;
 	}
 
-	public CommonsMultipartFile getFileData()
+	public MultipartFile getFileData()
 	{
 		return fileData;
 	}
 
-	public void setFileData(CommonsMultipartFile fileData)
+	public void setFileData(MultipartFile fileData)
 	{
 		this.fileData = fileData;
 	}

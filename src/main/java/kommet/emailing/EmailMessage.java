@@ -10,8 +10,8 @@ package kommet.emailing;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 public class EmailMessage
 {

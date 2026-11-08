@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Test;
 

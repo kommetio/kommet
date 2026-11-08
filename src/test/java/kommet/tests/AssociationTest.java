@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;

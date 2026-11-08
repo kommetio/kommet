@@ -10,7 +10,7 @@ package kommet.triggers;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

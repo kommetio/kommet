@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.Test;
 

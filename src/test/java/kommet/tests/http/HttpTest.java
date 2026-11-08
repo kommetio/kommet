@@ -9,7 +9,7 @@ package kommet.tests.http;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.apache.http.HttpStatus;
 import org.junit.Test;

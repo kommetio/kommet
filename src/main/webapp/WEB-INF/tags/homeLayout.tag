@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="kolmu" uri="/WEB-INF/tld/kolmu-tags.tld" %>
 <%@ attribute name="title" required="false" rtexprvalue="true" %>

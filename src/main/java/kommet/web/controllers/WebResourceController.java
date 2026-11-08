@@ -7,6 +7,8 @@
 
 package kommet.web.controllers;
 
+import java.io.IOException;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,10 +17,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -76,7 +78,7 @@ public class WebResourceController extends CommonKommetController
 	
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = UrlUtil.SYSTEM_ACTION_URL_PREFIX + "/downloadresource", method = RequestMethod.GET)
-	public void downloadWebResource(@RequestParam("name") String name, HttpServletResponse response, HttpSession session) throws PropertyUtilException, KommetException
+	public void downloadWebResource(@RequestParam("name") String name, HttpServletResponse response, HttpSession session) throws IOException, PropertyUtilException, KommetException
 	{
 		AuthData authData = AuthUtil.getAuthData(session);
 		EnvData env = envService.getCurrentEnv(session);
@@ -84,7 +86,7 @@ public class WebResourceController extends CommonKommetController
 		
 		if (res == null)
 		{
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST, "Invalid web resource name " + name);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid web resource name " + name);
 			return; 
 		}
 		

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

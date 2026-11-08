@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;

@@ -10,8 +10,8 @@ package kommet.tests.data;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.inject.Inject;
-import javax.transaction.TransactionManager;
+import jakarta.inject.Inject;
+import jakarta.transaction.TransactionManager;
 
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

@@ -10,7 +10,7 @@ package kommet.basic.keetle.tags;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

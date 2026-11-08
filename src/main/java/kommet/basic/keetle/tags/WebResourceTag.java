@@ -9,7 +9,7 @@ package kommet.basic.keetle.tags;
 
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 import kommet.basic.WebResource;
 import kommet.data.KommetException;

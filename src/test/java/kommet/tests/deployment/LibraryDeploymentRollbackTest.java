@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.zip.ZipInputStream;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
