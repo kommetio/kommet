@@ -22,6 +22,11 @@ public class ApiTokenKType extends Type
 {
 	private static final long serialVersionUID = 1L;
 
+	public ApiTokenKType()
+	{
+        super();
+	}
+
 	public ApiTokenKType(Type userType) throws KommetException
 	{
 		setApiName(SystemTypes.API_TOKEN_API_NAME);
