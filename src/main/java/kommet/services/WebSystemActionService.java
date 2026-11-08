@@ -34,7 +34,7 @@ public class WebSystemActionService implements SystemActionService
 		
 		for (RequestMappingInfo rm : registeredActions.keySet())
 		{
-			allURLs.addAll(rm.getPatternsCondition().getPatterns());
+			allURLs.addAll(rm.getPatternValues());
 		}
 		
 		return allURLs;
