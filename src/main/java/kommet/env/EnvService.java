@@ -559,9 +559,6 @@ public class EnvService
 			if (initTypeProxies)
 			{
 				envData.scanForPersistenceMappings("kommet", true);
-				basicSetupService.createMissingTypes(envData);
-				allTypesOnEnv = new ArrayList<Type>(envData.getAllTypes());
-				envData.scanForPersistenceMappings("kommet", ignoreTypeProxyErrors);
 
 				log.debug("Updating type proxies");
 
@@ -573,6 +570,9 @@ public class EnvService
 
 				// now generate and compile all proxies again, but this time with all properties
 				dataService.updateTypeProxy(allTypesOnEnv, AuthData.getRootAuthData(envData), envData);
+
+				basicSetupService.createMissingTypes(envData);
+				envData.scanForPersistenceMappings("kommet", ignoreTypeProxyErrors);
 			}
 		}
 
