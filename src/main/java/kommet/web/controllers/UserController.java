@@ -67,6 +67,7 @@ import kommet.i18n.Locale;
 import kommet.rest.RestUtil;
 import kommet.security.RestrictedAccess;
 import kommet.services.AppService;
+import kommet.services.ApiTokenService;
 import kommet.services.SystemSettingService;
 import kommet.systemsettings.SystemSettingKey;
 import kommet.uch.UserCascadeHierarchyContext;
@@ -118,6 +119,9 @@ public class UserController extends BasicRestController
 	
 	@Inject
 	AppService appService;
+
+	@Inject
+	ApiTokenService apiTokenService;
 	
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 	
@@ -671,6 +675,14 @@ public class UserController extends BasicRestController
 		
 		ModelAndView mv = new ModelAndView("users/myprofile");
 		mv.addObject("user", user);
+		mv.addObject("apiTokens", apiTokenService.search(authData.getUserId(), env));
+		String apiTokenCsrf = (String)session.getAttribute(ApiTokenService.CSRF_SESSION_ATTRIBUTE);
+		if (!StringUtils.hasText(apiTokenCsrf))
+		{
+			apiTokenCsrf = MiscUtils.getHash(48);
+			session.setAttribute(ApiTokenService.CSRF_SESSION_ATTRIBUTE, apiTokenCsrf);
+		}
+		mv.addObject("apiTokenCsrf", apiTokenCsrf);
 		mv.addObject("canChangePwd", true);
 		mv.addObject("canEdit", false);
 		// show notification is user has access to notification type, which should always be the case

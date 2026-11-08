@@ -541,6 +541,14 @@ public class EnvService
 				envData.registerType(type);
 			}
 
+			// find root user
+			List<Record> adminUsers = envData.getSelectCriteriaFromDAL("select id, userName, email, profile.id from " + SystemTypes.USER_API_NAME + " where id = '" + envs.get(0).getAdminId().getId() + "' LIMIT 1").list();
+			if (adminUsers.isEmpty())
+			{
+				throw new KommetException("Admin user with ID " + envs.get(0).getAdminId() + " not found on env " + envData.getName());
+			}
+			envData.setRootUser(adminUsers.get(0));
+
 			// init all unique checks on types
 			List<UniqueCheck> uniqueChecks = uniqueCheckService.find(null, envData, dataService);
 			for (UniqueCheck uc : uniqueChecks)
@@ -550,7 +558,7 @@ public class EnvService
 
 			if (initTypeProxies)
 			{
-				envData.scanForPersistenceMappings("kommet", ignoreTypeProxyErrors);
+				envData.scanForPersistenceMappings("kommet", true);
 
 				log.debug("Updating type proxies");
 
@@ -562,6 +570,9 @@ public class EnvService
 
 				// now generate and compile all proxies again, but this time with all properties
 				dataService.updateTypeProxy(allTypesOnEnv, AuthData.getRootAuthData(envData), envData);
+
+				basicSetupService.createMissingTypes(envData);
+				envData.scanForPersistenceMappings("kommet", ignoreTypeProxyErrors);
 			}
 		}
 
@@ -583,14 +594,6 @@ public class EnvService
 
 		if (initTypes)
 		{
-			// find root user
-			List<Record> adminUsers = envData.getSelectCriteriaFromDAL("select id, userName, email, profile.id from " + SystemTypes.USER_API_NAME + " where id = '" + envs.get(0).getAdminId().getId() + "' LIMIT 1").list();
-			if (adminUsers.isEmpty())
-			{
-				throw new KommetException("Admin user with ID " + envs.get(0).getAdminId() + " not found on env " + envData.getName());
-			}
-			envData.setRootUser(adminUsers.get(0));
-
 			// find guest user
 			UserFilter userFilter = new UserFilter();
 			userFilter.setUsername(Constants.UNAUTHENTICATED_USER_NAME);
