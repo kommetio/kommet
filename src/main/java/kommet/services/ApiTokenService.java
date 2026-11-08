@@ -1,0 +1,141 @@
+/**
+ * Copyright 2022, Radosław Krawiec
+ * Licensed under the GNU Affera General Public License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at https://www.gnu.org/licenses/agpl-3.0.en.html
+ */
+
+package kommet.services;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HexFormat;
+import java.util.List;
+
+import jakarta.inject.Inject;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import kommet.auth.AuthData;
+import kommet.basic.ApiToken;
+import kommet.basic.User;
+import kommet.dao.ApiTokenDao;
+import kommet.data.FieldValidationException;
+import kommet.data.KID;
+import kommet.data.KommetException;
+import kommet.env.EnvData;
+
+@Service
+public class ApiTokenService
+{
+	public static final String CSRF_SESSION_ATTRIBUTE = "kommet.apiToken.csrf";
+
+	private static final int TOKEN_BYTES = 32;
+	private static final int MAX_NAME_LENGTH = 100;
+	private static final SecureRandom secureRandom = new SecureRandom();
+
+	@Inject
+	ApiTokenDao apiTokenDao;
+
+	@Transactional
+	public CreatedApiToken add(String name, Date expirationDate, boolean readPermission, boolean writePermission, User systemUser, EnvData env) throws KommetException
+	{
+		if (systemUser == null || systemUser.getId() == null)
+		{
+			throw new FieldValidationException("A system user is required for an API token");
+		}
+		if (!StringUtils.hasText(name) || name.trim().length() > MAX_NAME_LENGTH)
+		{
+			throw new FieldValidationException("Token name is required and must be at most " + MAX_NAME_LENGTH + " characters");
+		}
+		if (!readPermission && !writePermission)
+		{
+			throw new FieldValidationException("Select at least one API token permission");
+		}
+		if (expirationDate != null && !expirationDate.after(new Date()))
+		{
+			throw new FieldValidationException("Expiration date must be in the future");
+		}
+
+		String secret = generateSecret();
+		ApiToken token = new ApiToken();
+		token.setName(name.trim());
+		token.setTokenHash(hashToken(secret));
+		token.setTokenPrefix(secret.substring(0, 11));
+		token.setSystemUser(systemUser);
+		token.setExpirationDate(expirationDate);
+		token.setReadPermission(readPermission);
+		token.setWritePermission(writePermission);
+
+		token = apiTokenDao.save(token, AuthData.getRootAuthData(env), env);
+		return new CreatedApiToken(token, secret);
+	}
+
+	@Transactional(readOnly = true)
+	public List<ApiToken> search(KID systemUserId, EnvData env) throws KommetException
+	{
+		return apiTokenDao.findForUser(systemUserId, env);
+	}
+
+	@Transactional
+	public void remove(KID tokenId, KID systemUserId, EnvData env) throws KommetException
+	{
+		ApiToken token = apiTokenDao.get(tokenId, AuthData.getRootAuthData(env), env);
+		if (token == null || token.getSystemUser() == null || !systemUserId.equals(token.getSystemUser().getId()))
+		{
+			throw new KommetException("API token not found");
+		}
+		apiTokenDao.delete(tokenId, AuthData.getRootAuthData(env), env);
+	}
+
+	@Transactional(readOnly = true)
+	public ApiToken findValidToken(String secret, EnvData env) throws KommetException
+	{
+		if (!StringUtils.hasText(secret))
+		{
+			return null;
+		}
+		ApiToken token = apiTokenDao.findByTokenHash(hashToken(secret), env);
+		return token != null && (token.getExpirationDate() == null || token.getExpirationDate().after(new Date())) ? token : null;
+	}
+
+	private String generateSecret()
+	{
+		byte[] tokenBytes = new byte[TOKEN_BYTES];
+		secureRandom.nextBytes(tokenBytes);
+		return "km_" + Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
+	}
+
+	private String hashToken(String secret) throws KommetException
+	{
+		try
+		{
+			byte[] digest = MessageDigest.getInstance("SHA-256").digest(secret.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+			return HexFormat.of().formatHex(digest);
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			throw new KommetException("SHA-256 is not available", e);
+		}
+	}
+
+	public static class CreatedApiToken
+	{
+		private final ApiToken apiToken;
+		private final String secret;
+
+		public CreatedApiToken(ApiToken apiToken, String secret)
+		{
+			this.apiToken = apiToken;
+			this.secret = secret;
+		}
+
+		public ApiToken getApiToken() { return apiToken; }
+		public String getSecret() { return secret; }
+	}
+}

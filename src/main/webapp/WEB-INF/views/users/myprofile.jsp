@@ -50,6 +50,69 @@
 			</table>
 		
 		</div>
+
+		<div class="ibox" style="margin-top:15px">
+			<h3>API tokens</h3>
+			<c:if test="${not empty apiTokenError}">
+				<div class="error"><c:out value="${apiTokenError}" /></div>
+			</c:if>
+			<c:if test="${not empty apiTokenMessage}">
+				<div class="success"><c:out value="${apiTokenMessage}" /></div>
+			</c:if>
+			<c:if test="${not empty newApiTokenSecret}">
+				<div class="success">
+					<p>Copy this token now. Its secret will not be shown again.</p>
+					<strong><c:out value="${newApiTokenName}" /></strong>
+					<code><c:out value="${newApiTokenSecret}" /></code>
+				</div>
+			</c:if>
+
+			<form method="post" action="${pageContext.request.contextPath}/km/api-tokens/create">
+				<input type="hidden" name="csrfToken" value="${apiTokenCsrf}" />
+				<label for="apiTokenName">Name</label>
+				<input id="apiTokenName" name="name" type="text" maxlength="100" required />
+
+				<label for="apiTokenExpiration">Expiration</label>
+				<select id="apiTokenExpiration" name="expirationDays">
+					<option value="">Never</option>
+					<option value="30">30 days</option>
+					<option value="90">90 days</option>
+					<option value="365">1 year</option>
+				</select>
+
+				<label><input type="checkbox" name="readPermission" value="true" checked="checked" /> Read</label>
+				<label><input type="checkbox" name="writePermission" value="true" checked="checked" /> Write</label>
+				<button type="submit">Create token</button>
+			</form>
+
+			<c:choose>
+				<c:when test="${empty apiTokens}">
+					<p>No API tokens have been created.</p>
+				</c:when>
+				<c:otherwise>
+					<table class="kdetails">
+						<thead><tr><th>Name</th><th>Token</th><th>Expires</th><th>Permissions</th><th></th></tr></thead>
+						<tbody>
+							<c:forEach items="${apiTokens}" var="apiToken">
+								<tr>
+									<td><c:out value="${apiToken.name}" /></td>
+									<td><code><c:out value="${apiToken.tokenPrefix}" />...</code></td>
+									<td><c:choose><c:when test="${empty apiToken.expirationDate}">Never</c:when><c:otherwise><c:out value="${apiToken.expirationDate}" /></c:otherwise></c:choose></td>
+									<td><c:if test="${apiToken.readPermission}">Read </c:if><c:if test="${apiToken.writePermission}">Write</c:if></td>
+									<td>
+										<form method="post" action="${pageContext.request.contextPath}/km/api-tokens/remove">
+											<input type="hidden" name="csrfToken" value="${apiTokenCsrf}" />
+											<input type="hidden" name="tokenId" value="${apiToken.id}" />
+											<button type="submit">Revoke</button>
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:otherwise>
+			</c:choose>
+		</div>
 		
 		<c:if test="${showNotifications == true}">
 		<div class="ibox" style="margin-top:15px">

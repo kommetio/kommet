@@ -77,6 +77,7 @@ public class KID
 	public static final String DICTIONARY_PREFIX = "037";
 	public static final String DICTIONARY_ITEM_PREFIX = "038";
 	public static final String REMINDER_PREFIX = "039";
+	public static final String API_TOKEN_PREFIX = "03a";
 	
 	// length of the identifier
 	public static final int LENGTH = 13;

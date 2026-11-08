@@ -79,6 +79,7 @@ public class SystemTypes
 	public static final String BUTTON_API_NAME = "Button";
 	public static final String DICTIONARY_API_NAME = "Dictionary";
 	public static final String DICTIONARY_ITEM_API_NAME = "DictionaryItem";
+	public static final String API_TOKEN_API_NAME = "ApiToken";
 	public static final long USER_ID_SEQ = 0;
 	public static final long PERMISSION_SET_ID_SEQ = 1;
 	public static final long ENV_ID_SEQ = 2;
@@ -143,6 +144,7 @@ public class SystemTypes
 	public static final long DICTIONARY_ID_SEQ = 61;
 	public static final long DICTIONARY_ITEM_ID_SEQ = 62;
 	public static final long REMINDER_ID_SEQ = 63;
+	public static final long API_TOKEN_ID_SEQ = 64;
 	
 	private static Set<String> inaccessibleSystemTypeApiNames;
 	
@@ -209,6 +211,7 @@ public class SystemTypes
 			inaccessibleSystemTypeApiNames.add(BUTTON_API_NAME);
 			inaccessibleSystemTypeApiNames.add(DICTIONARY_API_NAME);
 			inaccessibleSystemTypeApiNames.add(DICTIONARY_ITEM_API_NAME);
+			inaccessibleSystemTypeApiNames.add(API_TOKEN_API_NAME);
 		}
 		
 		return type.isBasic() && inaccessibleSystemTypeApiNames.contains(type.getApiName());
