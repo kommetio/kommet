@@ -90,6 +90,19 @@ public class BasicSetupTest extends BaseUnitTest
 		
 		basicSetupService.runBasicSetup(env);
 		
+		Type apiTokenType = env.getType(SystemTypes.getSystemTypeQualifiedName(SystemTypes.API_TOKEN_API_NAME));
+		assertNotNull("API token type not created by basic setup", apiTokenType);
+		assertTrue(apiTokenType.isBasic());
+		assertNotNull(apiTokenType.getField("systemUser"));
+		assertNotNull(apiTokenType.getField("expirationDate"));
+		assertEquals("true", apiTokenType.getField("isReadPermission").getDefaultValue());
+		assertEquals("true", apiTokenType.getField("isWritePermission").getDefaultValue());
+		int typeCount = env.getAllTypes().size();
+		basicSetupService.createMissingTypes(env);
+		basicSetupService.createMissingTypes(env);
+		assertEquals(typeCount, env.getAllTypes().size());
+		assertEquals(apiTokenType.getKID(), env.getType(SystemTypes.getSystemTypeQualifiedName(SystemTypes.API_TOKEN_API_NAME)).getKID());
+
 		String blankLayoutId = systemSettingService.getSettingValue(SystemSettingKey.BLANK_LAYOUT_ID, env);
 		assertNotNull(blankLayoutId);
 		

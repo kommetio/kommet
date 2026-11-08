@@ -208,7 +208,7 @@ public class BasicSetupService
 				type instanceof SharingRuleKType || type instanceof BusinessProcessKType || type instanceof BusinessActionKType || type instanceof BusinessProcessInputKType ||
 				type instanceof BusinessProcessOutputKType || type instanceof BusinessActionInvocationKType || type instanceof BusinessActionTransitionKType || type instanceof BusinessProcessParamAssignmentKType ||
 				type instanceof BusinessActionInvocationAttributeKType || type instanceof ButtonKType || type instanceof ReminderKType || type instanceof DictionaryKType ||
-				type instanceof DictionaryItemKType;
+				type instanceof DictionaryItemKType || type instanceof ApiTokenKType;
  				
 	}
 
@@ -1035,12 +1035,20 @@ public class BasicSetupService
 		vrService.saveSystemValidationRule(externalSourceVR, dataService.getRootAuthData(env), env);
 	}
 
+	@Transactional(rollbackFor = KommetException.class)
 	public void createMissingTypes(EnvData env) throws KeyPrefixException, KommetException
 	{
 		Type userType = env.getType(KeyPrefix.get(KID.USER_PREFIX));
 		Type userGroupType = env.getType(KeyPrefix.get(KID.USER_GROUP_PREFIX));
 		
-		createTaskType(userType, userGroupType, env);
+		if (env.getType(SystemTypes.getSystemTypeQualifiedName(SystemTypes.TASK_API_NAME)) == null)
+		{
+			createTaskType(userType, userGroupType, env);
+		}
+		else if (env.getType(SystemTypes.getSystemTypeQualifiedName(SystemTypes.TASK_DEPENDENCY_API_NAME)) == null)
+		{
+			createTaskDependencyType(env.getType(SystemTypes.getSystemTypeQualifiedName(SystemTypes.TASK_API_NAME)), env);
+		}
 		createApiTokenType(userType, env);
 	}
 
@@ -1080,6 +1088,11 @@ public class BasicSetupService
 		vrService.saveSystemValidationRule(progressVR, dataService.getRootAuthData(env), env);
 		
 		// now create task dependency
+		createTaskDependencyType(taskType, env);
+	}
+
+	private void createTaskDependencyType(Type taskType, EnvData env) throws KommetException
+	{
 		TaskDependencyKType taskDepType = new TaskDependencyKType(taskType);
 		taskDepType = (TaskDependencyKType)dataService.createType(taskDepType, dataService.getRootAuthData(env), env);
 		

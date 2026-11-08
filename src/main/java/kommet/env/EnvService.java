@@ -550,6 +550,9 @@ public class EnvService
 
 			if (initTypeProxies)
 			{
+				envData.scanForPersistenceMappings("kommet", true);
+				basicSetupService.createMissingTypes(envData);
+				allTypesOnEnv = new ArrayList<Type>(envData.getAllTypes());
 				envData.scanForPersistenceMappings("kommet", ignoreTypeProxyErrors);
 
 				log.debug("Updating type proxies");
