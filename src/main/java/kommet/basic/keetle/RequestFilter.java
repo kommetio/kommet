@@ -199,6 +199,18 @@ public class RequestFilter extends OncePerRequestFilter
 		openURLs.add(UrlUtil.SYSTEM_ACTION_URL_PREFIX + UrlUtil.OAUTH_GET_TOKEN_URL);
 	}
 	
+	/** Delegates only the schema API routes to their stateless bearer-authenticated controller. */
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request)
+	{
+		String path = request.getRequestURI().substring(request.getContextPath().length());
+		return kommet.web.controllers.DeveloperApiController.TYPE_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.FIELD_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.TYPES_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.TYPE_SAVE_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.FIELD_SAVE_PATH.equals(path);
+	}
+
 	@Override
 	protected void doFilterInternal (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException
 	{

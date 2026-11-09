@@ -59,10 +59,10 @@ public class ApiToken extends StandardTypeRecordProxy
 	public void setExpirationDate(Date expirationDate) { this.expirationDate = expirationDate; setInitialized(); }
 
 	@Property(field = "isReadPermission")
-	public boolean isReadPermission() { return readPermission; }
-	public void setReadPermission(boolean readPermission) { this.readPermission = readPermission; setInitialized(); }
+	public boolean getIsReadPermission() { return readPermission; }
+	public void setIsReadPermission(boolean readPermission) { this.readPermission = readPermission; setInitialized("isReadPermission"); }
 
 	@Property(field = "isWritePermission")
-	public boolean isWritePermission() { return writePermission; }
-	public void setWritePermission(boolean writePermission) { this.writePermission = writePermission; setInitialized(); }
+	public boolean getIsWritePermission() { return writePermission; }
+	public void setIsWritePermission(boolean writePermission) { this.writePermission = writePermission; setInitialized("isWritePermission"); }
 }
