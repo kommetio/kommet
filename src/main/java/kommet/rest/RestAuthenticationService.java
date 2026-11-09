@@ -71,7 +71,7 @@ public class RestAuthenticationService
 			throw new ApiException(401, "User inactive");
 		}
 
-		if ((access == Access.READ && !token.isReadPermission()) || (access == Access.WRITE && !token.isWritePermission()))
+		if ((access == Access.READ && !token.getIsReadPermission()) || (access == Access.WRITE && !token.getIsWritePermission()))
 		{
 			log.debug("[APITOKEN] Token " + token.getId() + " does not permit access " + access);
 			throw new ApiException(403, "API token does not permit this operation");

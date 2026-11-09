@@ -8,6 +8,7 @@
 - Follow nearby Java formatting: tabs for indentation and opening braces on separate lines. Preserve existing public APIs and avoid unrelated reformatting.
 - Add a brief purpose comment to every newly created class and method, including constructors and test methods.
 - Never use one-line `if`, `if-else`, `for`, `while`, `switch`, `try`, or `catch` clauses. Always put their opening and closing braces on separate lines, including `else` branches.
+- Never use one-line notation for methods, including constructors, getters and setters. Always put the opening and closing braces on separate lines.
 
 ## Built-In Types
 

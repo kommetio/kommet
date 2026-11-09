@@ -1,6 +1,8 @@
 package kommet.rest;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.inject.Inject;
@@ -34,10 +37,16 @@ import kommet.data.Type;
 import kommet.data.UniqueCheckService;
 import kommet.data.datatypes.AssociationDataType;
 import kommet.data.datatypes.AutoNumber;
+import kommet.data.datatypes.BlobDataType;
+import kommet.data.datatypes.BooleanDataType;
 import kommet.data.datatypes.DataType;
+import kommet.data.datatypes.DateDataType;
+import kommet.data.datatypes.DateTimeDataType;
+import kommet.data.datatypes.EmailDataType;
 import kommet.data.datatypes.EnumerationDataType;
 import kommet.data.datatypes.FormulaDataType;
 import kommet.data.datatypes.InverseCollectionDataType;
+import kommet.data.datatypes.KIDDataType;
 import kommet.data.datatypes.MultiEnumerationDataType;
 import kommet.data.datatypes.NumberDataType;
 import kommet.data.datatypes.SpecialValue;
@@ -66,7 +75,6 @@ public class SchemaApiService
 	private KommetCompiler compiler;
 
 	private final Map<KID, Object> locks = new ConcurrentHashMap<KID, Object>();
-
 	/** Runs the requested upsert atomically and invalidates cached state on failure. */
 	public Map<String, Object> save(JsonNode payload, RestAuthenticationService.Authentication authentication, boolean fieldOperation)
 	{
@@ -112,6 +120,235 @@ public class SchemaApiService
 				throw exception;
 			}
 		}
+	}
+
+	/** Returns one mutable custom type using the documented type payload shape. */
+	public Map<String, Object> getType(String qualifiedName, EnvData env) throws KommetException
+	{
+		return typeDefinition(readableType(qualifiedName, env), env, true);
+	}
+
+	/** Returns one field by its fully qualified owner-and-field name. */
+	public Map<String, Object> getField(String qualifiedName, EnvData env) throws KommetException
+	{
+		if (qualifiedName == null || qualifiedName.isBlank())
+		{
+			throw new ApiException(400, "A fully qualified field name is required");
+		}
+		int separator = qualifiedName.lastIndexOf('.');
+		if (separator <= 0 || separator == qualifiedName.length() - 1)
+		{
+			throw new ApiException(400, "Field name must include its package, type, and field names");
+		}
+		Type type = readableType(qualifiedName.substring(0, separator), env);
+		Field field = type.getField(qualifiedName.substring(separator + 1));
+		if (field == null)
+		{
+			throw new ApiException(404, "Field not found");
+		}
+		return fieldDefinition(field, type, env);
+	}
+
+	/** Lists mutable custom types, optionally including each type's field definitions. */
+	public List<Map<String, Object>> getTypes(EnvData env, boolean includeFields) throws KommetException
+	{
+		Collection<Type> registeredTypes = env.getCustomTypes();
+		List<Type> types = new ArrayList<Type>();
+		for (Type type : registeredTypes)
+		{
+			if (!type.isBasic() && !type.isDeclaredInCode())
+			{
+				types.add(type);
+			}
+		}
+		types.sort(Comparator.comparing(Type::getQualifiedName));
+		List<Map<String, Object>> definitions = new ArrayList<Map<String, Object>>();
+		for (Type type : types)
+		{
+			definitions.add(typeDefinition(type, env, includeFields));
+		}
+		return definitions;
+	}
+
+	private static Type readableType(String qualifiedName, EnvData env) throws KommetException
+	{
+		if (qualifiedName == null || qualifiedName.isBlank())
+		{
+			throw new ApiException(400, "A fully qualified type name is required");
+		}
+		Type type = env.getType(qualifiedName);
+		if (type == null || type.isBasic() || type.isDeclaredInCode())
+		{
+			throw new ApiException(404, "Type not found");
+		}
+		return type;
+	}
+
+	private static Map<String, Object> typeDefinition(Type type, EnvData env, boolean includeFields) throws KommetException
+	{
+		Map<String, Object> definition = new LinkedHashMap<String, Object>();
+		definition.put("package", type.getPackage());
+		definition.put("apiName", type.getApiName());
+		definition.put("label", type.getLabel());
+		definition.put("pluralLabel", type.getPluralLabel());
+		definition.put("description", type.getDescription());
+		definition.put("labelKey", type.getUchLabel());
+		definition.put("pluralLabelKey", type.getUchPluralLabel());
+		Field defaultField = type.getField(type.getDefaultFieldId());
+		definition.put("defaultFieldApiName", defaultField != null ? defaultField.getApiName() : null);
+		Field sharingField = type.getSharingControlledByField();
+		definition.put("sharingControlledByFieldApiName", sharingField != null ? sharingField.getApiName() : null);
+		definition.put("combineRecordAndCascadeSharing", type.isCombineRecordAndCascadeSharing());
+		if (includeFields)
+		{
+			List<Field> fields = new ArrayList<Field>(type.getFields());
+			fields.sort(Comparator.comparing(Field::getApiName));
+			List<Map<String, Object>> fieldDefinitions = new ArrayList<Map<String, Object>>();
+			for (Field field : fields)
+			{
+				fieldDefinitions.add(fieldDefinition(field, type, env));
+			}
+			definition.put("fields", fieldDefinitions);
+		}
+		return definition;
+	}
+
+	private static Map<String, Object> fieldDefinition(Field field, Type owner, EnvData env) throws KommetException
+	{
+		Map<String, Object> definition = new LinkedHashMap<String, Object>();
+		definition.put("apiName", field.getApiName());
+		definition.put("label", field.getLabel());
+		definition.put("description", field.getDescription());
+		definition.put("labelKey", field.getUchLabel());
+		definition.put("required", field.isRequired());
+		definition.put("trackHistory", field.isTrackHistory());
+		definition.put("defaultValue", field.getDefaultValue());
+		definition.put("unique", isUniqueField(field, owner));
+		definition.put("isDefault", Objects.equals(owner.getDefaultFieldId(), field.getKID()));
+		definition.put("dataType", dataTypeDefinition(field.getDataType(), env));
+		return definition;
+	}
+
+	private static boolean isUniqueField(Field field, Type owner)
+	{
+		if (owner.getUniqueChecks() == null || field.getKID() == null)
+		{
+			return false;
+		}
+		for (UniqueCheck check : owner.getUniqueChecks())
+		{
+			if (check.getParsedFieldIds() != null && check.getParsedFieldIds().size() == 1 && check.getParsedFieldIds().contains(field.getKID()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static Map<String, Object> dataTypeDefinition(DataType dataType, EnvData env) throws KommetException
+	{
+		Map<String, Object> definition = new LinkedHashMap<String, Object>();
+		if (dataType instanceof TextDataType)
+		{
+			TextDataType text = (TextDataType)dataType;
+			definition.put("kind", "text");
+			definition.put("length", text.getLength());
+			definition.put("long", text.isLong());
+			definition.put("formatted", text.isFormatted());
+		}
+		else if (dataType instanceof NumberDataType)
+		{
+			NumberDataType number = (NumberDataType)dataType;
+			definition.put("kind", "number");
+			definition.put("decimalPlaces", number.getDecimalPlaces());
+			definition.put("javaType", number.getJavaType());
+		}
+		else if (dataType instanceof BooleanDataType) definition.put("kind", "boolean");
+		else if (dataType instanceof DateDataType) definition.put("kind", "date");
+		else if (dataType instanceof DateTimeDataType) definition.put("kind", "datetime");
+		else if (dataType instanceof EmailDataType) definition.put("kind", "email");
+		else if (dataType instanceof KIDDataType) definition.put("kind", "kid");
+		else if (dataType instanceof BlobDataType) definition.put("kind", "blob");
+		else if (dataType instanceof EnumerationDataType)
+		{
+			EnumerationDataType enumeration = (EnumerationDataType)dataType;
+			definition.put("kind", "enumeration");
+			if (enumeration.getDictionary() != null)
+			{
+				definition.put("dictionaryId", enumeration.getDictionary().getId().getId());
+			}
+			if (enumeration.getDictionary() == null || !enumeration.getValueList().isEmpty())
+			{
+				definition.put("values", enumeration.getValueList());
+			}
+			definition.put("validateValues", enumeration.isValidateValues());
+		}
+		else if (dataType instanceof MultiEnumerationDataType)
+		{
+			definition.put("kind", "multiEnumeration");
+			definition.put("values", new ArrayList<String>(new TreeSet<String>(((MultiEnumerationDataType)dataType).getValues())));
+		}
+		else if (dataType instanceof AutoNumber)
+		{
+			definition.put("kind", "autoNumber");
+			definition.put("format", ((AutoNumber)dataType).getFormat());
+		}
+		else if (dataType instanceof TypeReference)
+		{
+			TypeReference reference = (TypeReference)dataType;
+			definition.put("kind", "typeReference");
+			definition.put("targetType", typeIdentity(reference.getType(), reference.getTypeId(), env));
+			definition.put("cascadeDelete", reference.isCascadeDelete());
+		}
+		else if (dataType instanceof FormulaDataType)
+		{
+			FormulaDataType formula = (FormulaDataType)dataType;
+			definition.put("kind", "formula");
+			definition.put("formula", formula.getUserDefinition());
+			definition.put("returnType", formula.getReturnType() != null ? formula.getReturnType().name() : null);
+		}
+		else if (dataType instanceof InverseCollectionDataType)
+		{
+			InverseCollectionDataType inverse = (InverseCollectionDataType)dataType;
+			definition.put("kind", "inverseCollection");
+			definition.put("inverseType", typeIdentity(inverse.getInverseType(), inverse.getInverseTypeId(), env));
+			definition.put("inverseProperty", inverse.getInverseProperty());
+		}
+		else if (dataType instanceof AssociationDataType)
+		{
+			AssociationDataType association = (AssociationDataType)dataType;
+			definition.put("kind", "association");
+			if (association.getLinkingTypeId() == null)
+			{
+				definition.put("mode", "direct");
+				definition.put("associatedType", typeIdentity(association.getAssociatedType(), association.getAssociatedTypeId(), env));
+			}
+			else
+			{
+				definition.put("mode", "linkingType");
+				definition.put("linkingType", typeIdentity(association.getLinkingType(), association.getLinkingTypeId(), env));
+				definition.put("selfLinkingFieldApiName", association.getSelfLinkingField());
+				definition.put("foreignLinkingFieldApiName", association.getForeignLinkingField());
+			}
+		}
+		else
+		{
+			throw new ApiException(500, "Unsupported schema datatype");
+		}
+		return definition;
+	}
+
+	private static Map<String, Object> typeIdentity(Type type, KID typeId, EnvData env) throws KommetException
+	{
+		Type resolved = type != null ? type : typeId != null ? env.getType(typeId) : null;
+		if (resolved == null)
+		{
+			throw new ApiException(404, "Schema datatype reference not found");
+		}
+		Map<String, Object> identity = new LinkedHashMap<String, Object>();
+		identity.put("package", resolved.getPackage());
+		identity.put("apiName", resolved.getApiName());
+		return identity;
 	}
 
 	/** Creates a custom type or updates its metadata without replacing existing fields. */

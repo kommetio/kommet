@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,6 +40,9 @@ import kommet.rest.SchemaPayload;
 @Controller
 public class DeveloperApiController
 {
+	public static final String TYPE_PATH = "/api/dev/type";
+	public static final String FIELD_PATH = "/api/dev/field";
+	public static final String TYPES_PATH = "/api/dev/types";
 	public static final String TYPE_SAVE_PATH = "/api/dev/type/save";
 	public static final String FIELD_SAVE_PATH = "/api/dev/field/save";
 
@@ -54,6 +58,36 @@ public class DeveloperApiController
 
 	@Inject
 	private SchemaApiService schemaService;
+
+	/** Returns one custom type and its fields by fully qualified type name. */
+	@RequestMapping(value = TYPE_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getType(@RequestParam(value = "environmentId", required = false) String environmentId,
+			@RequestParam(value = "qualifiedName", required = false) String qualifiedName, HttpServletRequest request) throws KommetException
+	{
+		EnvData env = readEnvironment(environmentId, request);
+		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
+		return jsonSuccess(schemaService.getType(qualifiedName, env));
+	}
+
+	/** Returns one custom field by its fully qualified owner-and-field name. */
+	@RequestMapping(value = FIELD_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getField(@RequestParam(value = "environmentId", required = false) String environmentId,
+			@RequestParam(value = "qualifiedName", required = false) String qualifiedName, HttpServletRequest request) throws KommetException
+	{
+		EnvData env = readEnvironment(environmentId, request);
+		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
+		return jsonSuccess(schemaService.getField(qualifiedName, env));
+	}
+
+	/** Lists custom types, including fields only when includeField is exactly 1. */
+	@RequestMapping(value = TYPES_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getTypes(@RequestParam(value = "environmentId", required = false) String environmentId,
+			@RequestParam(value = "includeField", required = false) String includeField, HttpServletRequest request) throws KommetException
+	{
+		EnvData env = readEnvironment(environmentId, request);
+		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
+		return jsonSuccess(schemaService.getTypes(env, "1".equals(includeField)));
+	}
 
 	/** Handles creation or metadata updates of a custom type. */
 	@RequestMapping(value = TYPE_SAVE_PATH, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -119,6 +153,31 @@ public class DeveloperApiController
 		response.put("success", true);
 		response.put("data", data);
 		return ResponseEntity.status("created".equals(data.get("operation")) ? 201 : 200).contentType(MediaType.APPLICATION_JSON).body(response);
+	}
+
+	private EnvData readEnvironment(String environmentId, HttpServletRequest request) throws KommetException
+	{
+		authorizationUtil.requireAuthorization(request);
+		if (environmentId == null || environmentId.isBlank())
+		{
+			throw new ApiException(400, "environmentId is required");
+		}
+		KID envId = SchemaDataTypeParser.id(environmentId);
+		EnvFilter filter = new EnvFilter();
+		filter.setKID(envId);
+		if (envService.find(filter, envService.getMasterEnv()).isEmpty())
+		{
+			throw new ApiException(404, "Environment not found");
+		}
+		return envService.get(envId);
+	}
+
+	private static ResponseEntity<Map<String, Object>> jsonSuccess(Object data)
+	{
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("success", true);
+		response.put("data", data);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	/** Converts expected API failures into the JSON error envelope. */

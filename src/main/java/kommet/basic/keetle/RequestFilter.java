@@ -204,7 +204,10 @@ public class RequestFilter extends OncePerRequestFilter
 	protected boolean shouldNotFilter(HttpServletRequest request)
 	{
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-		return kommet.web.controllers.DeveloperApiController.TYPE_SAVE_PATH.equals(path)
+		return kommet.web.controllers.DeveloperApiController.TYPE_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.FIELD_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.TYPES_PATH.equals(path)
+				|| kommet.web.controllers.DeveloperApiController.TYPE_SAVE_PATH.equals(path)
 				|| kommet.web.controllers.DeveloperApiController.FIELD_SAVE_PATH.equals(path);
 	}
 

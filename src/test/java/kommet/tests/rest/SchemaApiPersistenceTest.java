@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kommet.auth.UserService;
 import kommet.basic.BasicSetupService;
+import kommet.basic.ApiToken;
 import kommet.basic.User;
 import kommet.data.DataService;
 import kommet.data.Type;
@@ -37,6 +38,23 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 	@Inject private DataService dataService;
 
 	private final ObjectMapper mapper = new ObjectMapper();
+
+	/** Verifies token permissions persist, reload, and authorize write access. */
+	@Test
+	public void apiTokenPermissionsSurvivePersistenceAndSearch() throws Exception
+	{
+		EnvData env = fixture();
+		User root = userService.getUser(env.getRootUser().getKID(), env);
+		ApiTokenService.CreatedApiToken created = tokenService.add("Permission round-trip", null, true, true, root, env);
+		ApiToken loaded = tokenService.search(root.getId(), env).stream()
+				.filter(token -> token.getId().equals(created.getApiToken().getId()))
+				.findFirst().orElse(null);
+
+		assertNotNull(loaded);
+		assertTrue(loaded.getIsReadPermission());
+		assertTrue(loaded.getIsWritePermission());
+		authenticationService.authenticate("Bearer " + created.getSecret(), env, RestAuthenticationService.Access.WRITE);
+	}
 
 	/** Verifies repeated upserts preserve identities, fields, defaults, and unique checks. */
 	@Test

@@ -98,7 +98,7 @@
 									<td><c:out value="${apiToken.name}" /></td>
 									<td><code><c:out value="${apiToken.tokenPrefix}" />...</code></td>
 									<td><c:choose><c:when test="${empty apiToken.expirationDate}">Never</c:when><c:otherwise><c:out value="${apiToken.expirationDate}" /></c:otherwise></c:choose></td>
-									<td><c:if test="${apiToken.readPermission}">Read </c:if><c:if test="${apiToken.writePermission}">Write</c:if></td>
+									<td><c:if test="${apiToken.isReadPermission}">Read </c:if><c:if test="${apiToken.isWritePermission}">Write</c:if></td>
 									<td>
 										<form method="post" action="${pageContext.request.contextPath}/km/api-tokens/remove">
 											<input type="hidden" name="csrfToken" value="${apiTokenCsrf}" />

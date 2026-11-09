@@ -1,6 +1,7 @@
 package kommet.tests.rest;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -66,6 +67,7 @@ public class SchemaApiTest
 	private SchemaDataTypeParser parser;
 	private MockMvc mvc;
 	private boolean mutated;
+	private boolean includeFieldsRequested;
 
 	/** Builds environment metadata and isolated service doubles for each test. */
 	@Before
@@ -164,6 +166,19 @@ public class SchemaApiTest
 		});
 		// Records dispatch without performing schema mutations in HTTP-only tests.
 		ReflectionTestUtils.setField(controller, "schemaService", new SchemaApiService() {
+			/** Returns a representative type shape for controller response tests. */
+			@Override public Map<String, Object> getType(String qualifiedName, EnvData selected) {
+				return Map.of("package", "acme.billing", "apiName", "Invoice", "fields", List.of());
+			}
+			/** Returns a representative field shape for controller response tests. */
+			@Override public Map<String, Object> getField(String qualifiedName, EnvData selected) {
+				return Map.of("apiName", "invoiceNumber", "dataType", Map.of("kind", "text", "length", 80));
+			}
+			/** Records whether the type-list request asks for fields. */
+			@Override public List<Map<String, Object>> getTypes(EnvData selected, boolean includeFields) {
+				includeFieldsRequested = includeFields;
+				return List.of(Map.of("package", "acme.billing", "apiName", "Invoice"));
+			}
 			/** Records a successful upsert invocation and returns a creation result. */
 			@Override public Map<String, Object> save(JsonNode body, RestAuthenticationService.Authentication authentication, boolean fieldOperation) {
 				mutated = true;
@@ -309,6 +324,76 @@ public class SchemaApiTest
 		}
 	}
 
+	/** Verifies read routes authenticate with a bearer and preserve the documented response shapes. */
+	@Test
+	public void schemaReadEndpointsReturnDocumentedJson() throws Exception
+	{
+		String environmentId = env.getId().getId();
+		token.setWritePermission(false);
+		mvc.perform(get(DeveloperApiController.TYPE_PATH)
+				.param("environmentId", environmentId)
+				.param("qualifiedName", "acme.billing.Invoice"))
+				.andExpect(status().isUnauthorized());
+		var typeResponse = mvc.perform(get(DeveloperApiController.TYPE_PATH)
+				.param("environmentId", environmentId)
+				.param("qualifiedName", "acme.billing.Invoice")
+				.header("Authorization", "Bearer " + secret))
+				.andExpect(status().isOk()).andReturn();
+		JsonNode type = mapper.readTree(typeResponse.getResponse().getContentAsString()).get("data");
+		assertEquals("acme.billing", type.get("package").asText());
+		assertTrue(type.get("fields").isArray());
+
+		var fieldResponse = mvc.perform(get(DeveloperApiController.FIELD_PATH)
+				.param("environmentId", environmentId)
+				.param("qualifiedName", "acme.billing.Invoice.invoiceNumber")
+				.header("Authorization", "Bearer " + secret))
+				.andExpect(status().isOk()).andReturn();
+		JsonNode field = mapper.readTree(fieldResponse.getResponse().getContentAsString()).get("data");
+		assertEquals("invoiceNumber", field.get("apiName").asText());
+		assertEquals("text", field.get("dataType").get("kind").asText());
+
+		mvc.perform(get(DeveloperApiController.TYPES_PATH)
+				.param("environmentId", environmentId)
+				.header("Authorization", "Bearer " + secret))
+				.andExpect(status().isOk());
+		assertFalse(includeFieldsRequested);
+		mvc.perform(get(DeveloperApiController.TYPES_PATH)
+				.param("environmentId", environmentId)
+				.param("includeField", "1")
+				.header("Authorization", "Bearer " + secret))
+				.andExpect(status().isOk());
+		assertTrue(includeFieldsRequested);
+	}
+
+	/** Verifies schema serializers emit documented definitions from environment metadata. */
+	@Test
+	public void schemaReadServiceSerializesTypeAndFieldDefinitions() throws Exception
+	{
+		Field invoiceNumber = new Field();
+		invoiceNumber.setApiName("invoiceNumber");
+		invoiceNumber.setLabel("Invoice number");
+		invoiceNumber.setDataType(new TextDataType(80));
+		invoiceNumber.setRequired(true);
+		invoiceNumber.setKID(KID.get(KID.FIELD_PREFIX, 300L));
+		owner.addField(invoiceNumber);
+		owner.setDefaultFieldId(invoiceNumber.getKID());
+
+		SchemaApiService reader = new SchemaApiService();
+		Map<String, Object> type = reader.getType("acme.billing.Invoice", env);
+		assertEquals("acme.billing", type.get("package"));
+		assertTrue(type.containsKey("fields"));
+		Map<?, ?> field = (Map<?, ?>)((List<?>)type.get("fields")).get(0);
+		assertEquals("invoiceNumber", field.get("apiName"));
+		assertEquals(Boolean.TRUE, field.get("isDefault"));
+		assertEquals("text", ((Map<?, ?>)field.get("dataType")).get("kind"));
+		assertEquals("invoiceNumber", reader.getField("acme.billing.Invoice.invoiceNumber", env).get("apiName"));
+
+		List<Map<String, Object>> typesWithoutFields = reader.getTypes(env, false);
+		assertFalse(typesWithoutFields.stream().filter(item -> "Invoice".equals(item.get("apiName"))).findFirst().get().containsKey("fields"));
+		List<Map<String, Object>> typesWithFields = reader.getTypes(env, true);
+		assertTrue(typesWithFields.stream().filter(item -> "Invoice".equals(item.get("apiName"))).findFirst().get().containsKey("fields"));
+	}
+
 	/** Rejects malformed JSON, duplicate keys, and trailing payload content. */
 	@Test
 	public void rejectsMalformedDuplicateAndTrailingJson() throws Exception
@@ -336,6 +421,11 @@ public class SchemaApiTest
 		MockHttpServletRequest request = new MockHttpServletRequest("POST", "/app/api/dev/type/save");
 		request.setContextPath("/app");
 		assertEquals(Boolean.TRUE, ReflectionTestUtils.invokeMethod(filter, "shouldNotFilter", request));
+		for (String path : new String[] { DeveloperApiController.TYPE_PATH, DeveloperApiController.FIELD_PATH, DeveloperApiController.TYPES_PATH })
+		{
+			request.setRequestURI("/app" + path);
+			assertEquals(Boolean.TRUE, ReflectionTestUtils.invokeMethod(filter, "shouldNotFilter", request));
+		}
 		request.setRequestURI("/app/custom-rest");
 		assertEquals(Boolean.FALSE, ReflectionTestUtils.invokeMethod(filter, "shouldNotFilter", request));
 	}
