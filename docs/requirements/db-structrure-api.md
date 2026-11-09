@@ -4,7 +4,7 @@ Status: Implemented. Database-backed tests need the configured PostgreSQL fixtur
 
 ## Common
 
-All paths are relative to the application's context path. Requests must identify `environmentId`; GET endpoints pass it in the query string and POST endpoints in JSON. Do not infer the environment from a browser session.
+All paths are relative to the application's context path. Requests must identify `envId`; GET endpoints pass it in the query string and POST endpoints in JSON. Do not infer the environment from a browser session.
 
 Send exactly one `Authorization: Bearer <token>` header. GET requires a read-capable token. POST requires a write-capable token owned by a root or system administrator. Tokens are environment-scoped. Responses use JSON envelopes: success is `{ "success": true, "data": ... }`; errors are `{ "success": false, "messages": ["..."] }`.
 
@@ -22,7 +22,7 @@ BASE_URL='https://example.com/km-1.0'
 
 **HTTP method:** `GET`
 
-**Parameters:** Query parameters `environmentId` and `qualifiedName`, such as `acme.billing.Invoice`.
+**Parameters:** Query parameters `envId` and `qualifiedName`, such as `acme.billing.Invoice`.
 
 **Expected payload:** None.
 
@@ -51,7 +51,7 @@ BASE_URL='https://example.com/km-1.0'
 
 ```bash
 curl -sS -i --get "$BASE_URL/api/dev/type" \
-  --data-urlencode 'environmentId=0010000000002' \
+  --data-urlencode 'envId=0010000000002' \
   --data-urlencode 'qualifiedName=acme.billing.Invoice' \
   -H "Authorization: Bearer $KOMMET_API_TOKEN"
 ```
@@ -66,7 +66,7 @@ curl -sS -i --get "$BASE_URL/api/dev/type" \
 
 **HTTP method:** `GET`
 
-**Parameters:** Query parameters `environmentId` and `qualifiedName`, such as `acme.billing.Invoice.invoiceNumber`.
+**Parameters:** Query parameters `envId` and `qualifiedName`, such as `acme.billing.Invoice.invoiceNumber`.
 
 **Expected payload:** None.
 
@@ -94,7 +94,7 @@ curl -sS -i --get "$BASE_URL/api/dev/type" \
 
 ```bash
 curl -sS -i --get "$BASE_URL/api/dev/field" \
-  --data-urlencode 'environmentId=0010000000002' \
+  --data-urlencode 'envId=0010000000002' \
   --data-urlencode 'qualifiedName=acme.billing.Invoice.invoiceNumber' \
   -H "Authorization: Bearer $KOMMET_API_TOKEN"
 ```
@@ -109,7 +109,7 @@ curl -sS -i --get "$BASE_URL/api/dev/field" \
 
 **HTTP method:** `GET`
 
-**Parameters:** Query parameter `environmentId`; optional `includeField=1` includes fields. Fields are omitted otherwise.
+**Parameters:** Query parameter `envId`; optional `includeField=1` includes fields. Fields are omitted otherwise.
 
 **Expected payload:** None.
 
@@ -175,7 +175,7 @@ With `includeField=1`, each type includes its fields:
 
 ```bash
 curl -sS -i --get "$BASE_URL/api/dev/types" \
-  --data-urlencode 'environmentId=0010000000002' \
+  --data-urlencode 'envId=0010000000002' \
   -H "Authorization: Bearer $KOMMET_API_TOKEN"
 ```
 
@@ -189,13 +189,13 @@ curl -sS -i --get "$BASE_URL/api/dev/types" \
 
 **HTTP method:** `POST`
 
-**Parameters:** JSON body. Type identity is `(environmentId, type.package, type.apiName)`; names are stable and are not renamed by an upsert.
+**Parameters:** JSON body. Type identity is `(envId, type.package, type.apiName)`; names are stable and are not renamed by an upsert.
 
 **Expected payload:** `package`, `apiName`, `label`, and `pluralLabel` are required. Other metadata is optional.
 
 ```json
 {
-  "environmentId": "0010000000002",
+  "envId": "0010000000002",
   "type": {
     "package": "acme.billing",
     "apiName": "Invoice",
@@ -231,7 +231,7 @@ curl -sS -i --get "$BASE_URL/api/dev/types" \
 curl -sS -i "$BASE_URL/api/dev/type/save" \
   -H "Authorization: Bearer $KOMMET_API_TOKEN" \
   -H 'Content-Type: application/json' \
-  --data '{"environmentId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice","label":"Invoice","pluralLabel":"Invoices"}}'
+  --data '{"envId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice","label":"Invoice","pluralLabel":"Invoices"}}'
 ```
 
 **Error messages:** `400` malformed JSON or invalid type definition; `401` missing/invalid token; `403` missing write permission or root/system-administrator profile; `404` environment or referenced field not found.
@@ -244,13 +244,13 @@ curl -sS -i "$BASE_URL/api/dev/type/save" \
 
 **HTTP method:** `POST`
 
-**Parameters:** JSON body. Field identity is `(environmentId, type.package, type.apiName, field.apiName)`; field API names are stable.
+**Parameters:** JSON body. Field identity is `(envId, type.package, type.apiName, field.apiName)`; field API names are stable.
 
 **Expected payload:** `type.package`, `type.apiName`, `field.apiName`, `field.label`, and `field.dataType` are required. The server generates database columns; do not send `dbColumn`.
 
 ```json
 {
-  "environmentId": "0010000000002",
+  "envId": "0010000000002",
   "type": { "package": "acme.billing", "apiName": "Invoice" },
   "field": {
     "apiName": "invoiceNumber",
@@ -291,7 +291,7 @@ Supported `dataType.kind` values and options: `text` (`length`, `long`, `formatt
 curl -sS -i "$BASE_URL/api/dev/field/save" \
   -H "Authorization: Bearer $KOMMET_API_TOKEN" \
   -H 'Content-Type: application/json' \
-  --data '{"environmentId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice"},"field":{"apiName":"invoiceNumber","label":"Invoice number","dataType":{"kind":"text","length":80}}}'
+  --data '{"envId":"0010000000002","type":{"package":"acme.billing","apiName":"Invoice"},"field":{"apiName":"invoiceNumber","label":"Invoice number","dataType":{"kind":"text","length":80}}}'
 ```
 
 **Error messages:** `400` malformed JSON or invalid field definition; `401` missing/invalid token; `403` missing write permission, profile, or mutable-type access; `404` environment, type, or reference not found; `409` incompatible datatype/storage change.

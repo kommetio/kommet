@@ -51,6 +51,7 @@ import kommet.services.DictionaryService;
 import kommet.uch.UserCascadeHierarchyService;
 import kommet.utils.AppConfig;
 import kommet.web.controllers.DeveloperApiController;
+import kommet.web.controllers.DataUploadController;
 
 /** Verifies schema API validation, authentication, and HTTP behavior without a database. */
 public class SchemaApiTest
@@ -279,7 +280,7 @@ public class SchemaApiTest
 	public void schemaServiceRejectsMismatchedEnvironment() throws Exception
 	{
 		RestAuthenticationService.Authentication authentication = authenticator.authenticate("Bearer " + secret, env, RestAuthenticationService.Access.WRITE);
-		JsonNode payload = mapper.readTree("{\"environmentId\":\"0010000000003\",\"type\":{}}");
+		JsonNode payload = mapper.readTree("{\"envId\":\"0010000000003\",\"type\":{}}");
 		expect(403, () -> new SchemaApiService().save(payload, authentication, false));
 	}
 
@@ -328,14 +329,14 @@ public class SchemaApiTest
 	@Test
 	public void schemaReadEndpointsReturnDocumentedJson() throws Exception
 	{
-		String environmentId = env.getId().getId();
+		String envId = env.getId().getId();
 		token.setIsWritePermission(false);
 		mvc.perform(get(DeveloperApiController.TYPE_PATH)
-				.param("environmentId", environmentId)
+				.param("envId", envId)
 				.param("qualifiedName", "acme.billing.Invoice"))
 				.andExpect(status().isUnauthorized());
 		var typeResponse = mvc.perform(get(DeveloperApiController.TYPE_PATH)
-				.param("environmentId", environmentId)
+				.param("envId", envId)
 				.param("qualifiedName", "acme.billing.Invoice")
 				.header("Authorization", "Bearer " + secret))
 				.andExpect(status().isOk()).andReturn();
@@ -344,7 +345,7 @@ public class SchemaApiTest
 		assertTrue(type.get("fields").isArray());
 
 		var fieldResponse = mvc.perform(get(DeveloperApiController.FIELD_PATH)
-				.param("environmentId", environmentId)
+				.param("envId", envId)
 				.param("qualifiedName", "acme.billing.Invoice.invoiceNumber")
 				.header("Authorization", "Bearer " + secret))
 				.andExpect(status().isOk()).andReturn();
@@ -353,12 +354,12 @@ public class SchemaApiTest
 		assertEquals("text", field.get("dataType").get("kind").asText());
 
 		mvc.perform(get(DeveloperApiController.TYPES_PATH)
-				.param("environmentId", environmentId)
+				.param("envId", envId)
 				.header("Authorization", "Bearer " + secret))
 				.andExpect(status().isOk());
 		assertFalse(includeFieldsRequested);
 		mvc.perform(get(DeveloperApiController.TYPES_PATH)
-				.param("environmentId", environmentId)
+				.param("envId", envId)
 				.param("includeField", "1")
 				.header("Authorization", "Bearer " + secret))
 				.andExpect(status().isOk());
@@ -398,7 +399,7 @@ public class SchemaApiTest
 	@Test
 	public void rejectsMalformedDuplicateAndTrailingJson() throws Exception
 	{
-		for (String body : new String[] { "{", body() + " {}", "{\"environmentId\":\"0010000000002\",\"environmentId\":\"0010000000003\",\"type\":{}}" })
+		for (String body : new String[] { "{", body() + " {}", "{\"envId\":\"0010000000002\",\"envId\":\"0010000000003\",\"type\":{}}" })
 		{
 			mvc.perform(post(DeveloperApiController.TYPE_SAVE_PATH).header("Authorization", "Bearer " + secret).contentType(MediaType.APPLICATION_JSON).content(body)).andExpect(status().isBadRequest());
 		}
@@ -421,7 +422,7 @@ public class SchemaApiTest
 		MockHttpServletRequest request = new MockHttpServletRequest("POST", "/app/api/dev/type/save");
 		request.setContextPath("/app");
 		assertEquals(Boolean.TRUE, ReflectionTestUtils.invokeMethod(filter, "shouldNotFilter", request));
-		for (String path : new String[] { DeveloperApiController.TYPE_PATH, DeveloperApiController.FIELD_PATH, DeveloperApiController.TYPES_PATH })
+		for (String path : new String[] { DeveloperApiController.TYPE_PATH, DeveloperApiController.FIELD_PATH, DeveloperApiController.TYPES_PATH, DataUploadController.UPLOAD_PATH })
 		{
 			request.setRequestURI("/app" + path);
 			assertEquals(Boolean.TRUE, ReflectionTestUtils.invokeMethod(filter, "shouldNotFilter", request));
@@ -433,7 +434,7 @@ public class SchemaApiTest
 	/** Builds the minimal body used by controller dispatch tests. */
 	private String body()
 	{
-		return "{\"environmentId\":\"0010000000002\",\"type\":{}}";
+		return "{\"envId\":\"0010000000002\",\"type\":{}}";
 	}
 
 	/** Creates detached environment metadata without a database connection. */

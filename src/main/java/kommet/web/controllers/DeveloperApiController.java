@@ -61,30 +61,30 @@ public class DeveloperApiController
 
 	/** Returns one custom type and its fields by fully qualified type name. */
 	@RequestMapping(value = TYPE_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getType(@RequestParam(value = "environmentId", required = false) String environmentId,
+	public ResponseEntity<Map<String, Object>> getType(@RequestParam(value = "envId", required = false) String envId,
 			@RequestParam(value = "qualifiedName", required = false) String qualifiedName, HttpServletRequest request) throws KommetException
 	{
-		EnvData env = readEnvironment(environmentId, request);
+		EnvData env = readEnvironment(envId, request);
 		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
 		return jsonSuccess(schemaService.getType(qualifiedName, env));
 	}
 
 	/** Returns one custom field by its fully qualified owner-and-field name. */
 	@RequestMapping(value = FIELD_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getField(@RequestParam(value = "environmentId", required = false) String environmentId,
+	public ResponseEntity<Map<String, Object>> getField(@RequestParam(value = "envId", required = false) String envId,
 			@RequestParam(value = "qualifiedName", required = false) String qualifiedName, HttpServletRequest request) throws KommetException
 	{
-		EnvData env = readEnvironment(environmentId, request);
+		EnvData env = readEnvironment(envId, request);
 		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
 		return jsonSuccess(schemaService.getField(qualifiedName, env));
 	}
 
 	/** Lists custom types, including fields only when includeField is exactly 1. */
 	@RequestMapping(value = TYPES_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getTypes(@RequestParam(value = "environmentId", required = false) String environmentId,
+	public ResponseEntity<Map<String, Object>> getTypes(@RequestParam(value = "envId", required = false) String envId,
 			@RequestParam(value = "includeField", required = false) String includeField, HttpServletRequest request) throws KommetException
 	{
-		EnvData env = readEnvironment(environmentId, request);
+		EnvData env = readEnvironment(envId, request);
 		authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.READ);
 		return jsonSuccess(schemaService.getTypes(env, "1".equals(includeField)));
 	}
@@ -136,17 +136,17 @@ public class DeveloperApiController
 			throw new ApiException(400, "Malformed JSON request");
 		}
 
-		SchemaPayload.keys(payload, fieldOperation ? new String[] { "environmentId", "type", "field" } : new String[] { "environmentId", "type" });
-		KID envId = SchemaDataTypeParser.id(SchemaPayload.text(payload, "environmentId", true));
+		SchemaPayload.keys(payload, fieldOperation ? new String[] { "envId", "type", "field" } : new String[] { "envId", "type" });
+		KID requestedEnvId = SchemaDataTypeParser.id(SchemaPayload.text(payload, "envId", true));
 		EnvFilter filter = new EnvFilter();
-		filter.setKID(envId);
+		filter.setKID(requestedEnvId);
 
 		if (envService.find(filter, envService.getMasterEnv()).isEmpty())
 		{
 			throw new ApiException(404, "Environment not found");
 		}
 
-		EnvData env = envService.get(envId);
+		EnvData env = envService.get(requestedEnvId);
 		RestAuthenticationService.Authentication authentication = authorizationUtil.authenticate(request, env, RestAuthenticationService.Access.WRITE);
 		Map<String, Object> data = schemaService.save(payload, authentication, fieldOperation);
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
@@ -155,21 +155,21 @@ public class DeveloperApiController
 		return ResponseEntity.status("created".equals(data.get("operation")) ? 201 : 200).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	private EnvData readEnvironment(String environmentId, HttpServletRequest request) throws KommetException
+	private EnvData readEnvironment(String envId, HttpServletRequest request) throws KommetException
 	{
 		authorizationUtil.requireAuthorization(request);
-		if (environmentId == null || environmentId.isBlank())
+		if (envId == null || envId.isBlank())
 		{
-			throw new ApiException(400, "environmentId is required");
+			throw new ApiException(400, "envId is required");
 		}
-		KID envId = SchemaDataTypeParser.id(environmentId);
+		KID requestedEnvId = SchemaDataTypeParser.id(envId);
 		EnvFilter filter = new EnvFilter();
-		filter.setKID(envId);
+		filter.setKID(requestedEnvId);
 		if (envService.find(filter, envService.getMasterEnv()).isEmpty())
 		{
 			throw new ApiException(404, "Environment not found");
 		}
-		return envService.get(envId);
+		return envService.get(requestedEnvId);
 	}
 
 	private static ResponseEntity<Map<String, Object>> jsonSuccess(Object data)
