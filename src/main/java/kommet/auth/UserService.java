@@ -59,7 +59,7 @@ public class UserService
 	@Transactional(readOnly = true)
 	public User getUser (KID id, EnvData env) throws KommetException
 	{
-		return userDao.get(id, PropertySelection.SPECIFIED_AND_BASIC, "userName, email, password, locale, timezone, profile.id, profile.name", env);
+		return userDao.get(id, PropertySelection.SPECIFIED_AND_BASIC, "userName, email, password, locale, timezone, profile.id, profile.name, isActive", env);
 	}
 	
 	@Transactional(readOnly = true)
