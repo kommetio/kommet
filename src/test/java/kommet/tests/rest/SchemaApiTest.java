@@ -94,8 +94,8 @@ public class SchemaApiTest
 		token = new ApiToken();
 		token.setId(KID.get(KID.API_TOKEN_PREFIX, 1L));
 		token.setSystemUser(user);
-		token.setReadPermission(true);
-		token.setWritePermission(true);
+		token.setIsReadPermission(true);
+		token.setIsWritePermission(true);
 		authenticator = new RestAuthenticationService();
         
 		// Supplies token storage restricted to the primary test environment.
@@ -287,10 +287,10 @@ public class SchemaApiTest
 	@Test
 	public void rejectsInactiveUsersAndInsufficientCapabilities() throws Exception
 	{
-		token.setWritePermission(false);
+		token.setIsWritePermission(false);
 		expect(403, () -> authenticator.authenticate("Bearer " + secret, env, RestAuthenticationService.Access.WRITE));
 		assertNotNull(authenticator.authenticate("Bearer " + secret, env, RestAuthenticationService.Access.READ));
-		token.setReadPermission(false);
+		token.setIsReadPermission(false);
 		expect(403, () -> authenticator.authenticate("Bearer " + secret, env, RestAuthenticationService.Access.READ));
 		user.setIsActive(false);
 		expect(401, () -> authenticator.authenticate("Bearer " + secret, env, RestAuthenticationService.Access.WRITE));
@@ -329,7 +329,7 @@ public class SchemaApiTest
 	public void schemaReadEndpointsReturnDocumentedJson() throws Exception
 	{
 		String environmentId = env.getId().getId();
-		token.setWritePermission(false);
+		token.setIsWritePermission(false);
 		mvc.perform(get(DeveloperApiController.TYPE_PATH)
 				.param("environmentId", environmentId)
 				.param("qualifiedName", "acme.billing.Invoice"))

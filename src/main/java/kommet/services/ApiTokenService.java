@@ -74,8 +74,8 @@ public class ApiTokenService
 		token.setTokenPrefix(secret.substring(0, 11));
 		token.setSystemUser(systemUser);
 		token.setExpirationDate(expirationDate);
-		token.setReadPermission(readPermission);
-		token.setWritePermission(writePermission);
+		token.setIsReadPermission(readPermission);
+		token.setIsWritePermission(writePermission);
 
 		token = apiTokenDao.save(token, AuthData.getRootAuthData(env), env);
 		log.debug("[APITOKEN] Created token record " + token.getId() + " in environment " + env.getId());

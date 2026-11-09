@@ -135,6 +135,42 @@ curl -sS -i --get "$BASE_URL/api/dev/field" \
 }
 ```
 
+With `includeField=1`, each type includes its fields:
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "package": "acme.billing",
+      "apiName": "Invoice",
+      "label": "Invoice",
+      "pluralLabel": "Invoices",
+      "description": null,
+      "labelKey": null,
+      "pluralLabelKey": null,
+      "defaultFieldApiName": null,
+      "sharingControlledByFieldApiName": null,
+      "combineRecordAndCascadeSharing": false,
+      "fields": [
+        {
+          "apiName": "invoiceNumber",
+          "label": "Invoice number",
+          "description": null,
+          "labelKey": null,
+          "required": true,
+          "trackHistory": false,
+          "defaultValue": null,
+          "unique": true,
+          "isDefault": false,
+          "dataType": { "kind": "text", "length": 80, "long": false, "formatted": false }
+        }
+      ]
+    }
+  ]
+}
+```
+
 **Curl example:**
 
 ```bash

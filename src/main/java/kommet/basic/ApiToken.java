@@ -60,9 +60,9 @@ public class ApiToken extends StandardTypeRecordProxy
 
 	@Property(field = "isReadPermission")
 	public boolean getIsReadPermission() { return readPermission; }
-	public void setReadPermission(boolean readPermission) { this.readPermission = readPermission; setInitialized("isReadPermission"); }
+	public void setIsReadPermission(boolean readPermission) { this.readPermission = readPermission; setInitialized("isReadPermission"); }
 
 	@Property(field = "isWritePermission")
 	public boolean getIsWritePermission() { return writePermission; }
-	public void setWritePermission(boolean writePermission) { this.writePermission = writePermission; setInitialized("isWritePermission"); }
+	public void setIsWritePermission(boolean writePermission) { this.writePermission = writePermission; setInitialized("isWritePermission"); }
 }
