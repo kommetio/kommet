@@ -80,7 +80,7 @@ public class SchemaApiService
 	{
 		AuthData authData = authentication.getAuthData();
 		EnvData env = authentication.getEnv();
-		KID requestedEnvId = SchemaDataTypeParser.id(SchemaPayload.text(payload, "environmentId", true));
+		KID requestedEnvId = SchemaDataTypeParser.id(SchemaPayload.text(payload, "envId", true));
 		if (!env.getId().equals(requestedEnvId) || !env.getId().equals(authData.getEnvId()))
 		{
 			throw new ApiException(403, "Authentication does not permit the requested environment");
@@ -354,7 +354,7 @@ public class SchemaApiService
 	/** Creates a custom type or updates its metadata without replacing existing fields. */
 	private Map<String, Object> saveType(JsonNode payload, AuthData authData, EnvData env) throws KommetException
 	{
-		SchemaPayload.keys(payload, "environmentId", "type");
+		SchemaPayload.keys(payload, "envId", "type");
 		JsonNode definition = payload.get("type");
 		SchemaPayload.keys(definition, "package", "apiName", "label", "pluralLabel", "description", "labelKey", "pluralLabelKey", "defaultFieldApiName", "sharingControlledByFieldApiName", "combineRecordAndCascadeSharing");
 		String qualifiedName = SchemaPayload.qualifiedName(definition);
@@ -417,7 +417,7 @@ public class SchemaApiService
 	/** Upserts a field and its unique/default settings after validating existing data. */
 	private Map<String, Object> saveField(JsonNode payload, AuthData authData, EnvData env) throws KommetException
 	{
-		SchemaPayload.keys(payload, "environmentId", "type", "field");
+		SchemaPayload.keys(payload, "envId", "type", "field");
 		Type type = SchemaDataTypeParser.resolve(payload.get("type"), env);
 		mutable(type);
 		JsonNode definition = payload.get("field");

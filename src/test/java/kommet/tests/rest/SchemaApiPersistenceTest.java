@@ -62,14 +62,14 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 	{
 		EnvData env = fixture();
 		RestAuthenticationService.Authentication authentication = authentication(env);
-		JsonNode typePayload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"Invoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\",\"description\":\"Preserved description\"}}");
+		JsonNode typePayload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"Invoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\",\"description\":\"Preserved description\"}}");
 		Map<String, Object> created = schemaService.save(typePayload, authentication, false);
 		assertEquals("created", created.get("operation"));
 		Map<String, Object> updated = schemaService.save(typePayload, authentication, false);
 		assertEquals("updated", updated.get("operation"));
 		assertEquals(created.get("typeId"), updated.get("typeId"));
 
-		JsonNode fieldPayload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"Invoice\"},\"field\":{\"apiName\":\"invoiceNumber\",\"label\":\"Invoice number\",\"required\":true,\"unique\":true,\"isDefault\":true,\"dataType\":{\"kind\":\"text\",\"length\":80}}}");
+		JsonNode fieldPayload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"Invoice\"},\"field\":{\"apiName\":\"invoiceNumber\",\"label\":\"Invoice number\",\"required\":true,\"unique\":true,\"isDefault\":true,\"dataType\":{\"kind\":\"text\",\"length\":80}}}");
 		Map<String, Object> fieldCreated = schemaService.save(fieldPayload, authentication, true);
 		Map<String, Object> fieldUpdated = schemaService.save(fieldPayload, authentication, true);
 		assertEquals("created", fieldCreated.get("operation"));
@@ -92,7 +92,7 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 		EnvData env = fixture();
 		RestAuthenticationService.Authentication authentication = authentication(env);
 		String identity = "{\"package\":\"acme.billing\",\"apiName\":\"DatatypeInvoice\"}";
-		schemaService.save(mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"DatatypeInvoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\"}}"), authentication, false);
+		schemaService.save(mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"DatatypeInvoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\"}}"), authentication, false);
 		String[] definitions = {
 			"{\"kind\":\"text\",\"length\":80}",
 			"{\"kind\":\"number\",\"decimalPlaces\":2,\"javaType\":\"java.math.BigDecimal\"}",
@@ -108,7 +108,7 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 		};
 		for (int index = 0; index < definitions.length; index++)
 		{
-			JsonNode payload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":" + identity + ",\"field\":{\"apiName\":\"field" + index + "\",\"label\":\"Field\",\"required\":" + (index == 10) + ",\"dataType\":" + definitions[index] + "}}");
+			JsonNode payload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":" + identity + ",\"field\":{\"apiName\":\"field" + index + "\",\"label\":\"Field\",\"required\":" + (index == 10) + ",\"dataType\":" + definitions[index] + "}}");
 			assertEquals("created", schemaService.save(payload, authentication, true).get("operation"));
 			assertNotNull(env.getType("acme.billing.DatatypeInvoice").getField("field" + index));
 		}
@@ -119,7 +119,7 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 	public void builtInTypesCannotBeModified() throws Exception
 	{
 		EnvData env = fixture();
-		JsonNode payload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"kommet.basic\",\"apiName\":\"User\"},\"field\":{\"apiName\":\"unsafeField\",\"label\":\"Unsafe\",\"dataType\":{\"kind\":\"boolean\"}}}");
+		JsonNode payload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"kommet.basic\",\"apiName\":\"User\"},\"field\":{\"apiName\":\"unsafeField\",\"label\":\"Unsafe\",\"dataType\":{\"kind\":\"boolean\"}}}");
 		try { schemaService.save(payload, authentication(env), true); fail("Expected forbidden built-in mutation"); }
 		catch (ApiException exception) { assertEquals(403, exception.getStatus()); }
 		assertNull(env.getType("kommet.basic.User").getField("unsafeField"));
@@ -131,9 +131,9 @@ public class SchemaApiPersistenceTest extends BaseUnitTest
 	{
 		EnvData env = fixture();
 		RestAuthenticationService.Authentication authentication = authentication(env);
-		JsonNode typePayload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"RollbackInvoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\"}}");
+		JsonNode typePayload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"RollbackInvoice\",\"label\":\"Invoice\",\"pluralLabel\":\"Invoices\"}}");
 		schemaService.save(typePayload, authentication, false);
-		JsonNode fieldPayload = mapper.readTree("{\"environmentId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"RollbackInvoice\"},\"field\":{\"apiName\":\"optionalNumber\",\"label\":\"Number\",\"required\":false,\"isDefault\":true,\"dataType\":{\"kind\":\"text\",\"length\":80}}}");
+		JsonNode fieldPayload = mapper.readTree("{\"envId\":\"" + env.getId() + "\",\"type\":{\"package\":\"acme.billing\",\"apiName\":\"RollbackInvoice\"},\"field\":{\"apiName\":\"optionalNumber\",\"label\":\"Number\",\"required\":false,\"isDefault\":true,\"dataType\":{\"kind\":\"text\",\"length\":80}}}");
 		try { schemaService.save(fieldPayload, authentication, true); fail("An optional field cannot be the default"); }
 		catch (ApiException exception) { assertEquals(400, exception.getStatus()); }
 		TestTransaction.flagForRollback();
