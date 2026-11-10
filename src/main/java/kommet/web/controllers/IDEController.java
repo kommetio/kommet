@@ -72,6 +72,7 @@ import kommet.errorlog.ErrorLogService;
 import kommet.errorlog.ErrorLogSeverity;
 import kommet.ide.IDEFile;
 import kommet.ide.IDEService;
+import kommet.ide.IDESourceSaveService;
 import kommet.json.JSON;
 import kommet.koll.ClassCompilationException;
 import kommet.koll.ClassFilter;
@@ -141,6 +142,9 @@ public class IDEController extends CommonKommetController
 	
 	@Inject
 	ErrorLogService logService;
+
+	@Inject
+	IDESourceSaveService ideSourceSaveService;
 	
 	private static Set<String> allJavaClasses = null;
 	
@@ -424,12 +428,9 @@ public class IDEController extends CommonKommetController
 				return;
 			}
 				
-			file.setKollCode(code);
-			
 			try
 			{
-				clsService.fullSave(file, dataService, true, AuthUtil.getAuthData(session), env);
-				IDEService.refreshFile(new IDEFile(file), session);
+				file = ideSourceSaveService.saveClass(file, code, AuthUtil.getAuthData(session), env, session);
 				out.write(RestUtil.getRestSuccessDataResponse("{ \"fileId\": \"" + file.getId() + "\", \"fileName\": \"" + file.getName() + "\" }"));
 				return;
 			}
@@ -498,7 +499,7 @@ public class IDEController extends CommonKommetController
 					view.setName(viewProps[0]);
 					view.setPackageName(viewProps[1]);
 					
-					viewService.fullSave(view, code, true, AuthUtil.getAuthData(session), env);
+					view = ideSourceSaveService.saveView(view, code, AuthUtil.getAuthData(session), env, session);
 				}
 				catch (KommetException e)
 				{
@@ -511,7 +512,6 @@ public class IDEController extends CommonKommetController
 					return;
 				}
 				
-				IDEService.refreshFile(new IDEFile(view), session);
 				out.write(RestUtil.getRestSuccessDataResponse("{ \"fileId\": \"" + view.getId() + "\", \"fileName\": \"" + view.getName() + "\" }"));
 				return;
 			}
@@ -597,8 +597,7 @@ public class IDEController extends CommonKommetController
 			
 			try
 			{
-				viewResourceService.save(resource, AuthUtil.getAuthData(session), env);
-				IDEService.refreshFile(new IDEFile(resource), session);
+				resource = ideSourceSaveService.saveResource(resource, AuthUtil.getAuthData(session), env, session);
 				out.write(RestUtil.getRestSuccessDataResponse("{ \"fileId\": \"" + resource.getId() + "\", \"fileName\": \"" + resource.getName() + "\" }"));
 				return;
 			}
